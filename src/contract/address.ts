@@ -1,0 +1,1 @@
+export const tilesAddress = "0x7C1B1F4Cd598B802971aBd5cd1F4b62Eda9BF4E5"
