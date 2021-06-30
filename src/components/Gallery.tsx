@@ -132,21 +132,22 @@ export default function Gallery() {
               {gallery?.map(
                 g =>
                   g && (
-                    <div
-                      key={g}
-                      onClick={() => (window.location.hash = g)}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <Tile
-                        address={g}
-                        style={
-                          window.innerWidth > 600
-                            ? size === 'big'
-                              ? { width: 360, height: 360 }
-                              : { width: 240, height: 240 }
-                            : { width: 300, height: 300 }
-                        }
-                      />
+                    <div key={g}>
+                      <div
+                        onClick={() => (window.location.hash = g)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <Tile
+                          address={g}
+                          style={
+                            window.innerWidth > 600
+                              ? size === 'big'
+                                ? { width: 360, height: 360 }
+                                : { width: 240, height: 240 }
+                              : { width: 300, height: 300 }
+                          }
+                        />
+                      </div>
                       <div
                         style={{
                           fontSize: 11,

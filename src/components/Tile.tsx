@@ -10,11 +10,9 @@ export default function Tile({
   style?: CSSProperties
 }) {
   return (
-    <div>
-      <img
-        style={{ pointerEvents: 'none', background: '#faf3e8', ...style }}
-        src={tilesUrl(address)}
-      />
-    </div>
+    <img
+      style={{ pointerEvents: 'none', background: '#faf3e8', ...style }}
+      src={tilesUrl(address)}
+    />
   )
 }
