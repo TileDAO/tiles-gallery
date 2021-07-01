@@ -11,30 +11,21 @@ export default function Dao() {
         }}
       >
         <h3>TileDAO</h3>
+        <p>Above all else, art is a pillar of community.</p>
         <p>
-          A creative renaissance is underway. Tools and platforms are actively
-          being built—from within the crypto world and beyond—that are changing
-          the distribution of content in favor of artists. Middle-men like
-          streaming platforms and social networks who make content available as
-          cheaply as possible, while leaving creators few other options for
-          gaining exposure, are being replaced.
-        </p>
-        <p>
-          Most importantly, we're reminding ourselves that content creation is
-          first class labor, and that artists should be paid.
-        </p>
-        <p>
-          TileDAO itself is created and funded out of art. Its goal is to fund
-          projects that are building a more sustainable and equitable creators'
-          economy, along with the artists who will make it worth it.
+          TileDAO exists to enable a community to collectively decide how Tiles,
+          as well as the funds raised from selling them, are put to use. Because
+          the supply of Tiles is virtually infinite, they may continue to sell,
+          well... forever. This is an effort to put a potentially infinite
+          revenue stream to use in the coolest way possible.
         </p>
         <br />
         <h4>Funding</h4>
         <p>
           All revenue from Tile sales are sent to the TileDAO wallet, a{' '}
-          <a href="https://juice.work">Juice</a> treasury that makes all
+          <a href="https://juicebox.money">Juicebox</a> treasury that makes all
           outflows programmable and transparent, and rewards everyone who
-          purchases Tiles with a balance of <b>TILE ERC-20 tokens</b>{' '}
+          purchases Tiles with a balance of <b>$TILE ERC-20 tokens</b>{' '}
           proportional to the amount they've spent. As described in the{' '}
           <a href="/#/manifesto">manifesto</a>, it will be up to the community
           to decide how the treasury funds are put to use.
@@ -54,7 +45,7 @@ export default function Dao() {
         </p>
         <p>
           If you'd like to participate in deciding how the DAO funds are put to
-          use, please join!
+          use, get your Tile and come join us.
         </p>
       </div>
     </div>
