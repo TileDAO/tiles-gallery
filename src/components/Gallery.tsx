@@ -187,7 +187,7 @@ export default function Gallery() {
           padding: 10,
         }}
       >
-        <a href="https://github.com" target="_blank" rel="noreferrer">
+        <a href="https://github.com/tiledao" target="_blank" rel="noreferrer">
           <img style={{ color: '#222' }} src="assets/github.svg" />
         </a>
       </div>
