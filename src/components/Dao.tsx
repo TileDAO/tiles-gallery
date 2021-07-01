@@ -16,8 +16,8 @@ export default function Dao() {
           TileDAO exists to enable a community to collectively decide how Tiles,
           as well as the funds raised from selling them, are put to use. Because
           the supply of Tiles is virtually infinite, they may continue to sell,
-          well... forever. This is an effort to put a potentially infinite
-          revenue stream to use in the coolest way possible.
+          well... forever. This is an effort to use a potentially infinite
+          revenue stream in the coolest way possible.
         </p>
         <br />
         <h4>Funding</h4>
