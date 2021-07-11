@@ -13,8 +13,8 @@ export default function Dao() {
         <h3>TileDAO</h3>
         <p>Above all else, art is a pillar of community.</p>
         <p>
-          TileDAO exists to enable the community that will shape the future of
-          Tiles. Because their supply is virtually infinite, they may continue
+          TileDAO exists to fund the community that will shape the future of
+          Tiles. Because Tiles supply is virtually infinite, they may continue
           to sell, well... forever. This is an effort to use a potentially
           infinite revenue stream in the coolest way possible.
         </p>
@@ -24,11 +24,11 @@ export default function Dao() {
           All revenue from Tile sales are sent to the TileDAO wallet, a{' '}
           <a href="https://juicebox.money">Juicebox</a> treasury that makes all
           outflows programmable and transparent, and rewards everyone who
-          purchases Tiles with a balance of <b>$TILE ERC-20 tokens</b>{' '}
+          purchases Tiles with a balance of <b>TILE ERC-20 tokens</b>{' '}
           proportional to the amount they've spent. As described in the{' '}
           <a href="/#/manifesto">manifesto</a>, it will be up to the community
-          to decide how the treasury funds are put to use. To begin with, the
-          only allocation will be to support the Tile Artist.
+          to decide how the treasury funds are put to use. To begin with, 50% of
+          the funds will go toward supporting the Tile Artist.
         </p>
         <br />
         <h4>Community</h4>

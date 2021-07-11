@@ -17,27 +17,26 @@ export default function Manifesto() {
           from a different ETH address. Each one is unique.
         </p>
         <p>
-          Mathematically, all Tiles are equally rare. All are born from the same
-          assortment of simple shapes and colors—each assembled in its own
-          fashion. In that way, Tiles are a bit like us.
+          Mathematically, Tiles are equally rare. All are fashioned from the
+          same assortment of simple shapes and colors, but assembled in their
+          own way. In that way, Tiles are a bit like us.
         </p>
         <p>
           Tiles will continue to sell forever. Maybe they'll be sought after by
-          owners of matching addresses to decorate their ENS handles. Maybe
-          their value will become "pegged" to the final price floor of 2.56 ETH,
-          and they'll be traded as currency. Or perhaps the future will write a
-          more interesting story for them altogether.
+          owners of matching wallets to decorate ENS handles. Maybe they'll be
+          collected en masse to tile ceilings in the metaverse. Or perhaps the
+          future will write a more interesting story for them altogether.
         </p>
         <p>
-          As long as Tiles continue to sell, the revenue will be sent to the{' '}
-          <a href="/#/dao">TileDAO</a> treasury to be redistributed with the
-          guidance of anyone who owns a Tile.
+          All Tiles do have one thing in common: each is an invitation for its
+          owner to participate in a <a href="/#/dao">DAO</a> paid for by the
+          endless Tiles primary sale. It'll be up to the community to decide
+          what that means.
         </p>
         <p>
-          Tiles is an experiment. And like any good experiment, part of what
-          makes it beautiful is that its role in the world can't be predicted—it
-          will only ever be as interesting, influential, or valuable as humans
-          like you or I make it.
+          Like any good experiment, the role of Tiles in the world can't be
+          predicted—it will only ever be as valuable, influential, or beautiful
+          as we decide to make it.
         </p>
         <p>Thank you for being a part of it.</p>
         <p>- Tile Artist</p>

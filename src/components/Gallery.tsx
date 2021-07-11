@@ -65,16 +65,12 @@ export default function Gallery() {
             margin: '0 auto',
           }}
         >
-          <a href="/#/manifesto" target="_blank" rel="noreferrer">
-            Manifesto
-          </a>
-          <a href="/#/dao" target="_blank" rel="noreferrer">
-            DAO
-          </a>
+          <a href="/#/manifesto">Manifesto</a>
+          <a href="/#/dao">DAO</a>
         </div>
         <br />
         <br />
-        <a style={{ width: 70 }} href="/#/faq" target="_blank" rel="noreferrer">
+        <a style={{ width: 70 }} href="/#/faq">
           FAQ
         </a>
       </div>
@@ -201,6 +197,17 @@ export default function Gallery() {
             padding: 10,
           }}
         >
+          <div
+            style={{
+              cursor: 'pointer',
+              color: '#222',
+              padding: 5,
+              marginBottom: 20,
+            }}
+            onClick={() => window.scrollTo({ top: 0 })}
+          >
+            ^
+          </div>
           <div
             style={{
               cursor: 'pointer',
