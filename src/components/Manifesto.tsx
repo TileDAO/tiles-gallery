@@ -30,8 +30,8 @@ export default function Manifesto() {
         <p>
           All Tiles do have one thing in common: each is an invitation for its
           owner to participate in a <a href="/#/dao">DAO</a> paid for by the
-          endless Tiles primary sale. It'll be up to the community to decide
-          what that means.
+          never-ending Tiles primary sale. It'll be up to the community to
+          decide what that means.
         </p>
         <p>
           Like any good experiment, the role of Tiles in the world can't be

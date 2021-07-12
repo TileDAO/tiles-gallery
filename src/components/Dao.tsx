@@ -18,7 +18,6 @@ export default function Dao() {
           to sell, well... forever. This is an effort to use a potentially
           infinite revenue stream in the coolest way possible.
         </p>
-        <br />
         <h4>Funding</h4>
         <p>
           All revenue from Tile sales are sent to the TileDAO wallet, a{' '}
@@ -28,9 +27,9 @@ export default function Dao() {
           proportional to the amount they've spent. As described in the{' '}
           <a href="/#/manifesto">manifesto</a>, it will be up to the community
           to decide how the treasury funds are put to use. To begin with, 50% of
-          the funds will go toward supporting the Tile Artist.
+          the funds will go toward supporting the Tile Artist, and the rest will
+          remain in the treasury.
         </p>
-        <br />
         <h4>Community</h4>
         <p>
           The{' '}

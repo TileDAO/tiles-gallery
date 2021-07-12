@@ -1,2 +1,6 @@
 export const tilesUrl = (address: string) =>
-  'https://api.tiles.art/tile/' + address
+  (process.env.NODE_ENV === 'development'
+    ? 'http://localhost:9600'
+    : 'https://api.tiles.art') +
+  '/tile/' +
+  address

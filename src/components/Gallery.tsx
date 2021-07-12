@@ -98,7 +98,6 @@ export default function Gallery() {
           onChange={e => setAddress(e.target.value)}
         />
       </div>
-
       <div style={{ width: '100%', textAlign: 'center', paddingBottom: 300 }}>
         {address ? (
           <div
@@ -129,10 +128,7 @@ export default function Gallery() {
                 g =>
                   g && (
                     <div key={g}>
-                      <div
-                        onClick={() => (window.location.hash = g)}
-                        style={{ cursor: 'pointer' }}
-                      >
+                      <a href={'/#/' + g} style={{ display: 'block' }}>
                         <Tile
                           address={g}
                           style={
@@ -143,7 +139,7 @@ export default function Gallery() {
                               : { width: 300, height: 300 }
                           }
                         />
-                      </div>
+                      </a>
                       <div
                         style={{
                           fontSize: 11,
@@ -174,7 +170,6 @@ export default function Gallery() {
           </div>
         )}
       </div>
-
       <div
         style={{
           position: 'fixed',
@@ -187,27 +182,27 @@ export default function Gallery() {
           <img style={{ color: '#222' }} src="assets/github.svg" />
         </a>
       </div>
-
-      {window.innerWidth > 960 && (
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          right: 0,
+          padding: 10,
+        }}
+      >
         <div
           style={{
-            position: 'fixed',
-            bottom: 0,
-            right: 0,
-            padding: 10,
+            cursor: 'pointer',
+            background: '#222',
+            color: 'white',
+            padding: 5,
+            marginBottom: 10,
           }}
+          onClick={() => window.scrollTo({ top: 0 })}
         >
-          <div
-            style={{
-              cursor: 'pointer',
-              color: '#222',
-              padding: 5,
-              marginBottom: 20,
-            }}
-            onClick={() => window.scrollTo({ top: 0 })}
-          >
-            ^
-          </div>
+          ^
+        </div>
+        {window.innerWidth > 960 && (
           <div
             style={{
               cursor: 'pointer',
@@ -220,6 +215,8 @@ export default function Gallery() {
           >
             +
           </div>
+        )}
+        {window.innerWidth > 960 && (
           <div
             style={{
               cursor: 'pointer',
@@ -232,8 +229,9 @@ export default function Gallery() {
           >
             -
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      )
     </div>
   )
 }
