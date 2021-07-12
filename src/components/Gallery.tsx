@@ -9,16 +9,22 @@ export default function Gallery() {
   const [gallery, setGallery] = useState<string[]>()
   const [address, setAddress] = useState<string>('')
 
+  const load = (count: number) => {
+    const newGallery = [...(gallery ?? [])]
+
+    for (let i = 0; i < count; i++) {
+      newGallery.push('0x' + randomAddress())
+    }
+
+    console.log(gallery?.length, newGallery.length)
+
+    setGallery(newGallery)
+  }
+
   useLayoutEffect(() => {
     if (gallery?.length || address) return
 
-    let _gallery: string[] = []
-
-    for (let i = 0; i < 90; i++) {
-      _gallery.push('0x' + randomAddress())
-    }
-
-    setGallery(_gallery)
+    load(90)
   }, [address, gallery])
 
   const randomAddress = () => Wallet.generate().getAddress().toString('hex')
@@ -155,15 +161,7 @@ export default function Gallery() {
             </div>
             <div
               style={{ textAlign: 'center', marginTop: 100 }}
-              onClick={() => {
-                let newAddresses: string[] = []
-
-                for (let i = 0; i < 30; i++) {
-                  newAddresses.push(randomAddress())
-                }
-
-                setGallery([...(gallery ?? []), ...newAddresses])
-              }}
+              onClick={() => load(30)}
             >
               more
             </div>

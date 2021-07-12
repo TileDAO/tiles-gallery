@@ -26,8 +26,8 @@ export default function FAQ() {
       q: 'What is the TileDAO?',
       a: (
         <span>
-          <a href="/#/dao">TileDAO</a> receives all funds from Tile sales. Funds
-          are stored in a{' '}
+          <a href="/#/dao">TileDAO</a> receives all funds from the Tiles primary
+          sale. Funds are stored in a{' '}
           <a
             href="https://juicebox.money/#/p/tiledao"
             target="_blank"
@@ -55,26 +55,18 @@ export default function FAQ() {
         <span>
           <p>
             TILE is given by the <a href="/#/dao">TileDAO</a> treasury to anyone
-            who purchases a Tile, proportional to the price they paid. Tiles
-            sold on the secondary market will not earn TILE.
-          </p>
-          <p>
-            Right now TILE is simply a way to give Tile buyers a balance of
-            community tokens proportional to the amount they've spent. It will
-            be up to the community to decide how they might be used in the
-            future.
-          </p>
-          <p>
-            One option may involve using{' '}
+            who purchases a Tile in the primary sale, proportional to the price
+            they paid. TILE tokens can be redeemed for a portion of any
+            unallocated funds in the{' '}
             <a
               href="https://juicebox.money/#/p/tiledao"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Juicebox
-            </a>{' '}
-            to allow TILE holders to exchange their tokens for a portion of
-            Tiles revenue.
+              treasury
+            </a>
+            —effectively a discount on buying a Tile. It will be up to the
+            community to decide how else we use them in the future.
           </p>
         </span>
       ),
@@ -92,6 +84,8 @@ export default function FAQ() {
             TileDAO treasury
           </a>{' '}
           after first connecting the same wallet you used to purchase your Tile.
+          You can always cash in TILE tokens for unallocated treasury funds
+          without needing to claim them first.
         </span>
       ),
     },
@@ -122,9 +116,11 @@ export default function FAQ() {
             Tile.
           </p>
           <p>
-            If needed, the server can be relocated in the future, and the Tiles
-            contract can be updated to retrieve metadata/image URIs from the new
-            location using the <code>setBaseURI()</code> function.
+            If needed, the server could be relocated in the future, or
+            redesigned in a case like the ETH wallet address standard being
+            changed. The Tiles contract can be updated to retrieve
+            metadata/image URIs from the new location using the{' '}
+            <code>setBaseURI()</code> function.
           </p>
         </span>
       ),
