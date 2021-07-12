@@ -17,8 +17,8 @@ export default function FAQ() {
         <span>
           Any minted Tile can be "collected" by the owner of the wallet with
           that Tile's address, by paying the owner the current market price.
-          However, the probability of <i>accidentally</i> minting someone else's
-          wallet address Tile is virtually zero.
+          However, the probability of accidentally minting someone else's wallet
+          address Tile is virtually zero.
         </span>
       ),
     },
@@ -27,10 +27,17 @@ export default function FAQ() {
       a: (
         <span>
           <a href="/#/dao">TileDAO</a> receives all funds from Tile sales. Funds
-          are stored in a <a href="https://juice.work">Juice</a> treasury, where
-          they can be programmed toward any projects the community decides to
-          support. Anyone who owns a Tile is a member of the TileDAO and may
-          join the private{' '}
+          are stored in a{' '}
+          <a
+            href="https://juicebox.money/#/p/tiledao"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Juicebox treasury
+          </a>
+          , where they can be programmed towards anyone the community decides to
+          support. Anyone who owns a Tile is a member of the TileDAO and is
+          invited to join the{' '}
           <a
             href="https://discord.gg/8uMxwdfC"
             target="_blank"
@@ -46,9 +53,45 @@ export default function FAQ() {
       q: `What is the TILE ERC-20 token?`,
       a: (
         <span>
-          TILE is given by the <a href="/#/dao">TileDAO</a> treasury to anyone
-          who purchases a Tile, proportional to the price they paid. Tiles sold
-          on the secondary market will not earn TILE.
+          <p>
+            TILE is given by the <a href="/#/dao">TileDAO</a> treasury to anyone
+            who purchases a Tile, proportional to the price they paid. Tiles
+            sold on the secondary market will not earn TILE.
+          </p>
+          <p>
+            Right now TILE is simply a way to give Tile buyers a balance of
+            community tokens proportional to the amount they've spent. It will
+            be up to the community to decide how they might be used in the
+            future.
+          </p>
+          <p>
+            One option may involve using{' '}
+            <a
+              href="https://juicebox.money/#/p/tiledao"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Juicebox
+            </a>{' '}
+            to allow TILE holders to exchange their tokens for a portion of
+            Tiles revenue.
+          </p>
+        </span>
+      ),
+    },
+    {
+      q: `How can I claim my TILE ERC-20 tokens after buying a Tile?`,
+      a: (
+        <span>
+          TILE tokens can be claimed from the{' '}
+          <a
+            href="https://juicebox.money/#/p/tiledao"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            TileDAO treasury
+          </a>{' '}
+          after first connecting the same wallet you used to purchase your Tile.
         </span>
       ),
     },
@@ -65,7 +108,7 @@ export default function FAQ() {
             A server is used because, unlike NFT projects with a finite number
             of artworks in a collection, it would be impossible to pre-generate
             and store every Tile on a network like IPFS. While Tiles could be
-            generated and stored at the time of being minted, its{' '}
+            generated and stored at the time of minting, saving a{' '}
             <a
               href="https://docs.ipfs.io/concepts/content-addressing/"
               target="_blank"
@@ -73,10 +116,10 @@ export default function FAQ() {
             >
               CID
             </a>{' '}
-            being saved in the on-chain metadata, this comes with some risk: in
-            the case of some unexpected network or browser error, flawed image
-            data could be stored and an incorrect CID would be saved on-chain
-            for that Tile.
+            in the on-chain metadata, this is risky: in the case of an
+            unexpected network or browser error, flawed metadata could be stored
+            and an incorrect CID would be irreversibly saved on-chain for that
+            Tile.
           </p>
           <p>
             If needed, the server can be relocated in the future, and the Tiles
