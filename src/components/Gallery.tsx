@@ -104,12 +104,9 @@ export default function Gallery() {
       </div>
       <div style={{ width: '100%', textAlign: 'center', paddingBottom: 300 }}>
         {address ? (
-          <div
-            style={{ cursor: 'pointer' }}
-            onClick={() => (window.location.hash = address)}
-          >
+          <a href={'/#/' + address} style={{ display: 'block' }}>
             <Tile address={address} />
-          </div>
+          </a>
         ) : (
           <div>
             <div

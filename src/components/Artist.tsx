@@ -61,18 +61,17 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
       }}
     >
       <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: 40 }}>
-        <div
-          style={{ cursor: 'pointer' }}
-          onClick={saleIsActive ? pauseSale : startSale}
-        >
-          {saleIsActive ? 'Pause sale' : 'Start sale'}
+        <div>
+          <span className="btn" onClick={saleIsActive ? pauseSale : startSale}>
+            {saleIsActive ? 'Pause sale' : 'Start sale'}
+          </span>
         </div>
 
         <div>baseURI: {currentBaseURI}</div>
         <div style={gridItemStyle}>
           <input id="newBaseURI" placeholder={currentBaseURI} />
           <div
-            style={{ cursor: 'pointer' }}
+            className="btn"
             onClick={() => {
               const uri = getInputById('newBaseURI')?.value
               setBaseURI(uri ?? '')
@@ -86,7 +85,7 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
         <div style={gridItemStyle}>
           <input id="newArtist" placeholder={constants.AddressZero} />
           <div
-            style={{ cursor: 'pointer' }}
+            className="btn"
             onClick={() => {
               const address = getInputById('newArtist').value
               if (address) transferOwnership(address)
@@ -119,15 +118,17 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
               placeholder={constants.AddressZero}
             />
           </div>
-          <div
-            style={{ cursor: 'pointer', textAlign: 'right' }}
-            onClick={e => {
-              const to = getInputById('mintReserveTo').value
-              const address = getInputById('mintReserveAddress').value
-              if (to && address) mintReserveTile(to, address)
-            }}
-          >
-            Mint
+          <div style={{ textAlign: 'right' }}>
+            <span
+              className="btn"
+              onClick={() => {
+                const to = getInputById('mintReserveTo').value
+                const address = getInputById('mintReserveAddress').value
+                if (to && address) mintReserveTile(to, address)
+              }}
+            >
+              Mint
+            </span>
           </div>
         </div>
       </div>

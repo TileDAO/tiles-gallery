@@ -19,6 +19,20 @@ a {
   color: #1a49ef;
 }
 
+a.bland {
+  color: #222;
+  text-decoration: none;
+}
+
 input {
   font-family: monospace;
+}
+
+.btn {
+  cursor: pointer;
+  border-bottom: 3px solid #F8D938;
+}
+
+.btn:hover {
+  border-color: #222;
 }

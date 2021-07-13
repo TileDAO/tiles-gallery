@@ -50,9 +50,14 @@ export default function Navbar({
           alignItems: 'center',
         }}
       >
-        <div
-          style={{ display: 'flex', alignItems: 'center' }}
-          onClick={() => (window.location.hash = '/')}
+        <a
+          className="bland"
+          href="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+          }}
         >
           <img style={{ width: 24, height: 24 }} src="logo.svg" />
           <span style={{ marginLeft: 10 }}>
@@ -69,27 +74,19 @@ export default function Navbar({
               'Sale has not started'
             )}
           </span>
-        </div>
+        </a>
         {account ? (
           <div>
-            <span
-              style={{ cursor: 'pointer' }}
-              onClick={() => (window.location.hash = 'wallet/' + account)}
-            >
+            <a className="bland" href={'/#/wallet/' + account}>
               ({ownedTokens?.length ?? 0} owned)
-            </span>{' '}
+            </a>{' '}
             {account}{' '}
-            <span style={{ cursor: 'pointer' }} onClick={deactivate}>
+            <span className="btn" onClick={deactivate}>
               X
             </span>
           </div>
         ) : (
-          <div
-            style={{
-              cursor: 'pointer',
-            }}
-            onClick={() => activateBrowserWallet()}
-          >
+          <div className="btn" onClick={() => activateBrowserWallet()}>
             connect
           </div>
         )}

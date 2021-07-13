@@ -66,7 +66,7 @@ export default function Detail({
         <Tile address={address} style={{ width: 400, height: 400 }} />
 
         <div style={{ textAlign: 'center', marginTop: 10 }}>
-          <div style={{ marginBottom: 40 }}>{address}</div>
+          <div style={{ marginBottom: 20 }}>{address}</div>
           {saleIsActive === false ? (
             <div>
               Sale has not started
@@ -82,7 +82,8 @@ export default function Detail({
                         onChange={e => setReserveReceiver(e.target.value)}
                       />
                       <div
-                        style={{ cursor: 'pointer', marginTop: 10 }}
+                        style={{ marginTop: 10 }}
+                        className="btn"
                         onClick={() => _mint(true)}
                       >
                         MINT
@@ -93,20 +94,20 @@ export default function Detail({
               )}
             </div>
           ) : owned ? (
-            'Not available'
+            <span style={{ opacity: 0.4 }}>Not for sale</span>
           ) : (
             <div>
-              <div style={{ marginBottom: 10 }}>Unowned</div>
+              <div style={{ marginBottom: 30 }}>Available</div>
               {mintState.status === 'Mining' ? (
                 'Waiting...'
               ) : (
-                <div style={{ padding: 5, cursor: 'pointer' }}>
+                <div style={{ padding: 5 }}>
                   {account ? (
-                    <div onClick={() => _mint()}>
+                    <span className="btn" onClick={() => _mint()}>
                       BUY (
                       {price && parseFloat(utils.formatUnits(price.toString()))}{' '}
                       ETH)
-                    </div>
+                    </span>
                   ) : (
                     'Connect wallet to mint'
                   )}
