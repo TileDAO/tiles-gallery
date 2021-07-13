@@ -24,6 +24,9 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
       .then(res => setReservesLimit(res[0]))
   }, [])
 
+  const getInputById = (id: string) =>
+    document.getElementById(id) as HTMLInputElement
+
   const startSale = () => contract.functions.startSale()
 
   const pauseSale = () => contract.functions.pauseSale()
@@ -71,7 +74,7 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
           <div
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              const uri = document.getElementById('newBaseURI')?.nodeValue
+              const uri = getInputById('newBaseURI')?.value
               setBaseURI(uri ?? '')
             }}
           >
@@ -85,7 +88,7 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
           <div
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              const address = document.getElementById('newArtist')?.nodeValue
+              const address = getInputById('newArtist').value
               if (address) transferOwnership(address)
             }}
           >
@@ -118,10 +121,9 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
           </div>
           <div
             style={{ cursor: 'pointer', textAlign: 'right' }}
-            onClick={() => {
-              const to = document.getElementById('mintReserveTo')?.nodeValue
-              const address =
-                document.getElementById('mintReserveAddress')?.nodeValue
+            onClick={e => {
+              const to = getInputById('mintReserveTo').value
+              const address = getInputById('mintReserveAddress').value
               if (to && address) mintReserveTile(to, address)
             }}
           >

@@ -8,8 +8,11 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 export const networkConfig: Config = {
+  readOnlyChainId: parseInt(
+    process.env.READONLY_CHAIN_ID || '31337',
+  ) as ChainId,
+  // readonlyChainId: ChainId.Kovan,
   // readOnlyChainId: ChainId.Localhost,
-  readOnlyChainId: ChainId.Kovan,
   // readOnlyChainId: 31337,
   readOnlyUrls: {
     31337: 'http://localhost:8545',
