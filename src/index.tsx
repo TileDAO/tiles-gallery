@@ -7,26 +7,32 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
-const config: Config = {
-  readOnlyChainId: ChainId.Localhost,
+export const networkConfig: Config = {
+  // readOnlyChainId: ChainId.Localhost,
+  readOnlyChainId: ChainId.Kovan,
+  // readOnlyChainId: 31337,
   readOnlyUrls: {
+    31337: 'http://localhost:8545',
     [ChainId.Localhost]: 'http://localhost:8545',
-    [ChainId.Ropsten]:
-      'https://ropsten.infura.io/v3/62687d1a985d4508b2b7a24827551934',
+    [ChainId.Kovan]:
+      'https://kovan.infura.io/v3/0e8a1922865f444683f5d0507139d739',
     [ChainId.Mainnet]:
-      'https://mainnet.infura.io/v3/62687d1a985d4508b2b7a24827551934',
+      'https://mainnet.infura.io/v3/0e8a1922865f444683f5d0507139d739',
   },
   multicallAddresses: {
+    31337: 'http://localhost:8545',
     [ChainId.Localhost]: 'http://localhost:8545',
-    [ChainId.Ropsten]:
-      'https://ropsten.infura.io/v3/62687d1a985d4508b2b7a24827551934',
+    [ChainId.Kovan]:
+      'https://kovan.infura.io/v3/0e8a1922865f444683f5d0507139d739',
+    [ChainId.Mainnet]:
+      'https://mainnet.infura.io/v3/0e8a1922865f444683f5d0507139d739',
   },
-  supportedChains: [ChainId.Localhost, ChainId.Ropsten],
+  supportedChains: [31337, ChainId.Localhost, ChainId.Kovan, ChainId.Mainnet],
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <DAppProvider config={config}>
+    <DAppProvider config={networkConfig}>
       <App />
     </DAppProvider>
   </React.StrictMode>,

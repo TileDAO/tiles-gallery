@@ -23,6 +23,7 @@ function App() {
   const contract = useTilesContract()
 
   useLayoutEffect(() => {
+    if (!account) return
     contract.functions.owner().then(res => setIsArtist(res[0] === account))
   }, [account])
 
@@ -47,11 +48,9 @@ function App() {
             <Route exact path="/">
               <Gallery />
             </Route>
-            {isArtist && (
-              <Route exact path="/artist">
-                <Artist saleIsActive={saleIsActive} />
-              </Route>
-            )}
+            <Route exact path="/artist">
+              <Artist saleIsActive={saleIsActive} />
+            </Route>
             <Route exact path="/prices">
               <Prices />
             </Route>

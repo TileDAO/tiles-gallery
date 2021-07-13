@@ -16,8 +16,6 @@ export default function Gallery() {
       newGallery.push('0x' + randomAddress())
     }
 
-    console.log(gallery?.length, newGallery.length)
-
     setGallery(newGallery)
   }
 
@@ -101,7 +99,7 @@ export default function Gallery() {
             boxSizing: 'border-box',
           }}
           placeholder={constants.AddressZero}
-          onChange={e => setAddress(e.target.value)}
+          onChange={e => setAddress(e.target.value.trim())}
         />
       </div>
       <div style={{ width: '100%', textAlign: 'center', paddingBottom: 300 }}>

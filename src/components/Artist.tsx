@@ -1,20 +1,21 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { constants, utils } from 'ethers'
+import { CSSProperties } from 'react'
 import { useLayoutEffect, useState } from 'react'
 
 import { useTilesContract } from '../hooks/TilesContract'
 
 export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
-  const [currentJuicer, setCurrentJuicer] = useState<string>()
-  const [currentProjectID, setCurrentProjectID] = useState<BigNumber>()
+  const [currentArtist, setCurrentArtist] = useState<string>()
+  const [currentBaseURI, setCurrentBaseURI] = useState<string>()
   const [reservesCount, setReservesCount] = useState<BigNumber>()
   const [reservesLimit, setReservesLimit] = useState<BigNumber>()
 
   const contract = useTilesContract()
 
   useLayoutEffect(() => {
-    contract.functions.juicer().then(res => setCurrentJuicer(res[0]))
-    contract.functions.projectID().then(res => setCurrentProjectID(res[0]))
+    contract.functions.owner().then(res => setCurrentArtist(res[0]))
+    contract.functions.baseURI().then(res => setCurrentBaseURI(res[0]))
     contract.functions
       .mintedReservesCount()
       .then(res => setReservesCount(res[0]))
@@ -27,13 +28,7 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
 
   const pauseSale = () => contract.functions.pauseSale()
 
-  const setJuicerAddress = (address: string) => {
-    if (utils.isAddress(address)) return
-    contract.functions.setJuicer(address)
-  }
-
-  const setProjectID = (newProjectID: string) =>
-    contract.functions.setProjectID(BigNumber.from(newProjectID).toHexString())
+  const setBaseURI = (uri: string) => contract.functions.setBaseURI(uri)
 
   const transferOwnership = (address: string) => {
     if (!utils.isAddress(address)) return
@@ -47,6 +42,12 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
 
   const remainingReserves = reservesLimit?.sub(reservesCount ?? 0)
 
+  const gridItemStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+  }
+
   return (
     <div
       style={{
@@ -56,7 +57,7 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
         height: '100vh',
       }}
     >
-      <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: 20 }}>
+      <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: 40 }}>
         <div
           style={{ cursor: 'pointer' }}
           onClick={saleIsActive ? pauseSale : startSale}
@@ -64,24 +65,25 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
           {saleIsActive ? 'Pause sale' : 'Start sale'}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'baseline' }}>
-          <input id="newJuicerAddress" placeholder={currentJuicer} />
+        <div>baseURI: {currentBaseURI}</div>
+        <div style={gridItemStyle}>
+          <input id="newBaseURI" placeholder={currentBaseURI} />
           <div
-            style={{ cursor: 'pointer', marginLeft: 10 }}
+            style={{ cursor: 'pointer' }}
             onClick={() => {
-              const address =
-                document.getElementById('newJuicerAddress')?.nodeValue
-              if (address) setJuicerAddress(address)
+              const uri = document.getElementById('newBaseURI')?.nodeValue
+              setBaseURI(uri ?? '')
             }}
           >
-            Set Juicer
+            Set new baseURI
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'baseline' }}>
+        <div>Artist: {currentArtist}</div>
+        <div style={gridItemStyle}>
           <input id="newArtist" placeholder={constants.AddressZero} />
           <div
-            style={{ cursor: 'pointer', marginLeft: 10 }}
+            style={{ cursor: 'pointer' }}
             onClick={() => {
               const address = document.getElementById('newArtist')?.nodeValue
               if (address) transferOwnership(address)
@@ -91,25 +93,12 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'baseline' }}>
-          <input id="newProjectId" placeholder={currentProjectID?.toString()} />
-          <div
-            style={{ cursor: 'pointer', marginLeft: 10 }}
-            onClick={() => {
-              const id = document.getElementById('newProjectId')?.nodeValue
-              if (id) setProjectID(id)
-            }}
-          >
-            Set Juicebox Project
-          </div>
-        </div>
-
         <div>
-          <div>
+          <div style={{ marginBottom: 10 }}>
             Mint reserve Tile ({remainingReserves?.toString()}/
             {reservesLimit?.toString()} remaining)
           </div>
-          <div>
+          <div style={{ ...gridItemStyle, marginBottom: 10 }}>
             <label htmlFor="to">To</label>
             <input
               name="to"
@@ -118,7 +107,7 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
               placeholder={constants.AddressZero}
             />
           </div>
-          <div>
+          <div style={{ ...gridItemStyle, marginBottom: 10 }}>
             <label htmlFor="address">Tile address</label>
             <input
               name="address"
@@ -127,19 +116,17 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
               placeholder={constants.AddressZero}
             />
           </div>
-          {remainingReserves?.gt(0) && (
-            <div
-              style={{ cursor: 'pointer', marginLeft: 10 }}
-              onClick={() => {
-                const to = document.getElementById('mintReserveTo')?.nodeValue
-                const address =
-                  document.getElementById('mintReserveAddress')?.nodeValue
-                if (to && address) mintReserveTile(to, address)
-              }}
-            >
-              Mint
-            </div>
-          )}
+          <div
+            style={{ cursor: 'pointer', textAlign: 'right' }}
+            onClick={() => {
+              const to = document.getElementById('mintReserveTo')?.nodeValue
+              const address =
+                document.getElementById('mintReserveAddress')?.nodeValue
+              if (to && address) mintReserveTile(to, address)
+            }}
+          >
+            Mint
+          </div>
         </div>
       </div>
     </div>

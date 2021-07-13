@@ -19,15 +19,15 @@ export default function Navbar({
   const contract = useTilesContract()
 
   useLayoutEffect(() => {
-    contract.functions.totalSupply().then(
-      res => setSupply(res[0]),
-      err => console.log('err', err),
-    )
-    if (account) {
-      contract.functions.tokensOfOwner(account).then(res => {
-        console.log('owned', res)
-        setOwnedTokens(res[0])
-      })
+    contract.functions.totalSupply &&
+      contract.functions.totalSupply().then(
+        res => setSupply(res[0]),
+        err => console.log('err', err),
+      )
+    if (account && contract.functions.tokensOfOwner) {
+      contract.functions
+        .tokensOfOwner(account)
+        .then(res => setOwnedTokens(res[0]))
     } else if (ownedTokens) {
       setOwnedTokens([])
     }
