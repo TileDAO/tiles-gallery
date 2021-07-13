@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals'
 
 export const networkConfig: Config = {
   readOnlyChainId: parseInt(
-    process.env.READONLY_CHAIN_ID || '31337',
+    process.env.REACT_APP_READONLY_CHAIN_ID || '31337',
   ) as ChainId,
   // readonlyChainId: ChainId.Kovan,
   // readOnlyChainId: ChainId.Localhost,
