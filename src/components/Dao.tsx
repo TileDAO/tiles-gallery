@@ -15,7 +15,7 @@ export default function Dao() {
         <p>
           TileDAO exists to fund the community that will shape the future of
           Tiles. Because Tiles supply is virtually limitless, their primary sale
-          may never have an end. This DAO is an effort to use a potentially
+          may continue indefinitely. This DAO is an effort to use a potentially
           infinite revenue stream in the coolest way possible.
         </p>
         <h4>Funding</h4>
@@ -32,9 +32,12 @@ export default function Dao() {
           rewards everyone who purchases Tiles with a balance of TILE ERC-20
           tokens proportional to the amount they've spent. As described in the{' '}
           <a href="/#/manifesto">manifesto</a>, it will be up to the community
-          to decide how the treasury funds are put to use. To begin with, 50% of
-          the funds will go toward supporting the Tile Artist, and the rest will
-          remain in the treasury.
+          to decide how the treasury funds are put to use.
+        </p>
+        <p>
+          To begin with, the only spending allocations made will be to support
+          the Tile artist and the Juicebox platform. At any time, a portion of
+          all unallocated funds can be claimed in exchange for burning TILE.
         </p>
         <h4>Community</h4>
         <p>

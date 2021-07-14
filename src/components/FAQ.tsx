@@ -118,9 +118,9 @@ export default function FAQ() {
           <p>
             If needed, the server could be relocated in the future, or
             redesigned in a case like the ETH wallet address standard being
-            changed. The Tiles contract can be updated to retrieve
-            metadata/image URIs from the new location using the{' '}
-            <code>setBaseURI()</code> function.
+            changed. The Tiles contract can be updated by the owner to retrieve
+            metadata from the new location using the <code>setBaseURI()</code>{' '}
+            function.
           </p>
         </span>
       ),

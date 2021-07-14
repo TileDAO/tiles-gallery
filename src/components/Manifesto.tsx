@@ -12,34 +12,34 @@ export default function Manifesto() {
       >
         <h3>Manifesto</h3>
         <p>
-          Tiles is the first art project of its kind: a virtually infinite
-          collection of generated artworks (16^40 in total). Each one is created
-          from a different ETH address. Each one is unique.
+          Humanity is most simply defined by our desire to form communities
+          around ideas, symbols of those ideas, and artifacts that satisfy our
+          overlapping interpretations of beauty.
         </p>
         <p>
-          Mathematically, Tiles are equally rare. All are fashioned from the
-          same assortment of simple shapes and colors, but assembled in their
-          own way. In that way, Tiles are a bit like us.
+          Tiles are a celebration of what gives meaning to those communities:
+          the individual. There is one Tile generated for every possible ETH
+          wallet address—each representing a unique identity in the
+          decentralized ecosystem that makes projects like this possible.
         </p>
         <p>
-          Tiles will continue to sell forever. Maybe they'll be sought after by
-          owners of matching wallets to decorate ENS handles. Maybe they'll be
-          collected en masse to tile ceilings in the metaverse. Or perhaps the
-          future will write a more interesting story for them altogether.
+          Mathematically, all Tiles are equally rare. They are all fashioned
+          from the same assortment of simple shapes and colors, but each in a
+          unique way. In that sense, Tiles are a bit like us.
         </p>
         <p>
-          All Tiles do have one thing in common: each is an invitation for its
-          owner to participate in a <a href="/#/dao">DAO</a> paid for by the
-          never-ending Tiles primary sale. It'll be up to the community to
-          decide what that means.
+          Owning a Tile is an invitation to participate in the{' '}
+          <a href="/#/dao">TileDAO</a>, which receives all revenue from the
+          Tiles primary sale. Because the supply is virtually infinite, funding
+          for the DAO may continue indefinitely—as long as Tiles are sold.
         </p>
         <p>
-          Like any good experiment, the role of Tiles in the world can't be
-          predicted—it will only ever be as valuable, influential, or beautiful
-          as we decide to make it.
+          How these funds are used will be Tiles' true creation of value. In the
+          future, Tiles will be defined not only by the artwork that gave them
+          shape, but by what we build from them together.
         </p>
         <p>Thank you for being a part of it.</p>
-        <p>- Tile Artist</p>
+        <p>- Tile artist</p>
       </div>
     </div>
   )
