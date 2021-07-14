@@ -117,7 +117,7 @@ export default function Gallery() {
                 ...(window.innerWidth > 960
                   ? {
                       gridTemplateColumns:
-                        size === 'big' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr',
+                        size === 'big' ? '1fr' : 'repeat(3, 1fr)',
                       maxWidth: size === 'big' ? 900 : 960,
                       paddingLeft: 60,
                       paddingRight: 60,
@@ -155,7 +155,12 @@ export default function Gallery() {
               )}
             </div>
             <div
-              style={{ textAlign: 'center', marginTop: 100 }}
+              className="btn"
+              style={{
+                display: 'inline-block',
+                marginTop: 100,
+                padding: 20,
+              }}
               onClick={() => load(30)}
             >
               more
@@ -198,7 +203,7 @@ export default function Gallery() {
         {window.innerWidth > 960 && (
           <div
             style={{
-              cursor: 'pointer',
+              cursor: size === 'big' ? 'default' : 'pointer',
               background: '#222',
               color: 'white',
               padding: 5,
@@ -212,7 +217,7 @@ export default function Gallery() {
         {window.innerWidth > 960 && (
           <div
             style={{
-              cursor: 'pointer',
+              cursor: size === 'small' ? 'default' : 'pointer',
               background: '#222',
               color: 'white',
               padding: 5,
