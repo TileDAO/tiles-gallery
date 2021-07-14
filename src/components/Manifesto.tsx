@@ -35,7 +35,7 @@ export default function Manifesto() {
         </p>
         <p>
           How these funds are used will be Tiles' true creation of value. In the
-          future, Tiles will be defined not only by the artwork that gave them
+          future, Tiles will be defined not only by the artwork that gives them
           shape, but by what we build from them together.
         </p>
         <p>Thank you for being a part of it.</p>
