@@ -29,7 +29,7 @@ export default function FAQ() {
           <a href="/#/dao">TileDAO</a> receives all funds from the Tiles primary
           sale. Funds are stored in a{' '}
           <a
-            href="https://juicebox.money/#/p/tiledao"
+            href="https://juicebox.money/#/p/tiles"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -59,7 +59,7 @@ export default function FAQ() {
             they paid. TILE tokens can be redeemed for a portion of any
             unallocated funds in the{' '}
             <a
-              href="https://juicebox.money/#/p/tiledao"
+              href="https://juicebox.money/#/p/tiles"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -77,7 +77,7 @@ export default function FAQ() {
         <span>
           TILE tokens can be claimed from the{' '}
           <a
-            href="https://juicebox.money/#/p/tiledao"
+            href="https://juicebox.money/#/p/tiles"
             target="_blank"
             rel="noopener noreferrer"
           >

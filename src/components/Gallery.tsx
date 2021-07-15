@@ -49,7 +49,7 @@ export default function Gallery() {
         <br />
         <br />
         <br />
-        Each one is unique. And equally rare?
+        Each one is unique. And equally rare
         <br />
         <br />
         <br />
@@ -201,7 +201,7 @@ export default function Gallery() {
           </a>
         </div>
         <div>
-          <a href="https://github.com/tiledao" target="_blank" rel="noreferrer">
+          <a href="https://github.com/tiles" target="_blank" rel="noreferrer">
             <img style={{ color: '#222', width: 24 }} src="assets/github.svg" />
           </a>
         </div>

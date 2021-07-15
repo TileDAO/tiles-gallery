@@ -22,7 +22,7 @@ export default function Dao() {
         <p>
           All revenue from Tile sales are sent to the TileDAO wallet, a{' '}
           <a
-            href="https://juicebox.money/#/p/tiledao"
+            href="https://juicebox.money/#/p/tiles"
             target="_blank"
             rel="noopener noreferrer"
           >
