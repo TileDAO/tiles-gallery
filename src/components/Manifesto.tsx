@@ -12,9 +12,9 @@ export default function Manifesto() {
       >
         <h3>Manifesto</h3>
         <p>
-          Humanity is most simply defined by our desire to form communities
-          around ideas, symbols of those ideas, and artifacts that satisfy our
-          overlapping interpretations of beauty.
+          Humanity is most simply defined by a desire to form communities around
+          ideas, symbols, and artifacts that satisfy our overlapping
+          interpretations of beauty.
         </p>
         <p>
           Tiles are a celebration of what gives meaning to those communities:
@@ -34,9 +34,9 @@ export default function Manifesto() {
           for the DAO may continue indefinitely—as long as Tiles are sold.
         </p>
         <p>
-          How these funds are used will be Tiles' true creation of value. In the
-          future, Tiles will be defined not only by the artwork that gives them
-          shape, but by what we build from them together.
+          How these funds are used will be the true experiment in creating
+          value. In the future, Tiles will be defined not only by the artwork
+          that gives them shape, but by what we build from them together.
         </p>
         <p>Thank you for being a part of it.</p>
         <p>- Tile artist</p>
