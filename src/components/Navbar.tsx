@@ -71,7 +71,7 @@ export default function Navbar({
                 )}
               </span>
             ) : (
-              'Sale has not started'
+              'Sale starts July 16 3pm ET'
             )}
           </span>
         </a>

@@ -39,7 +39,7 @@ export default function FAQ() {
           support. Anyone who owns a Tile is a member of the TileDAO and is
           invited to join the{' '}
           <a
-            href="https://discord.gg/8uMxwdfC"
+            href="https://discord.gg/svtKStWe"
             target="_blank"
             rel="noreferrer"
           >

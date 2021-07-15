@@ -176,9 +176,35 @@ export default function Gallery() {
           padding: 10,
         }}
       >
-        <a href="https://github.com/tiledao" target="_blank" rel="noreferrer">
-          <img style={{ color: '#222' }} src="assets/github.svg" />
-        </a>
+        <div style={{marginBottom: 10}}>
+          <a
+            href="https://twitter.com/Tile_DAO"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              style={{ color: '#222', width: 24 }}
+              src="assets/twitter.svg"
+            />
+          </a>
+        </div>
+        <div style={{marginBottom: 10}}>
+          <a
+            href="https://discord.gg/svtKStWe"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              style={{ color: '#222', width: 24 }}
+              src="assets/discord.svg"
+            />
+          </a>
+        </div>
+        <div>
+          <a href="https://github.com/tiledao" target="_blank" rel="noreferrer">
+            <img style={{ color: '#222', width: 24 }} src="assets/github.svg" />
+          </a>
+        </div>
       </div>
       <div
         style={{

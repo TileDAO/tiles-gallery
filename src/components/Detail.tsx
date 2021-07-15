@@ -69,7 +69,7 @@ export default function Detail({
           <div style={{ marginBottom: 20 }}>{address}</div>
           {saleIsActive === false ? (
             <div>
-              Sale has not started
+              Sale starts July 16 3pm ET
               {isArtist && (
                 <div style={{ marginTop: 20 }}>
                   {owned ? (
