@@ -12,6 +12,15 @@ export default function FAQ() {
       a: `There is a unique Tile for every possible ETH wallet address. That's 16^40 Tiles. Or roughly, 15 with 47 zeros behind it.`,
     },
     {
+      q: 'What happens when I buy a Tile?',
+      a: (
+        <span>
+          Purchasing a Tile mints a Tiles NFT to your connected wallet address,
+          for the Tile you've selected.
+        </span>
+      ),
+    },
+    {
       q: 'What if someone else mints a Tile with my wallet address?',
       a: (
         <span>
@@ -35,8 +44,8 @@ export default function FAQ() {
           >
             Juicebox treasury
           </a>
-          , where they can be programmed towards anyone the community decides to
-          support. Anyone who owns a Tile is a member of the TileDAO and is
+          , where they can be programmed transparently toward other people or
+          projects. Anyone who owns a Tile is a member of the TileDAO and is
           invited to join the{' '}
           <a
             href="https://discord.gg/svtKStWe"
@@ -66,7 +75,7 @@ export default function FAQ() {
               treasury
             </a>
             —effectively a discount on buying a Tile. It will be up to the
-            community to decide how else we use them in the future.
+            community to decide how else TILE tokens are used in the future.
           </p>
         </span>
       ),

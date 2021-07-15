@@ -11,13 +11,15 @@ export default function Dao() {
         }}
       >
         <h3>TileDAO</h3>
-        <p>Above all else, art is a pillar of community.</p>
         <p>
-          TileDAO exists to fund the community that will shape the future of
-          Tiles. Because Tiles supply is virtually limitless, their primary sale
-          may continue indefinitely. This DAO is an effort to use a potentially
-          infinite revenue stream in the coolest way possible.
+          TileDAO exists to reinvest revenue from the Tiles primary sale back
+          into the creators' economy. Because the supply of Tiles is virtually
+          limitless, the sale may continue indefinitely. The goal in forming
+          this DAO is to amass inspiration, ideas, and opinions from everyone
+          who has bought into this project, in order to best determine how the
+          funding should be put to use.
         </p>
+        <p>Above all else, art is a pillar of community.</p>
         <h4>Funding</h4>
         <p>
           All revenue from Tile sales are sent to the TileDAO wallet, a{' '}
@@ -37,7 +39,8 @@ export default function Dao() {
         <p>
           To begin with, the only spending allocations made will be to support
           the Tile artist and the Juicebox platform. At any time, a portion of
-          all unallocated funds can be claimed in exchange for burning TILE.
+          all unallocated funds can be claimed by TILE holders in exchange for
+          burning TILE.
         </p>
         <h4>Community</h4>
         <p>
