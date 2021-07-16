@@ -33,13 +33,13 @@ export default function FAQ() {
         <span>
           You can see the contract on etherscan{' '}
           <a
-            href="https://etherscan.io/address/0xa85feb7b33103718195b446e5c6715f0b4232889"
+            href="https://etherscan.io/address/0x64931F06d3266049Bf0195346973762E6996D764"
             target="_blank"
             rel="noopener noreferrer"
           >
             here
           </a>
-          . Its address is 0xa85feb7b33103718195b446e5c6715f0b4232889
+          . Its address is 0x64931F06d3266049Bf0195346973762E6996D764
         </span>
       ),
     },
