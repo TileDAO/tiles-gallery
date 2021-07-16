@@ -49,14 +49,16 @@ export default function Detail({
   const owner = useMemo(() => {
     if (!tokenId?.gt(0)) return
 
-    let _owner: string
+    let _owner: string | undefined = undefined
 
-    contract.functions.ownerOf(address).then(
+    contract.functions.ownerOf(tokenId.toHexString()).then(
       res => {
         _owner = res[0]
       },
       err => console.log('err', err),
     )
+
+    return _owner
   }, [tokenId])
 
   const _mint = async (reserve?: boolean) => {
