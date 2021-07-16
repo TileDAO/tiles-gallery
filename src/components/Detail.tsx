@@ -88,19 +88,19 @@ export default function Detail({
                   {owned ? (
                     <div>Reserved for {owner}</div>
                   ) : (
-                    <div>
+                    <div style={{textAlign: 'center'}}>
                       <div>mint reserve to:</div>
                       <input
                         style={{ width: 360, textAlign: 'center' }}
                         onChange={e => setReserveReceiver(e.target.value)}
                       />
-                      <div
+                      <span
                         style={{ marginTop: 10 }}
                         className="btn"
                         onClick={() => _mint(true)}
                       >
                         MINT
-                      </div>
+                      </span>
                     </div>
                   )}
                 </div>

@@ -13,21 +13,33 @@ export default function FAQ() {
     },
     {
       q: 'What happens when I buy a Tile?',
-      a: (
-        <span>
-          Purchasing a Tile mints a Tiles NFT to your connected wallet address,
-          for the Tile you've selected.
-        </span>
-      ),
+      a: `Purchasing a Tile mints a Tiles NFT to your connected wallet address,
+          for the Tile you've selected.`,
+    },
+    {
+      q: 'Can I only mint the Tile with my address?',
+      a: `Any Tile can be minted by anyone.`,
     },
     {
       q: 'What if someone else mints a Tile with my wallet address?',
-      a: (
-        <span>
-          Any minted Tile can be "collected" by the owner of the wallet with
+      a: `Any minted Tile can be "collected" by the owner of the wallet with
           that Tile's address, by paying the owner the current market price.
           However, the probability of accidentally minting someone else's wallet
-          address Tile is virtually zero.
+          address Tile is virtually zero.`,
+    },
+    {
+      q: 'Where can I find the Tiles NFT contract?',
+      a: (
+        <span>
+          You can see the contract on etherscan{' '}
+          <a
+            href="https://etherscan.io/address/0xa85feb7b33103718195b446e5c6715f0b4232889"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            here
+          </a>
+          . Its address is 0xa85feb7b33103718195b446e5c6715f0b4232889
         </span>
       ),
     },
