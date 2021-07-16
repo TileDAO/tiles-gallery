@@ -88,26 +88,24 @@ export default function Detail({
                   {owned ? (
                     <div>Reserved for {owner}</div>
                   ) : (
-                    <div style={{textAlign: 'center'}}>
+                    <div>
                       <div>mint reserve to:</div>
                       <input
                         style={{ width: 360, textAlign: 'center' }}
                         onChange={e => setReserveReceiver(e.target.value)}
                       />
-                      <span
-                        style={{ marginTop: 10 }}
-                        className="btn"
-                        onClick={() => _mint(true)}
-                      >
-                        MINT
-                      </span>
+                      <div style={{ textAlign: 'center', marginTop: 10 }}>
+                        <span className="btn" onClick={() => _mint(true)}>
+                          MINT
+                        </span>
+                      </div>
                     </div>
                   )}
                 </div>
               )}
             </div>
           ) : owned ? (
-            <span style={{ opacity: 0.4 }}>Not for sale</span>
+            <span style={{ opacity: 0.4 }}>Owned by {owner}</span>
           ) : (
             <div>
               <div style={{ marginBottom: 30 }}>Available</div>
