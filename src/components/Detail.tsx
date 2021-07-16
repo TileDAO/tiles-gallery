@@ -1,5 +1,6 @@
 import { useContractFunction, useEthers } from '@usedapp/core'
 import { BigNumber, utils } from 'ethers'
+import { useMemo } from 'react'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -16,7 +17,7 @@ export default function Detail({
   price?: BigNumber
 }) {
   const [reserveReceiver, setReserveReceiver] = useState<string>()
-  const [owned, setOwned] = useState<boolean>()
+  const [tokenId, setTokenId] = useState<BigNumber>()
   const { account } = useEthers()
 
   const contract = useTilesContract()
@@ -32,16 +33,31 @@ export default function Detail({
     'mintReserveTile',
   )
 
+  const owned = tokenId?.gt(0)
+
   useEffect(() => {
     if (address && !utils.isAddress(address)) window.location.hash = '/'
   }, [address])
 
   useLayoutEffect(() => {
     contract.functions.idOfAddress(address).then(
-      res => setOwned((res[0] as BigNumber).gt(0)),
+      res => setTokenId(res[0] as BigNumber),
       err => console.log('err', err),
     )
   }, [address])
+
+  const owner = useMemo(() => {
+    if (!tokenId?.gt(0)) return
+
+    let _owner: string
+
+    contract.functions.ownerOf(address).then(
+      res => {
+        _owner = res[0]
+      },
+      err => console.log('err', err),
+    )
+  }, [tokenId])
 
   const _mint = async (reserve?: boolean) => {
     if (!address) return
@@ -73,7 +89,7 @@ export default function Detail({
               {isArtist && (
                 <div style={{ marginTop: 20 }}>
                   {owned ? (
-                    <div>Reserved</div>
+                    <div>Reserved for {owner}</div>
                   ) : (
                     <div>
                       <div>mint reserve to:</div>
