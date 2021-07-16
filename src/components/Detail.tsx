@@ -18,6 +18,7 @@ export default function Detail({
 }) {
   const [reserveReceiver, setReserveReceiver] = useState<string>()
   const [tokenId, setTokenId] = useState<BigNumber>()
+  const [owner, setOwner] = useState<string>()
   const { account } = useEthers()
 
   const contract = useTilesContract()
@@ -46,19 +47,13 @@ export default function Detail({
     )
   }, [address])
 
-  const owner = useMemo(() => {
-    if (!tokenId?.gt(0)) return
-
-    let _owner: string | undefined = undefined
+  useLayoutEffect(() => {
+    if (!tokenId) return
 
     contract.functions.ownerOf(tokenId.toHexString()).then(
-      res => {
-        _owner = res[0]
-      },
+      res => setOwner(res[0]),
       err => console.log('err', err),
     )
-
-    return _owner
   }, [tokenId])
 
   const _mint = async (reserve?: boolean) => {
