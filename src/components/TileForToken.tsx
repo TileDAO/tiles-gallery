@@ -40,7 +40,7 @@ export default function TileForToken({
         src={data.image_url}
         onClick={onClickTile ? () => onClickTile(data.name) : () => null}
       />
-      <div style={{ fontSize: 11 }}>0x{data.name}</div>
+      <div style={{ fontSize: 11 }}>{data.name}</div>
     </div>
   )
 }
