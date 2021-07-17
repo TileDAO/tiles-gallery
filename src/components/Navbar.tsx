@@ -59,7 +59,7 @@ export default function Navbar({
             cursor: 'pointer',
           }}
         >
-          <img style={{ width: 24, height: 24 }} src="logo.svg" />
+          <img style={{ width: 24, height: 24 }} src="assets/logo.svg" />
           <span style={{ marginLeft: 10 }}>
             {saleIsActive ? (
               <span>
