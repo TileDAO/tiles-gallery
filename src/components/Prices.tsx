@@ -24,7 +24,9 @@ export default function Prices() {
       >
         <div style={{ maxWidth: 300, margin: '0 auto' }}>
           <h4 style={{ textAlign: 'center' }}>Tile pricing</h4>
-          <div>{row('1 - 200', 0.01)}</div>
+          <div style={{ textDecoration: 'line-through' }}>
+            {row('1 - 200', 0.01)}
+          </div>
           <div>{row('201 - 400', 0.02)}</div>
           <div>{row('401 - 800', 0.04)}</div>
           <div>{row('801 - 1,600', 0.08)}</div>
