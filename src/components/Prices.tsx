@@ -27,8 +27,12 @@ export default function Prices() {
           <div style={{ textDecoration: 'line-through' }}>
             {row('1 - 200', 0.01)}
           </div>
-          <div>{row('201 - 400', 0.02)}</div>
-          <div>{row('401 - 800', 0.04)}</div>
+          <div style={{ textDecoration: 'line-through' }}>
+            {row('201 - 400', 0.02)}
+          </div>
+          <div style={{ textDecoration: 'line-through' }}>
+            {row('401 - 800', 0.04)}
+          </div>
           <div>{row('801 - 1,600', 0.08)}</div>
           <div>{row('1,601 - 3,200', 0.16)}</div>
           <div>{row('3,201 - 6,400', 0.32)}</div>
