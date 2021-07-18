@@ -7,30 +7,25 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
+const infuraId = '643e4d7aeffa4bd1b56c33e0c99b7604'
+
 export const networkConfig: Config = {
   readOnlyChainId: parseInt(
     process.env.REACT_APP_READONLY_CHAIN_ID || '31337',
   ) as ChainId,
-  // readonlyChainId: ChainId.Kovan,
   // readOnlyChainId: ChainId.Localhost,
   // readOnlyChainId: 31337,
   readOnlyUrls: {
     31337: 'http://localhost:8545',
     [ChainId.Localhost]: 'http://localhost:8545',
-    [ChainId.Kovan]:
-      'https://kovan.infura.io/v3/0e8a1922865f444683f5d0507139d739',
-    [ChainId.Mainnet]:
-      'https://mainnet.infura.io/v3/0e8a1922865f444683f5d0507139d739',
+    [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/' + infuraId,
   },
   multicallAddresses: {
     31337: 'http://localhost:8545',
     [ChainId.Localhost]: 'http://localhost:8545',
-    [ChainId.Kovan]:
-      'https://kovan.infura.io/v3/0e8a1922865f444683f5d0507139d739',
-    [ChainId.Mainnet]:
-      'https://mainnet.infura.io/v3/0e8a1922865f444683f5d0507139d739',
+    [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/' + infuraId,
   },
-  supportedChains: [31337, ChainId.Localhost, ChainId.Kovan, ChainId.Mainnet],
+  supportedChains: [31337, ChainId.Localhost, ChainId.Mainnet],
 }
 
 ReactDOM.render(
