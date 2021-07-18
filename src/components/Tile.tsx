@@ -11,7 +11,10 @@ export default function Tile({
 }) {
   return (
     <img
-      style={{ pointerEvents: 'none', background: '#faf3e8', ...style }}
+      style={{
+        background: '#faf3e8',
+        ...style,
+      }}
       src={tilesUrl(address)}
     />
   )
