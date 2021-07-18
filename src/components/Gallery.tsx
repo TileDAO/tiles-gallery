@@ -49,7 +49,7 @@ export default function Gallery() {
         <br />
         <br />
         <br />
-        Each one is unique. And equally rare
+        Each one is unique & subjectively rare
         <br />
         <br />
         <br />
@@ -176,7 +176,7 @@ export default function Gallery() {
           padding: 10,
         }}
       >
-        <div style={{marginBottom: 10}}>
+        <div style={{ marginBottom: 10 }}>
           <a
             href="https://twitter.com/Tile_DAO"
             target="_blank"
@@ -188,7 +188,7 @@ export default function Gallery() {
             />
           </a>
         </div>
-        <div style={{marginBottom: 10}}>
+        <div style={{ marginBottom: 10 }}>
           <a
             href="https://discord.gg/svtKStWe"
             target="_blank"

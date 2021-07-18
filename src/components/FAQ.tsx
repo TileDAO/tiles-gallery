@@ -28,6 +28,10 @@ export default function FAQ() {
           address Tile is virtually zero.`,
     },
     {
+      q: 'Is every Tile different?',
+      a: `No SVGs will be exactly the same for any two Tiles. However, there will be some (extremely uncommon) sets that are hard to tell apart or visually indistinguishable, even though their code is unique. Whether these are more or less valuable will be up to you.`,
+    },
+    {
       q: 'Where can I find the Tiles NFT contract?',
       a: (
         <span>
