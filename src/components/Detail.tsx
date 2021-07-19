@@ -37,7 +37,7 @@ export default function Detail({
   const owned = tokenId?.gt(0)
 
   useEffect(() => {
-    if (address && !utils.isAddress(address)) window.location.hash = '/'
+    if (address && !utils.isAddress(address.toLowerCase())) window.location.hash = '/'
   }, [address])
 
   useLayoutEffect(() => {

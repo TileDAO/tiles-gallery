@@ -52,7 +52,7 @@ function App() {
               <Artist saleIsActive={saleIsActive} />
             </Route>
             <Route exact path="/prices">
-              <Prices />
+              <Prices salePrice={price} />
             </Route>
             <Route exact path="/manifesto">
               <Manifesto />

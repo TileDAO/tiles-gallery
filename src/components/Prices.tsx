@@ -1,16 +1,30 @@
-export default function Prices() {
-  const row = (range: string, price: number) => (
-    <div
-      style={{
-        width: 300,
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginBottom: 10,
-      }}
-    >
-      <span>{range}</span>
-      <span>{price} ETH</span>
-    </div>
+import { BigNumber } from 'ethers'
+import { parseEther } from 'ethers/lib/utils'
+import { useCallback } from 'react'
+
+export default function Prices({
+  salePrice,
+}: {
+  salePrice: BigNumber | undefined
+}) {
+  const row = useCallback(
+    (range: string, price: number) => (
+      <div
+        style={{
+          width: 300,
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: 10,
+          textDecoration: salePrice?.gt(parseEther(price.toString()))
+            ? 'line-through'
+            : undefined,
+        }}
+      >
+        <span>{range}</span>
+        <span>{price} ETH</span>
+      </div>
+    ),
+    [salePrice],
   )
 
   return (
@@ -24,15 +38,9 @@ export default function Prices() {
       >
         <div style={{ maxWidth: 300, margin: '0 auto' }}>
           <h4 style={{ textAlign: 'center' }}>Tile pricing</h4>
-          <div style={{ textDecoration: 'line-through' }}>
-            {row('1 - 200', 0.01)}
-          </div>
-          <div style={{ textDecoration: 'line-through' }}>
-            {row('201 - 400', 0.02)}
-          </div>
-          <div style={{ textDecoration: 'line-through' }}>
-            {row('401 - 800', 0.04)}
-          </div>
+          <div>{row('1 - 200', 0.01)}</div>
+          <div>{row('201 - 400', 0.02)}</div>
+          <div>{row('401 - 800', 0.04)}</div>
           <div>{row('801 - 1,600', 0.08)}</div>
           <div>{row('1,601 - 3,200', 0.16)}</div>
           <div>{row('3,201 - 6,400', 0.32)}</div>

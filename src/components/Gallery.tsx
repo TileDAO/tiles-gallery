@@ -1,5 +1,5 @@
 import Wallet from 'ethereumjs-wallet'
-import { constants } from 'ethers'
+import { constants, utils } from 'ethers'
 import { useLayoutEffect, useState } from 'react'
 
 import Tile from './Tile'
@@ -104,9 +104,13 @@ export default function Gallery() {
       </div>
       <div style={{ width: '100%', textAlign: 'center', paddingBottom: 300 }}>
         {address ? (
-          <a href={'/#/' + address} style={{ display: 'block' }}>
-            <Tile address={address} />
-          </a>
+          utils.isAddress(address.toLowerCase()) ? (
+            <a href={'/#/' + address} style={{ display: 'block' }}>
+              <Tile address={address.toLowerCase()} />
+            </a>
+          ) : (
+            'Not a valid address'
+          )
         ) : (
           <div>
             <div

@@ -70,8 +70,10 @@ export default function Navbar({
                   </span>
                 )}
               </span>
+            ) : saleIsActive === false ? (
+              'Sale is paused'
             ) : (
-              'Sale starts July 16 3pm ET'
+              ''
             )}
           </span>
         </a>
