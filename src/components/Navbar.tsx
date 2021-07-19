@@ -104,11 +104,15 @@ export default function Navbar({
               </a>{' '}
               |{' '}
               <a className="bland" href="/#/treasury">
-                {Math.round(
-                  parseFloat(
-                    formatEther(stakedTILEBalance?.add(TILEBalance ?? 0) || 0),
-                  ),
-                ) || '--'}{' '}
+                {stakedTILEBalance && TILEBalance
+                  ? Math.round(
+                      parseFloat(
+                        formatEther(
+                          stakedTILEBalance?.add(TILEBalance ?? 0) || 0,
+                        ),
+                      ),
+                    )
+                  : '--'}{' '}
                 TILE
               </a>
             </span>{' '}
