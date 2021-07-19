@@ -11,6 +11,7 @@ import Gallery from './components/Gallery'
 import Manifesto from './components/Manifesto'
 import Navbar from './components/Navbar'
 import Prices from './components/Prices'
+import Treasury from './components/Treasury'
 import Wallet from './components/Wallet'
 import { useTilesContract } from './hooks/TilesContract'
 
@@ -59,6 +60,9 @@ function App() {
             </Route>
             <Route exact path="/dao">
               <Dao />
+            </Route>
+            <Route exact path="/treasury">
+              <Treasury />
             </Route>
             <Route exact path="/faq">
               <FAQ />

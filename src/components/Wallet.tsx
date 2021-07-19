@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import React, { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useTilesContract } from '../hooks/TilesContract'

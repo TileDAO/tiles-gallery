@@ -4,6 +4,10 @@ import { utils } from 'ethers'
 import { useLayoutEffect, useState } from 'react'
 
 import { useTilesContract } from '../hooks/TilesContract'
+import { tileAddress } from '../contracts/tile.address'
+import { useTicketBoothContract } from '../hooks/TicketBoothContract'
+import { useErc20Contract } from '../hooks/Erc20Contract'
+import { formatEther, parseEther } from 'ethers/lib/utils'
 
 export default function Navbar({
   saleIsActive,
@@ -13,24 +17,39 @@ export default function Navbar({
   price?: BigNumber
 }) {
   const [ownedTokens, setOwnedTokens] = useState<BigNumber[]>()
+  const [TILEBalance, setTILEBalance] = useState<BigNumber>()
+  const [stakedTILEBalance, setStakedTILEBalance] = useState<BigNumber>()
   const [supply, setSupply] = useState<BigNumber>()
-  const { activateBrowserWallet, account, deactivate } = useEthers()
+  const { activateBrowserWallet, account, deactivate, library } = useEthers()
 
-  const contract = useTilesContract()
+  const tileContract = useErc20Contract(tileAddress)
+  const tilesContract = useTilesContract()
+  const ticketBoothContract = useTicketBoothContract()
 
+  // Get token IDs of owned Tiles
   useLayoutEffect(() => {
-    contract.functions.totalSupply &&
-      contract.functions.totalSupply().then(
+    tilesContract.functions.totalSupply &&
+      tilesContract.functions.totalSupply().then(
         res => setSupply(res[0]),
         err => console.log('err', err),
       )
-    if (account && contract.functions.tokensOfOwner) {
-      contract.functions
+    if (account && tilesContract.functions.tokensOfOwner) {
+      tilesContract.functions
         .tokensOfOwner(account)
         .then(res => setOwnedTokens(res[0]))
     } else if (ownedTokens) {
       setOwnedTokens([])
     }
+
+    // Get staked TILE balance
+    ticketBoothContract.functions
+      .stakedBalanceOf(account, '0x02')
+      .then(res => setStakedTILEBalance(res[0]))
+
+    // Get ERC20 TILE balance
+    tileContract?.functions
+      .balanceOf(account)
+      .then(res => setTILEBalance(res[0]))
   }, [account])
 
   return (
@@ -79,10 +98,21 @@ export default function Navbar({
         </a>
         {account ? (
           <div>
-            <a className="bland" href={'/#/wallet/' + account}>
-              ({ownedTokens?.length ?? 0} owned)
-            </a>{' '}
-            {account}{' '}
+            <span>
+              <a className="bland" href={'/#/wallet/' + account}>
+                {ownedTokens?.length ?? 0} Tiles
+              </a>{' '}
+              |{' '}
+              <a className="bland" href="/#/treasury">
+                {Math.round(
+                  parseFloat(
+                    formatEther(stakedTILEBalance?.add(TILEBalance ?? 0) || 0),
+                  ),
+                ) || '--'}{' '}
+                TILE
+              </a>
+            </span>{' '}
+            | {account}{' '}
             <span className="btn" onClick={deactivate}>
               X
             </span>

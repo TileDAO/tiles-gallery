@@ -30,9 +30,15 @@ input {
 
 .btn {
   cursor: pointer;
-  border-bottom: 3px solid #F8D938;
+  border-bottom: 3px solid #f8d938;
 }
 
 .btn:hover {
   border-color: #222;
+}
+
+section {
+  padding-bottom: 60px;
+  margin-bottom: 60px;
+  border-bottom: 1px solid #22222222;
 }

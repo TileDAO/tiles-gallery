@@ -1,0 +1,1 @@
+export const ticketBoothAddress = '0xee2eBCcB7CDb34a8A822b589F9E8427C24351bfc'
