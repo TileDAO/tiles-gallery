@@ -205,7 +205,7 @@ export default function Gallery() {
           </a>
         </div>
         <div>
-          <a href="https://github.com/tiles" target="_blank" rel="noreferrer">
+          <a href="https://github.com/TileDAO/tiles" target="_blank" rel="noreferrer">
             <img style={{ color: '#222', width: 24 }} src="assets/github.svg" />
           </a>
         </div>
