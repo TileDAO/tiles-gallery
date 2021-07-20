@@ -28,25 +28,27 @@ export default function Navbar({
 
   // Get token IDs of owned Tiles
   useLayoutEffect(() => {
-    if (!account) return
-
     // Get total supply of Tiles
     tilesContract.functions.totalSupply().then(res => setSupply(res[0]))
 
-    // Get tokenIDs of Tiles owned by `account`
-    tilesContract.functions
-      .tokensOfOwner(account)
-      .then(res => setOwnedTokens(res[0]))
+    if (account) {
+      // Get tokenIDs of Tiles owned by `account`
+      tilesContract.functions
+        .tokensOfOwner(account)
+        .then(res => setOwnedTokens(res[0]))
 
-    // Get staked TILE balance
-    ticketBoothContract.functions
-      .stakedBalanceOf(account, '0x02')
-      .then(res => setStakedTILEBalance(res[0]))
+      // Get staked TILE balance
+      ticketBoothContract.functions
+        .stakedBalanceOf(account, '0x02')
+        .then(res => setStakedTILEBalance(res[0]))
 
-    // Get ERC20 TILE balance
-    tileContract?.functions
-      .balanceOf(account)
-      .then(res => setTILEBalance(res[0]))
+      // Get ERC20 TILE balance
+      tileContract?.functions
+        .balanceOf(account)
+        .then(res => setTILEBalance(res[0]))
+    } else if (ownedTokens) {
+      setOwnedTokens([])
+    }
   }, [account])
 
   return (
