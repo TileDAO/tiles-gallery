@@ -1,6 +1,5 @@
 import { useContractFunction, useEthers } from '@usedapp/core'
 import { BigNumber, utils } from 'ethers'
-import { useMemo } from 'react'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -37,7 +36,8 @@ export default function Detail({
   const owned = tokenId?.gt(0)
 
   useEffect(() => {
-    if (address && !utils.isAddress(address.toLowerCase())) window.location.hash = '/'
+    if (address && !utils.isAddress(address.toLowerCase()))
+      window.location.hash = '/'
   }, [address])
 
   useLayoutEffect(() => {
@@ -48,7 +48,7 @@ export default function Detail({
   }, [address])
 
   useLayoutEffect(() => {
-    if (!tokenId) return
+    if (!tokenId || tokenId.eq(0)) return
 
     contract.functions.ownerOf(tokenId.toHexString()).then(
       res => setOwner(res[0]),
@@ -79,7 +79,10 @@ export default function Detail({
         <Tile address={address} style={{ width: 400, height: 400 }} />
 
         <div style={{ textAlign: 'center', marginTop: 10 }}>
-          <div style={{ marginBottom: 20 }}>{address}</div>
+          <div style={{ marginBottom: 20 }}>
+            {address.startsWith('0x') ? '' : '0x'}
+            {address}
+          </div>
           {saleIsActive === false ? (
             <div>
               Sale starts July 16 3pm ET
@@ -133,6 +136,16 @@ export default function Detail({
             </div>
           )}
         </div>
+      </div>
+
+      <div style={{ position: 'fixed', bottom: 0, right: 0, padding: 10 }}>
+        <a
+          href={'https://api2.tiles.art/png/' + address}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Download PNG
+        </a>
       </div>
     </div>
   )

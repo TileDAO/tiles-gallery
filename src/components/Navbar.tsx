@@ -1,13 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { useEthers } from '@usedapp/core'
 import { utils } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import { useLayoutEffect, useState } from 'react'
 
-import { useTilesContract } from '../hooks/TilesContract'
 import { tileAddress } from '../contracts/tile.address'
-import { useTicketBoothContract } from '../hooks/TicketBoothContract'
 import { useErc20Contract } from '../hooks/Erc20Contract'
-import { formatEther, parseEther } from 'ethers/lib/utils'
+import { useTicketBoothContract } from '../hooks/TicketBoothContract'
+import { useTilesContract } from '../hooks/TilesContract'
 
 export default function Navbar({
   saleIsActive,
@@ -20,7 +20,7 @@ export default function Navbar({
   const [TILEBalance, setTILEBalance] = useState<BigNumber>()
   const [stakedTILEBalance, setStakedTILEBalance] = useState<BigNumber>()
   const [supply, setSupply] = useState<BigNumber>()
-  const { activateBrowserWallet, account, deactivate, library } = useEthers()
+  const { activateBrowserWallet, account, deactivate } = useEthers()
 
   const tileContract = useErc20Contract(tileAddress)
   const tilesContract = useTilesContract()
@@ -28,18 +28,15 @@ export default function Navbar({
 
   // Get token IDs of owned Tiles
   useLayoutEffect(() => {
-    tilesContract.functions.totalSupply &&
-      tilesContract.functions.totalSupply().then(
-        res => setSupply(res[0]),
-        err => console.log('err', err),
-      )
-    if (account && tilesContract.functions.tokensOfOwner) {
-      tilesContract.functions
-        .tokensOfOwner(account)
-        .then(res => setOwnedTokens(res[0]))
-    } else if (ownedTokens) {
-      setOwnedTokens([])
-    }
+    if (!account) return
+
+    // Get total supply of Tiles
+    tilesContract.functions.totalSupply().then(res => setSupply(res[0]))
+
+    // Get tokenIDs of Tiles owned by `account`
+    tilesContract.functions
+      .tokensOfOwner(account)
+      .then(res => setOwnedTokens(res[0]))
 
     // Get staked TILE balance
     ticketBoothContract.functions
