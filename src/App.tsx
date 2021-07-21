@@ -29,16 +29,9 @@ function App() {
   }, [account])
 
   useLayoutEffect(() => {
-    contract.functions.saleIsActive().then(
-      res => setsaleIsActive(res[0]),
-      err => setsaleIsActive(false),
-    )
-  }, [])
-
-  useLayoutEffect(() => {
-    if (!saleIsActive) return
+    contract.functions.saleIsActive().then(res => setsaleIsActive(res[0]))
     contract.functions.calculatePrice().then(res => setPrice(res[0]))
-  }, [saleIsActive])
+  }, [])
 
   return (
     <div style={{ width: '100vw', height: '100vh', cursor: 'crosshair' }}>

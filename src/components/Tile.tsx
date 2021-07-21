@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 
-import { tilesUrl } from '../utils/api'
+import { svgUrl } from '../utils/api'
 
 export default function Tile({
   address,
@@ -15,7 +15,7 @@ export default function Tile({
         background: '#faf3e8',
         ...style,
       }}
-      src={tilesUrl(address)}
+      src={svgUrl(address)}
     />
   )
 }

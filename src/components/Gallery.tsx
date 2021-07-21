@@ -106,7 +106,10 @@ export default function Gallery() {
         {address ? (
           utils.isAddress(address.toLowerCase()) ? (
             <a href={'/#/' + address} style={{ display: 'block' }}>
-              <Tile address={address.toLowerCase()} />
+              <Tile
+                style={{ width: 360, height: 360 }}
+                address={address.toLowerCase()}
+              />
             </a>
           ) : (
             'Not a valid address'
@@ -205,7 +208,11 @@ export default function Gallery() {
           </a>
         </div>
         <div>
-          <a href="https://github.com/TileDAO/tiles" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/TileDAO/tiles"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img style={{ color: '#222', width: 24 }} src="assets/github.svg" />
           </a>
         </div>
