@@ -140,7 +140,7 @@ export default function Detail({
 
       <div style={{ position: 'fixed', bottom: 0, right: 0, padding: 10 }}>
         <a
-          href={'https://api2.tiles.art/png/' + address}
+          href={'https://api.tiles.art/png/' + address + '?scale=5'}
           target="_blank"
           rel="noopener noreferrer"
         >
