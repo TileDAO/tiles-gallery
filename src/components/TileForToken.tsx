@@ -12,7 +12,7 @@ export default function TileForToken({
   onClickTile?: (address: string) => void
 }) {
   const [URI, setURI] = useState<string>()
-  const [data, setData] = useState<{ name: string; image_url: string }>()
+  const [data, setData] = useState<{ name: string; image: string }>()
 
   const contract = useTilesContract()
 
@@ -37,7 +37,7 @@ export default function TileForToken({
           height: 240,
           cursor: onClickTile ? 'cursor' : 'unset',
         }}
-        src={data.image_url}
+        src={data.image}
         onClick={onClickTile ? () => onClickTile(data.name) : () => null}
       />
       <div style={{ fontSize: 11 }}>{data.name}</div>
