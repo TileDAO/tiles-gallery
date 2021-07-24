@@ -46,7 +46,7 @@ export default function Dao() {
         <p>
           The{' '}
           <a
-            href="https://discord.gg/svtKStWe"
+            href="https://discord.gg/SqZA8dUFtY"
             target="_blank"
             rel="noreferrer"
           >

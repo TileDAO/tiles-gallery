@@ -197,7 +197,7 @@ export default function Gallery() {
         </div>
         <div style={{ marginBottom: 10 }}>
           <a
-            href="https://discord.gg/svtKStWe"
+            href="https://discord.gg/SqZA8dUFtY"
             target="_blank"
             rel="noreferrer"
           >
