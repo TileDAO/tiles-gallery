@@ -1,2 +1,2 @@
 export const svgUrl = (address: string) =>
-  'https://shapes-foundry.herokuapp.com/svg/' + address.toLowerCase()
+  process.env.REACT_APP_API_URL + '/svg/' + address.toLowerCase()

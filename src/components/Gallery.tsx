@@ -141,7 +141,7 @@ export default function Gallery() {
                               ? size === 'big'
                                 ? {}
                                 : { width: 240, height: 240 }
-                              : { width: 300, height: 300 }
+                              : {}
                           }
                         />
                       </a>
