@@ -1,10 +1,13 @@
 import Wallet from 'ethereumjs-wallet'
+import { constants, utils } from 'ethers'
 import { useLayoutEffect, useState } from 'react'
+
 import Tile from './Tile'
 
 export default function Gallery() {
   const [size, setSize] = useState<'small' | 'big'>('big')
   const [gallery, setGallery] = useState<string[]>()
+  const [address, setAddress] = useState<string>('')
 
   const load = (count: number) => {
     const newGallery = [...(gallery ?? [])]
@@ -17,10 +20,10 @@ export default function Gallery() {
   }
 
   useLayoutEffect(() => {
-    if (gallery?.length) return
+    if (gallery?.length || address) return
 
     load(90)
-  }, [gallery])
+  }, [address, gallery])
 
   const randomAddress = () => Wallet.generate().getAddress().toString('hex')
 
@@ -28,66 +31,93 @@ export default function Gallery() {
     <div>
       <div
         style={{
-          width: '100%',
-          textAlign: 'center',
-          paddingBottom: 300,
-          paddingTop: 100,
+          marginTop: 60,
+          marginBottom: 60,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          width: 360,
+          maxWidth: '90vw',
         }}
       >
-        <div
+        <input
           style={{
-            display: 'grid',
-            gridGap: size === 'big' ? 100 : 60,
-            margin: '0 auto',
-            ...(window.innerWidth > 960
-              ? {
-                  gridTemplateColumns:
-                    size === 'big' ? '1fr' : 'repeat(3, 1fr)',
-                  maxWidth: size === 'big' ? 900 : 960,
-                  paddingLeft: 60,
-                  paddingRight: 60,
-                }
-              : { gridTemplateColumns: '1fr', gridGap: 60 }),
+            textAlign: 'center',
+            display: 'block',
+            border: '1px solid #ddd',
+            borderRadius: 4,
+            padding: 5,
+            width: '100%',
+            boxSizing: 'border-box',
           }}
-        >
-          {gallery?.map(
-            g =>
-              g && (
-                <div key={g}>
-                  <Tile
-                    address={g}
-                    style={
-                      window.innerWidth > 600
-                        ? size === 'big'
-                          ? {}
-                          : { width: 240, height: 240 }
-                        : {}
+          placeholder={constants.AddressZero}
+          onChange={e => setAddress(e.target.value.trim())}
+        />
+      </div>
+      <div style={{ width: '100%', textAlign: 'center', paddingBottom: 300 }}>
+        {address ? (
+          utils.isAddress(address.toLowerCase()) ? (
+            <Tile address={address.toLowerCase()} />
+          ) : (
+            'Not a valid address'
+          )
+        ) : (
+          <div>
+            <div
+              style={{
+                display: 'grid',
+                gridGap: size === 'big' ? 100 : 60,
+                margin: '0 auto',
+                ...(window.innerWidth > 960
+                  ? {
+                      gridTemplateColumns:
+                        size === 'big' ? '1fr' : 'repeat(3, 1fr)',
+                      maxWidth: size === 'big' ? 900 : 960,
+                      paddingLeft: 60,
+                      paddingRight: 60,
                     }
-                  />
-                  <div
-                    style={{
-                      fontSize: 11,
-                      opacity: 0.25,
-                      userSelect: 'all',
-                    }}
-                  >
-                    {g}
-                  </div>
-                </div>
-              ),
-          )}
-        </div>
-        <div
-          className="btn"
-          style={{
-            display: 'inline-block',
-            marginTop: 100,
-            padding: 20,
-          }}
-          onClick={() => load(30)}
-        >
-          more
-        </div>
+                  : { gridTemplateColumns: '1fr', gridGap: 60 }),
+              }}
+            >
+              {gallery?.map(
+                g =>
+                  g && (
+                    <div key={g}>
+                      <Tile
+                        address={g}
+                        style={
+                          window.innerWidth > 600
+                            ? size === 'big'
+                              ? {}
+                              : { width: 240, height: 240 }
+                            : {}
+                        }
+                      />
+                      <div
+                        style={{
+                          fontSize: 11,
+                          opacity: 0.25,
+                          userSelect: 'all',
+                        }}
+                      >
+                        {g}
+                      </div>
+                    </div>
+                  ),
+              )}
+            </div>
+            <div
+              className="btn"
+              style={{
+                display: 'inline-block',
+                marginTop: 100,
+                padding: 20,
+              }}
+              onClick={() => load(30)}
+            >
+              more
+            </div>
+          </div>
+        )}
       </div>
       <div
         style={{
