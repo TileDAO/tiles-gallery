@@ -36,7 +36,7 @@ function App() {
   return (
     <div style={{ width: '100vw', height: '100vh', cursor: 'crosshair' }}>
       <div style={{ width: '100%', maxWidth: 1400, margin: '0 auto' }}>
-        <Navbar price={price} saleIsActive={saleIsActive} />
+        <Navbar />
         <HashRouter>
           <Switch>
             <Route exact path="/">

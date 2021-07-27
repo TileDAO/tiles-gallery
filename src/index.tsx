@@ -30,9 +30,9 @@ export const networkConfig: Config = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <DAppProvider config={networkConfig}>
-      <App />
-    </DAppProvider>
+    {/* <DAppProvider config={networkConfig}> */}
+    <App />
+    {/* </DAppProvider> */}
   </React.StrictMode>,
   document.getElementById('root'),
 )
