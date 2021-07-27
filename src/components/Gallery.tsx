@@ -106,10 +106,7 @@ export default function Gallery() {
         {address ? (
           utils.isAddress(address.toLowerCase()) ? (
             <a href={'/#/' + address} style={{ display: 'block' }}>
-              <Tile
-                style={{ width: 360, height: 360 }}
-                address={address.toLowerCase()}
-              />
+              <Tile address={address.toLowerCase()} />
             </a>
           ) : (
             'Not a valid address'
@@ -142,7 +139,7 @@ export default function Gallery() {
                           style={
                             window.innerWidth > 600
                               ? size === 'big'
-                                ? { width: 360, height: 360 }
+                                ? {}
                                 : { width: 240, height: 240 }
                               : { width: 300, height: 300 }
                           }

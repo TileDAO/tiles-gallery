@@ -41,19 +41,17 @@ export default function Detail({
   }, [address])
 
   useLayoutEffect(() => {
-    contract.functions.idOfAddress(address).then(
-      res => setTokenId(res[0] as BigNumber),
-      err => console.log('err', err),
-    )
+    contract.functions
+      .idOfAddress(address)
+      .then(res => setTokenId(res[0] as BigNumber))
   }, [address])
 
   useLayoutEffect(() => {
     if (!tokenId || tokenId.eq(0)) return
 
-    contract.functions.ownerOf(tokenId.toHexString()).then(
-      res => setOwner(res[0]),
-      err => console.log('err', err),
-    )
+    contract.functions
+      .ownerOf(tokenId.toHexString())
+      .then(res => setOwner(res[0]))
   }, [tokenId])
 
   const _mint = async (reserve?: boolean) => {
@@ -76,7 +74,7 @@ export default function Detail({
       }}
     >
       <div style={{ maxWidth: 800, paddingTop: 40, paddingBottom: 40 }}>
-        <Tile address={address} style={{ width: 400, height: 400 }} />
+        <Tile address={address} />
 
         <div style={{ textAlign: 'center', marginTop: 10 }}>
           <div style={{ marginBottom: 20 }}>
