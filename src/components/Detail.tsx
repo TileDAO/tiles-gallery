@@ -108,7 +108,11 @@ export default function Detail({
               )}
             </div>
           ) : owned ? (
-            <span style={{ opacity: 0.4 }}>Owned by {owner}</span>
+            <div style={{ opacity: 0.4 }}>
+              Tile #{tokenId?.toString()} owned by:
+              <br />
+              {owner}
+            </div>
           ) : (
             <div>
               <div style={{ marginBottom: 30 }}>Available</div>
@@ -126,11 +130,7 @@ export default function Detail({
                     'Connect wallet to mint'
                   )}
 
-                  <div>
-                    {mintState.errorMessage && (
-                      <div>{mintState.errorMessage}</div>
-                    )}
-                  </div>
+                  <div>{mintState.errorMessage || ''}</div>
                 </div>
               )}
             </div>
