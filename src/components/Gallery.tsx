@@ -99,17 +99,14 @@ export default function Gallery() {
             boxSizing: 'border-box',
           }}
           placeholder={constants.AddressZero}
-          onChange={e => setAddress(e.target.value.trim())}
+          onChange={e => setAddress(e.target.value.trim().toLowerCase())}
         />
       </div>
       <div style={{ width: '100%', textAlign: 'center', paddingBottom: 300 }}>
         {address ? (
-          utils.isAddress(address.toLowerCase()) ? (
+          utils.isAddress(address) ? (
             <a href={'/#/' + address} style={{ display: 'block' }}>
-              <Tile
-                style={{ width: 360, height: 360 }}
-                address={address.toLowerCase()}
-              />
+              <Tile style={{ width: 360, height: 360 }} address={address} />
             </a>
           ) : (
             'Not a valid address'
