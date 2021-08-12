@@ -13,19 +13,13 @@ export const networkConfig: Config = {
   readOnlyChainId: parseInt(
     process.env.REACT_APP_READONLY_CHAIN_ID || '31337',
   ) as ChainId,
-  // readOnlyChainId: ChainId.Localhost,
-  // readOnlyChainId: 31337,
   readOnlyUrls: {
-    31337: 'http://localhost:8545',
-    [ChainId.Localhost]: 'http://localhost:8545',
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/' + infuraId,
   },
   multicallAddresses: {
-    31337: 'http://localhost:8545',
-    [ChainId.Localhost]: 'http://localhost:8545',
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/' + infuraId,
   },
-  supportedChains: [31337, ChainId.Localhost, ChainId.Mainnet],
+  supportedChains: [ChainId.Mainnet],
 }
 
 ReactDOM.render(
