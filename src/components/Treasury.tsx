@@ -1,6 +1,24 @@
-import React from 'react'
+import { BigNumber, utils } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
+import { useLayoutEffect, useState } from 'react'
+
+import { tilesAddress } from '../contracts/tiles.address'
+import { useTicketBoothContract } from '../hooks/TicketBoothContract'
 
 export default function Treasury() {
+  const [JBXBalance, setJBXBalance] = useState<BigNumber>()
+  const [TILEBalance, setTILEBalance] = useState<BigNumber>()
+  const ticketBoothContract = useTicketBoothContract()
+
+  useLayoutEffect(() => {
+    ticketBoothContract.functions
+      .balanceOf(tilesAddress, '0x01')
+      .then(res => setJBXBalance(res[0]))
+    ticketBoothContract.functions
+      .balanceOf(tilesAddress, '0x02')
+      .then(res => setTILEBalance(res[0]))
+  }, [])
+
   return (
     <div>
       <div
@@ -12,17 +30,9 @@ export default function Treasury() {
           margin: '10vh auto',
         }}
       >
+        <h1>TileDAO treasury</h1>
         <section>
-          <h1>TileDAO treasury</h1>
-
-          <p>
-            This is a guide to how the TileDAO treasury works. Every part of the
-            configuration will ultimately be managed by the DAO, and can be
-            voted on by TILE holders.
-          </p>
-          <p>This isn't quite complete and will continue to be updated!</p>
-          <p>
-            Link to treasury:{' '}
+          <div>
             <a
               href="https://juicebox.money/#/p/tiles"
               target="_blank"
@@ -30,10 +40,54 @@ export default function Treasury() {
             >
               https://juicebox.money/#/p/tiles
             </a>
+          </div>
+          <h2>Token balances</h2>
+          <div>
+            TILE:{' '}
+            <span style={{ fontWeight: 600 }}>
+              {Math.round(parseFloat(formatEther(TILEBalance ?? 0)))}
+            </span>
+          </div>
+          <div>
+            JBX:{' '}
+            <span style={{ fontWeight: 600 }}>
+              {Math.round(parseFloat(formatEther(JBXBalance ?? 0)))}
+            </span>
+          </div>
+          <div>
+            ETH: see the{' '}
+            <a
+              href="https://juicebox.money/#/p/tiles"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Juicebox treasury
+            </a>
+          </div>
+          <p>
+            Juicebox currently invests 2ETH/week into{' '}
+            <a
+              href="https://juicebox.money/#/p/juicebox"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              JuiceboxDAO
+            </a>
+            , earning JBX tokens in return.
           </p>
         </section>
+
+        <h2>Treasury guide</h2>
+        <div style={{ marginBottom: 100 }}>
+          <p>
+            This is a guide to how the TileDAO treasury works. Every part of the
+            configuration will ultimately be managed by the DAO, and can be
+            voted on by TILE holders.
+          </p>
+          <p>This isn't quite complete and will continue to be updated!</p>
+        </div>
         <section>
-          <h2>Funding target</h2>
+          <h3>Funding target</h3>
           <img
             style={{ maxWidth: '100%' }}
             src="assets/screenshots/funding_target.png"
@@ -71,7 +125,7 @@ export default function Treasury() {
           </p>
         </section>
         <section>
-          <h2>TILE</h2>
+          <h3>TILE</h3>
           <img
             style={{ maxWidth: '100%' }}
             src="assets/screenshots/tokens.png"
@@ -111,7 +165,7 @@ export default function Treasury() {
           </p>
         </section>
         <section>
-          <h2>Bonding curve</h2>
+          <h3>Bonding curve</h3>
           <p>
             Note: This refers to the treasury bonding curve—not the Tiles
             pricing tiers.
@@ -132,7 +186,7 @@ export default function Treasury() {
           <p>Currently the bonding curve is set in the middle at 50%.</p>
         </section>
         <section>
-          <h2>Discount rate</h2>
+          <h3>Discount rate</h3>
           <p>
             When paying the TileDAO treasury—either directly, or by buying a
             Tile in the primary sale—TILE ERC-20 tokens are rewarded
@@ -147,7 +201,7 @@ export default function Treasury() {
           </p>
         </section>
         <section>
-          <h2>What's a funding cycle?</h2>
+          <h3>What's a funding cycle?</h3>
           <p>
             The treasury operates in 7 day funding cycles. The treasury
             configuration can only change for the upcoming funding cycle,

@@ -4,8 +4,6 @@ import { utils } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { useLayoutEffect, useState } from 'react'
 
-import { tileAddress } from '../contracts/tile.address'
-import { useErc20Contract } from '../hooks/Erc20Contract'
 import { useTicketBoothContract } from '../hooks/TicketBoothContract'
 import { useTilesContract } from '../hooks/TilesContract'
 
@@ -18,11 +16,9 @@ export default function Navbar({
 }) {
   const [ownedTokens, setOwnedTokens] = useState<BigNumber[]>()
   const [TILEBalance, setTILEBalance] = useState<BigNumber>()
-  const [stakedTILEBalance, setStakedTILEBalance] = useState<BigNumber>()
   const [supply, setSupply] = useState<BigNumber>()
   const { activateBrowserWallet, account, deactivate } = useEthers()
 
-  const tileContract = useErc20Contract(tileAddress)
   const tilesContract = useTilesContract()
   const ticketBoothContract = useTicketBoothContract()
 
@@ -39,12 +35,7 @@ export default function Navbar({
 
       // Get staked TILE balance
       ticketBoothContract.functions
-        .stakedBalanceOf(account, '0x02')
-        .then(res => setStakedTILEBalance(res[0]))
-
-      // Get ERC20 TILE balance
-      tileContract?.functions
-        .balanceOf(account)
+        .balanceOf(account, '0x02')
         .then(res => setTILEBalance(res[0]))
     } else if (ownedTokens) {
       setOwnedTokens([])
@@ -103,14 +94,8 @@ export default function Navbar({
               </a>{' '}
               |{' '}
               <a className="bland" href="/#/treasury">
-                {stakedTILEBalance && TILEBalance
-                  ? Math.round(
-                      parseFloat(
-                        formatEther(
-                          stakedTILEBalance?.add(TILEBalance ?? 0) || 0,
-                        ),
-                      ),
-                    )
+                {TILEBalance
+                  ? Math.round(parseFloat(formatEther(TILEBalance ?? 0)))
                   : '--'}{' '}
                 TILE
               </a>
