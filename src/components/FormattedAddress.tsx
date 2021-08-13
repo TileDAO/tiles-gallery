@@ -65,15 +65,20 @@ export default function FormattedAddress({
               {address}
             </div>
           )}
-          <a href={`/#/wallet/${address}`}>Tiles</a>
-          <br />
-          <a
-            href={`https://etherscan.io/address/${address}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Etherscan
-          </a>
+          <div>
+            <a style={{ marginRight: 10 }} href={`/#/wallet/${address}`}>
+              Tiles
+            </a>
+            |
+            <a
+              style={{ marginLeft: 10 }}
+              href={`https://etherscan.io/address/${address}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Etherscan
+            </a>
+          </div>
         </div>
       </div>
     </span>
