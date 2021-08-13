@@ -1,5 +1,4 @@
 import { BigNumber } from 'ethers'
-import { useMemo } from 'react'
 import { useLayoutEffect, useState } from 'react'
 
 import { useTilesContract } from '../hooks/TilesContract'
@@ -37,7 +36,19 @@ export default function Recent() {
         paddingBottom: 100,
       }}
     >
-      <h4 style={{ marginBottom: 80 }}>Minted Tiles</h4>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          marginBottom: 80,
+        }}
+      >
+        <h4>Minted Tiles</h4>
+        <a style={{ display: 'inline-block' }} className="bland btn" href="/">
+          Mint
+        </a>
+      </div>
       <Grid
         cols={3}
         items={tokenIds.map(tokenId => (
