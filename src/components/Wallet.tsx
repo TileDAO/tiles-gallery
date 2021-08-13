@@ -3,7 +3,9 @@ import { useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useTilesContract } from '../hooks/TilesContract'
+import Grid from './Grid'
 import TileForToken from './TileForToken'
+import FormattedAddress from './FormattedAddress'
 
 export default function Wallet() {
   const [ownedTokens, setOwnedTokens] = useState<BigNumber[]>()
@@ -26,41 +28,46 @@ export default function Wallet() {
     <div
       style={{
         paddingTop: '20vh',
-        maxWidth: 960,
+        width: 960,
+        maxWidth: '90vw',
         margin: '0 auto',
         paddingBottom: 100,
       }}
     >
-      <div style={{ marginBottom: 80 }}>Tiles owned by {address}</div>
+      <h4 style={{ marginBottom: 80 }}>
+        Tiles owned by <FormattedAddress address={address} />
+      </h4>
       {ownedTokens &&
         (ownedTokens.length ? (
-          <div
-            style={{
-              display: 'grid',
-              gridGap: 60,
-              margin: '0 auto',
-              ...(window.innerWidth > 960
-                ? {
-                    gridTemplateColumns: `repeat(${Math.min(
-                      ownedTokens.length || 3,
-                      3,
-                    )}, 1fr`,
-                    maxWidth: 960,
-                  }
-                : { gridTemplateColumns: '1fr', gridGap: 60 }),
-            }}
-          >
-            {ownedTokens.map((t, i) => {
+          <Grid
+            items={ownedTokens.map(t => {
               return (
-                <div key={t.toString()}>
+                <a
+                  href={'/#/' + address}
+                  key={t.toString()}
+                  style={{ textDecoration: 'none' }}
+                >
                   <TileForToken
                     tokenId={t}
-                    onClickTile={address => (window.location.hash = address)}
+                    style={{ width: 280, height: 280 }}
+                    renderDetails={(address, id) => (
+                      <div
+                        style={{
+                          fontSize: 11,
+                          textAlign: 'center',
+                        }}
+                      >
+                        <div>{address}</div>
+                        <div style={{ fontWeight: 600, opacity: 0.25 }}>
+                          #{id.toString()}
+                        </div>
+                      </div>
+                    )}
                   />
-                </div>
+                </a>
               )
             })}
-          </div>
+          />
         ) : (
           <div>No Tiles yet</div>
         ))}

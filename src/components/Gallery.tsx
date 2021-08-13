@@ -1,6 +1,7 @@
 import Wallet from 'ethereumjs-wallet'
 import { constants, utils } from 'ethers'
 import { useLayoutEffect, useState } from 'react'
+import Grid from './Grid'
 
 import Tile from './Tile'
 
@@ -106,58 +107,33 @@ export default function Gallery() {
         {address ? (
           utils.isAddress(address) ? (
             <a href={'/#/' + address} style={{ display: 'block' }}>
-              <Tile style={{ width: 360, height: 360 }} address={address} />
+              <Tile address={address} />
             </a>
           ) : (
             'Not a valid address'
           )
         ) : (
           <div>
-            <div
-              style={{
-                display: 'grid',
-                gridGap: size === 'big' ? 100 : 60,
-                margin: '0 auto',
-                ...(window.innerWidth > 960
-                  ? {
-                      gridTemplateColumns:
-                        size === 'big' ? '1fr' : 'repeat(3, 1fr)',
-                      maxWidth: size === 'big' ? 900 : 960,
-                      paddingLeft: 60,
-                      paddingRight: 60,
-                    }
-                  : { gridTemplateColumns: '1fr', gridGap: 60 }),
-              }}
-            >
-              {gallery?.map(
-                g =>
-                  g && (
-                    <div key={g}>
-                      <a href={'/#/' + g} style={{ display: 'block' }}>
-                        <Tile
-                          address={g}
-                          style={
-                            window.innerWidth > 600
-                              ? size === 'big'
-                                ? { width: 360, height: 360 }
-                                : { width: 240, height: 240 }
-                              : { width: 300, height: 300 }
-                          }
-                        />
-                      </a>
-                      <div
-                        style={{
-                          fontSize: 11,
-                          opacity: 0.25,
-                          userSelect: 'all',
-                        }}
-                      >
-                        {g}
-                      </div>
-                    </div>
-                  ),
-              )}
-            </div>
+            <Grid
+              cols={size === 'big' ? 1 : 3}
+              items={gallery?.map(g => (
+                <div key={g}>
+                  <a href={'/#/' + g} style={{ display: 'block' }}>
+                    <Tile address={g} />
+                  </a>
+                  <div
+                    style={{
+                      fontSize: 11,
+                      opacity: 0.25,
+                      userSelect: 'all',
+                    }}
+                  >
+                    {g}
+                  </div>
+                </div>
+              ))}
+            />
+
             <div
               className="btn"
               style={{

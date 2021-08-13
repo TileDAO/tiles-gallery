@@ -56,20 +56,14 @@ export default function Navbar({
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignContent: 'center',
         }}
       >
-        <a
-          className="bland"
-          href="/"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            cursor: 'pointer',
-          }}
-        >
-          <img style={{ width: 24, height: 24 }} src="assets/logo.svg" />
-          <span style={{ marginLeft: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <a className="bland" href="/">
+            <img style={{ width: 24, height: 24 }} src="assets/logo.svg" />
+          </a>
+          <a className="text-link" href="/#/recent" style={{ marginLeft: 10 }}>
             {saleIsActive ? (
               <span>
                 {supply?.toString() ?? 0} minted{' '}
@@ -84,32 +78,33 @@ export default function Navbar({
             ) : (
               ''
             )}
-          </span>
-        </a>
-        {account ? (
-          <div>
-            <span>
-              <a className="bland" href={'/#/wallet/' + account}>
-                {ownedTokens?.length ?? 0} Tiles
-              </a>{' '}
-              |{' '}
-              <a className="bland" href="/#/treasury">
-                {TILEBalance
-                  ? Math.round(parseFloat(formatEther(TILEBalance ?? 0)))
-                  : '--'}{' '}
-                TILE
-              </a>
-            </span>{' '}
-            | {account}{' '}
-            <span className="btn" onClick={deactivate}>
-              X
-            </span>
-          </div>
-        ) : (
-          <div className="btn" onClick={() => activateBrowserWallet()}>
-            connect
-          </div>
-        )}
+          </a>
+        </div>
+        {window.innerWidth > 600 &&
+          (account ? (
+            <div>
+              <span>
+                <a className="text-link" href={'/#/wallet/' + account}>
+                  {ownedTokens?.length ?? 0} Tiles
+                </a>{' '}
+                |{' '}
+                <a className="text-link" href="/#/treasury">
+                  {TILEBalance
+                    ? Math.round(parseFloat(formatEther(TILEBalance ?? 0)))
+                    : '--'}{' '}
+                  TILE
+                </a>
+              </span>{' '}
+              | {account}{' '}
+              <span className="btn" onClick={deactivate}>
+                X
+              </span>
+            </div>
+          ) : (
+            <div className="btn" onClick={() => activateBrowserWallet()}>
+              connect
+            </div>
+          ))}
       </div>
     </div>
   )
