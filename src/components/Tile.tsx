@@ -13,6 +13,8 @@ export default function Tile({
     <img
       style={{
         background: '#faf3e8',
+        width: 300,
+        height: 300,
         ...style,
       }}
       src={svgUrl(address)}

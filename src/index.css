@@ -42,3 +42,27 @@ section {
   margin-bottom: 60px;
   border-bottom: 1px solid #22222222;
 }
+
+.address-container .address {
+  position: absolute;
+  left: 0;
+  padding: 10px 15px;
+  background: #FAF3E8;
+  font-size: 11px;
+  display: none;
+  text-align: left;
+}
+
+.address-container:hover .address {
+  display: block;
+}
+
+.text-link {
+  color: #222;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.text-link:hover {
+  border-bottom: 2px solid #f8d938;
+}

@@ -4,7 +4,9 @@ import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useTilesContract } from '../hooks/TilesContract'
+import FormattedAddress from './FormattedAddress'
 import Tile from './Tile'
+import TileForToken from './TileForToken'
 
 export default function Detail({
   saleIsActive,
@@ -22,7 +24,7 @@ export default function Detail({
 
   const contract = useTilesContract()
 
-  const { address } = useParams<{ address: string }>()
+  const { address, id } = useParams<{ address: string; id: string }>()
 
   const { state: mintState, send: mint } = useContractFunction(
     contract as any,
@@ -33,19 +35,22 @@ export default function Detail({
     'mintReserveTile',
   )
 
-  const owned = tokenId?.gt(0)
-
   useEffect(() => {
     if (address && !utils.isAddress(address.toLowerCase()))
       window.location.hash = '/'
   }, [address])
 
   useLayoutEffect(() => {
+    if (!address) return
     contract.functions.idOfAddress(address).then(
       res => setTokenId(res[0] as BigNumber),
       err => console.log('err', err),
     )
   }, [address])
+
+  useEffect(() => {
+    if (id) setTokenId(BigNumber.from(id))
+  }, [])
 
   useLayoutEffect(() => {
     if (!tokenId || tokenId.eq(0)) return
@@ -55,6 +60,8 @@ export default function Detail({
       err => console.log('err', err),
     )
   }, [tokenId])
+
+  const owned = tokenId?.gt(0)
 
   const _mint = async (reserve?: boolean) => {
     if (!address) return
@@ -76,13 +83,30 @@ export default function Detail({
       }}
     >
       <div style={{ maxWidth: 800, paddingTop: 40, paddingBottom: 40 }}>
-        <Tile address={address} style={{ width: 400, height: 400 }} />
-
-        <div style={{ textAlign: 'center', marginTop: 10 }}>
-          <div style={{ marginBottom: 20 }}>
-            {address.startsWith('0x') ? '' : '0x'}
-            {address}
+        {id !== undefined ? (
+          <TileForToken
+            tokenId={BigNumber.from(id)}
+            style={{ width: 400, height: 400 }}
+            renderDetails={(address, id) => (
+              <div style={{ marginTop: 10 }}>
+                {address}
+                <div style={{ fontWeight: 400 }}>#{id.toString()}</div>
+              </div>
+            )}
+          />
+        ) : (
+          <div>
+            <Tile address={address} style={{ width: 400, height: 400 }} />
+            <div
+              style={{ marginBottom: 20, marginTop: 10, textAlign: 'center' }}
+            >
+              {address?.startsWith('0x') ? '' : '0x'}
+              {address}
+            </div>
           </div>
+        )}
+
+        <div style={{ textAlign: 'center', marginTop: 20 }}>
           {saleIsActive === false ? (
             <div>
               Sale starts July 16 3pm ET
@@ -108,10 +132,10 @@ export default function Detail({
               )}
             </div>
           ) : owned ? (
-            <div style={{ opacity: 0.4 }}>
-              Tile #{tokenId?.toString()} owned by:
+            <div style={{ color: '#bbb' }}>
+              Owned by:
               <br />
-              {owner}
+              <FormattedAddress address={owner} />
             </div>
           ) : (
             <div>
