@@ -146,7 +146,7 @@ export default function Detail({
                 <div style={{ padding: 5 }}>
                   {account ? (
                     <span className="btn" onClick={() => _mint()}>
-                      BUY (
+                      MINT (
                       {price && parseFloat(utils.formatUnits(price.toString()))}{' '}
                       ETH)
                     </span>
@@ -154,7 +154,7 @@ export default function Detail({
                     'Connect wallet to mint'
                   )}
 
-                  <div>{mintState.errorMessage || ''}</div>
+                  <div style={{marginTop: 20}}>{mintState.errorMessage || ''}</div>
                 </div>
               )}
             </div>
