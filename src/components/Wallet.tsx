@@ -43,21 +43,21 @@ export default function Wallet() {
             items={ownedTokens.map(t => {
               return (
                 <a
-                  href={'/#/' + address}
+                  href={'/#/id/' + t.toString()}
                   key={t.toString()}
                   style={{ textDecoration: 'none' }}
                 >
                   <TileForToken
                     tokenId={t}
                     style={{ width: 280, height: 280 }}
-                    renderDetails={(address, id) => (
+                    renderDetails={(_address, id) => (
                       <div
                         style={{
                           fontSize: 11,
                           textAlign: 'center',
                         }}
                       >
-                        <div>{address}</div>
+                        <div>{_address}</div>
                         <div style={{ fontWeight: 600, opacity: 0.25 }}>
                           #{id.toString()}
                         </div>
