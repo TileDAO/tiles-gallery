@@ -1,12 +1,11 @@
-import { BigNumber } from 'ethers'
 import { parseEther } from 'ethers/lib/utils'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 
-export default function Prices({
-  salePrice,
-}: {
-  salePrice: BigNumber | undefined
-}) {
+import { TilesContext } from '../contexts/TilesContext'
+
+export default function Prices() {
+  const { currentPrice } = useContext(TilesContext)
+
   const row = useCallback(
     (range: string, price: number) => (
       <div
@@ -15,7 +14,7 @@ export default function Prices({
           display: 'flex',
           justifyContent: 'space-between',
           marginBottom: 10,
-          textDecoration: salePrice?.gt(parseEther(price.toString()))
+          textDecoration: currentPrice?.gt(parseEther(price.toString()))
             ? 'line-through'
             : undefined,
         }}
@@ -24,7 +23,7 @@ export default function Prices({
         <span>{price} ETH</span>
       </div>
     ),
-    [salePrice],
+    [currentPrice],
   )
 
   return (

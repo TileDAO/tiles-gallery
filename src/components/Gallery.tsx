@@ -28,6 +28,9 @@ export default function Gallery() {
 
   const randomAddress = () => Wallet.generate().getAddress().toString('hex')
 
+  const largeTileSize = 360
+  const smallTileSize = 280
+
   return (
     <div>
       <div
@@ -85,7 +88,7 @@ export default function Gallery() {
           marginBottom: 60,
           marginLeft: 'auto',
           marginRight: 'auto',
-          width: 360,
+          width: largeTileSize,
           maxWidth: '90vw',
         }}
       >
@@ -107,7 +110,10 @@ export default function Gallery() {
         {address ? (
           utils.isAddress(address) ? (
             <a href={'/#/' + address} style={{ display: 'block' }}>
-              <Tile address={address} />
+              <Tile
+                style={{ width: largeTileSize, height: largeTileSize }}
+                address={address}
+              />
             </a>
           ) : (
             'Not a valid address'
@@ -119,7 +125,14 @@ export default function Gallery() {
               items={gallery?.map(g => (
                 <div key={g}>
                   <a href={'/#/' + g} style={{ display: 'block' }}>
-                    <Tile address={g} />
+                    <Tile
+                      style={
+                        size === 'big'
+                          ? { width: largeTileSize, height: largeTileSize }
+                          : { width: smallTileSize, height: smallTileSize }
+                      }
+                      address={g}
+                    />
                   </a>
                   <div
                     style={{

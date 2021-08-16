@@ -1,4 +1,4 @@
-import { BigNumber, utils } from 'ethers'
+import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { useLayoutEffect, useState } from 'react'
 
@@ -14,9 +14,11 @@ export default function Treasury() {
     ticketBoothContract.functions
       .balanceOf(tilesAddress, '0x01')
       .then(res => setJBXBalance(res[0]))
+      .catch(e => console.log('Error getting balanceOf', e))
     ticketBoothContract.functions
       .balanceOf(tilesAddress, '0x02')
       .then(res => setTILEBalance(res[0]))
+      .catch(e => console.log('Error getting balanceOf', e))
   }, [])
 
   return (

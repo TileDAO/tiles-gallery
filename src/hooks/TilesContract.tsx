@@ -1,12 +1,12 @@
 import { useEthers } from '@usedapp/core'
 import { Contract, providers } from 'ethers'
-import { networkConfig } from '..'
 
+import { networkConfig } from '..'
 import { tilesAbi } from '../contracts/tiles.abi'
 import { tilesAddress } from '../contracts/tiles.address'
 
 export function useTilesContract() {
-  const { library } = useEthers()
+  const { account, library } = useEthers()
 
   const readNetworkUrl =
     networkConfig.readOnlyChainId &&
@@ -16,7 +16,8 @@ export function useTilesContract() {
   return new Contract(
     tilesAddress,
     tilesAbi,
-    (library?.getSigner() ??
-      new providers.JsonRpcProvider(readNetworkUrl)) as any,
+    account
+      ? library?.getSigner()
+      : new providers.JsonRpcProvider(readNetworkUrl),
   )
 }

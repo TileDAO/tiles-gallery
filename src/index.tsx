@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
-const infuraId = '643e4d7aeffa4bd1b56c33e0c99b7604'
+const infuraId = process.env.REACT_APP_INFURA_ID
 
 export const networkConfig: Config = {
   readOnlyChainId: parseInt(

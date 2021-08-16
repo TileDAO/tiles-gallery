@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { constants, utils } from 'ethers'
-import { CSSProperties } from 'react'
-import { useLayoutEffect, useState } from 'react'
+import { CSSProperties, useLayoutEffect, useState } from 'react'
 
 import { useTilesContract } from '../hooks/TilesContract'
 
@@ -14,14 +13,22 @@ export default function Artist({ saleIsActive }: { saleIsActive?: boolean }) {
   const contract = useTilesContract()
 
   useLayoutEffect(() => {
-    contract.functions.owner().then(res => setCurrentArtist(res[0]))
-    contract.functions.baseURI().then(res => setCurrentBaseURI(res[0]))
+    contract.functions
+      .owner()
+      .then(res => setCurrentArtist(res[0]))
+      .catch(e => console.log('Error getting owner', e))
+    contract.functions
+      .baseURI()
+      .then(res => setCurrentBaseURI(res[0]))
+      .catch(e => console.log('Error getting baseURI', e))
     contract.functions
       .mintedReservesCount()
       .then(res => setReservesCount(res[0]))
+      .catch(e => console.log('Error getting mintedReservesCount', e))
     contract.functions
       .mintedReservesLimit()
       .then(res => setReservesLimit(res[0]))
+      .catch(e => console.log('Error getting mintedReservesLimit', e))
   }, [])
 
   const getInputById = (id: string) =>

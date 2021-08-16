@@ -20,11 +20,12 @@ export default function TileForToken({
 
   const contract = useTilesContract()
 
-  const _tokenId = tokenId.toHexString()
-
   useEffect(() => {
-    contract.functions.tokenURI(_tokenId).then(res => setURI(res[0]))
-  }, [_tokenId])
+    contract.functions
+      .tokenURI(tokenId.toHexString())
+      .then(res => setURI(res[0]))
+      .catch(e => console.log('Error getting tokenURI', e))
+  }, [tokenId])
 
   useLayoutEffect(() => {
     if (!URI) return
