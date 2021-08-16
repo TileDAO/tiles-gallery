@@ -1,22 +1,21 @@
 import { BigNumber } from 'ethers'
-import { useLayoutEffect, useState } from 'react'
-
-import { useTilesContract } from '../hooks/TilesContract'
+import { useContext, useLayoutEffect, useState } from 'react'
+import { TilesContext } from '../contexts/TilesContext'
 import Grid from './Grid'
 import TileForToken from './TileForToken'
 
-export default function Recent() {
+export default function Minted() {
   const [tokenIds, setTokenIds] = useState<BigNumber[]>([])
 
-  const tilesContract = useTilesContract()
+  const { totalSupply } = useContext(TilesContext)
 
   useLayoutEffect(() => {
-    tilesContract.functions.totalSupply().then(res => {
-      load(30, res[0])
-    })
-  }, [])
+    load(30, totalSupply)
+  }, [totalSupply])
 
   function load(count: number, start?: BigNumber) {
+    if (!start && !tokenIds.length) return
+
     const newTokenIds = start ? [start] : tokenIds
 
     for (let i = 0; i < count - (start ? 1 : 0); i++) {

@@ -3,9 +3,9 @@ import { useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useTilesContract } from '../hooks/TilesContract'
+import FormattedAddress from './FormattedAddress'
 import Grid from './Grid'
 import TileForToken from './TileForToken'
-import FormattedAddress from './FormattedAddress'
 
 export default function Wallet() {
   const [ownedTokens, setOwnedTokens] = useState<BigNumber[]>()
@@ -19,6 +19,7 @@ export default function Wallet() {
       contract.functions
         .tokensOfOwner(address)
         .then(res => setOwnedTokens(res[0]))
+        .catch(e => console.log('Error getting tokensOfOwner', e))
     } else if (ownedTokens) {
       setOwnedTokens([])
     }

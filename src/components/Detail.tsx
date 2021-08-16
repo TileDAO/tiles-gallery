@@ -1,26 +1,22 @@
 import { useContractFunction, useEthers } from '@usedapp/core'
 import { BigNumber, utils } from 'ethers'
+import { useContext } from 'react'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { TilesContext } from '../contexts/TilesContext'
 
 import { useTilesContract } from '../hooks/TilesContract'
 import FormattedAddress from './FormattedAddress'
 import Tile from './Tile'
 import TileForToken from './TileForToken'
 
-export default function Detail({
-  saleIsActive,
-  isArtist,
-  price,
-}: {
-  saleIsActive?: boolean
-  isArtist?: boolean
-  price?: BigNumber
-}) {
+export default function Detail() {
   const [reserveReceiver, setReserveReceiver] = useState<string>()
   const [tokenId, setTokenId] = useState<BigNumber>()
   const [owner, setOwner] = useState<string>()
   const { account } = useEthers()
+
+  const { currentPrice, saleIsActive, userIsArtist } = useContext(TilesContext)
 
   const contract = useTilesContract()
 
@@ -55,11 +51,11 @@ export default function Detail({
   useLayoutEffect(() => {
     if (!tokenId || tokenId.eq(0)) return
 
-    contract.functions.ownerOf(tokenId.toHexString()).then(
+    contract?.functions.ownerOf(tokenId.toHexString()).then(
       res => setOwner(res[0]),
       err => console.log('err', err),
     )
-  }, [tokenId])
+  }, [tokenId, contract])
 
   const owned = tokenId?.gt(0)
 
@@ -69,7 +65,7 @@ export default function Detail({
     reserve
       ? mintReserve(reserveReceiver, address)
       : mint(address, {
-          value: price?.toHexString(),
+          value: currentPrice?.toHexString(),
         })
   }
 
@@ -110,7 +106,7 @@ export default function Detail({
           {saleIsActive === false ? (
             <div>
               Sale starts July 16 3pm ET
-              {isArtist && (
+              {userIsArtist && (
                 <div style={{ marginTop: 20 }}>
                   {owned ? (
                     <div>Reserved for {owner}</div>
@@ -147,14 +143,19 @@ export default function Detail({
                   {account ? (
                     <span className="btn" onClick={() => _mint()}>
                       MINT (
-                      {price && parseFloat(utils.formatUnits(price.toString()))}{' '}
+                      {currentPrice &&
+                        parseFloat(
+                          utils.formatUnits(currentPrice.toString()),
+                        )}{' '}
                       ETH)
                     </span>
                   ) : (
                     'Connect wallet to mint'
                   )}
 
-                  <div style={{marginTop: 20}}>{mintState.errorMessage || ''}</div>
+                  <div style={{ marginTop: 20 }}>
+                    {mintState.errorMessage || ''}
+                  </div>
                 </div>
               )}
             </div>
