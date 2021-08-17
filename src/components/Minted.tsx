@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { TilesContext } from '../contexts/TilesContext'
-import Grid from './Grid'
-import TileForToken from './TileForToken'
+import Grid from './shared/Grid'
+import TileForToken from './shared/TileForToken'
 
 export default function Minted() {
   const [tokenIds, setTokenIds] = useState<BigNumber[]>([])

@@ -1,9 +1,9 @@
 import Wallet from 'ethereumjs-wallet'
 import { constants, utils } from 'ethers'
 import { useLayoutEffect, useState } from 'react'
-import Grid from './Grid'
 
-import Tile from './Tile'
+import Grid from './shared/Grid'
+import Tile from './shared/Tile'
 
 export default function Gallery() {
   const [size, setSize] = useState<'small' | 'big'>('big')

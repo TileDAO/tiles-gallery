@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { CSSProperties, useEffect, useLayoutEffect, useState } from 'react'
 
-import { useTilesContract } from '../hooks/TilesContract'
+import { useTilesContract } from '../../hooks/TilesContract'
 
 export default function TileForToken({
   tokenId,

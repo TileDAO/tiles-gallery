@@ -3,9 +3,9 @@ import { useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useTilesContract } from '../hooks/TilesContract'
-import FormattedAddress from './FormattedAddress'
-import Grid from './Grid'
-import TileForToken from './TileForToken'
+import FormattedAddress from './shared/FormattedAddress'
+import Grid from './shared/Grid'
+import TileForToken from './shared/TileForToken'
 
 export default function Wallet() {
   const [ownedTokens, setOwnedTokens] = useState<BigNumber[]>()
