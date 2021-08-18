@@ -10,7 +10,7 @@ export default function TileForToken({
   style,
   renderDetails,
 }: {
-  tokenId: BigNumber
+  tokenId: BigNumber | undefined
   onClickTile?: (address: string) => void
   style?: CSSProperties
   renderDetails?: (address: string, id: BigNumber) => string | JSX.Element
@@ -21,6 +21,7 @@ export default function TileForToken({
   const contract = useTilesContract()
 
   useEffect(() => {
+    if (!tokenId || tokenId.eq(0)) return
     contract.functions
       .tokenURI(tokenId.toHexString())
       .then(res => setURI(res[0]))
@@ -46,7 +47,7 @@ export default function TileForToken({
         src={data.image}
         onClick={onClickTile ? () => onClickTile(data.name) : () => null}
       />
-      {renderDetails ? renderDetails(data.name, tokenId) : null}
+      {renderDetails && tokenId ? renderDetails(data.name, tokenId) : null}
     </div>
   )
 }

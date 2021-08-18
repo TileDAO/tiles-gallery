@@ -1,10 +1,9 @@
 import { useContractFunction, useEthers } from '@usedapp/core'
 import { BigNumber, utils } from 'ethers'
-import { useContext } from 'react'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { TilesContext } from '../../contexts/TilesContext'
 
+import { TilesContext } from '../../contexts/TilesContext'
 import { useTilesContract } from '../../hooks/TilesContract'
 import FormattedAddress from './FormattedAddress'
 import Tile from './Tile'
@@ -14,13 +13,15 @@ export default function Detail() {
   const [reserveReceiver, setReserveReceiver] = useState<string>()
   const [tokenId, setTokenId] = useState<BigNumber>()
   const [owner, setOwner] = useState<string>()
+  const [address, setAddress] = useState<string>()
   const { account } = useEthers()
 
   const { currentPrice, saleIsActive, userIsArtist } = useContext(TilesContext)
 
-  const contract = useTilesContract()
+  const { address: addressFromParams, id: idFromParams } =
+    useParams<{ address: string; id: string }>()
 
-  const { address, id } = useParams<{ address: string; id: string }>()
+  const contract = useTilesContract()
 
   const { state: mintState, send: mint } = useContractFunction(
     contract as any,
@@ -32,30 +33,38 @@ export default function Detail() {
   )
 
   useEffect(() => {
+    if (addressFromParams) setAddress(addressFromParams)
+    if (idFromParams) setTokenId(BigNumber.from(idFromParams))
+  }, [])
+
+  useEffect(() => {
     if (address && !utils.isAddress(address.toLowerCase()))
       window.location.hash = '/'
   }, [address])
 
   useLayoutEffect(() => {
-    if (!address) return
+    if (!address || idFromParams) return
     contract.functions.idOfAddress(address).then(
       res => setTokenId(res[0] as BigNumber),
-      err => console.log('err', err),
+      err => console.log('Error getting idOfAddress', err),
     )
   }, [address])
 
-  useEffect(() => {
-    if (id) setTokenId(BigNumber.from(id))
-  }, [])
+  useLayoutEffect(() => {
+    if (!tokenId || addressFromParams) return
+    contract.functions.tileAddressOf(tokenId.toHexString()).then(
+      res => setAddress(res[0]),
+      err => console.log('Error getting tileAddressOf', err),
+    )
+  }, [tokenId])
 
   useLayoutEffect(() => {
     if (!tokenId || tokenId.eq(0)) return
-
-    contract?.functions.ownerOf(tokenId.toHexString()).then(
+    contract.functions.ownerOf(tokenId.toHexString()).then(
       res => setOwner(res[0]),
-      err => console.log('err', err),
+      err => console.log('Error getting ownerOf', err),
     )
-  }, [tokenId, contract])
+  }, [tokenId])
 
   const owned = tokenId?.gt(0)
 
@@ -79,13 +88,13 @@ export default function Detail() {
       }}
     >
       <div style={{ maxWidth: 800, paddingTop: 40, paddingBottom: 40 }}>
-        {id !== undefined ? (
+        {tokenId?.gt(0) ? (
           <TileForToken
-            tokenId={BigNumber.from(id)}
+            tokenId={tokenId}
             style={{ width: 400, height: 400 }}
-            renderDetails={(address, id) => (
+            renderDetails={(addr, id) => (
               <div style={{ marginTop: 10 }}>
-                {address}
+                {addr}
                 <div style={{ fontWeight: 400 }}>#{id.toString()}</div>
               </div>
             )}

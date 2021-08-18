@@ -5,9 +5,10 @@ export default function Tile({
   address,
   style,
 }: {
-  address: string
+  address: string | undefined
   style?: CSSProperties
 }) {
+  if (!address) return null
   return (
     <img
       style={{

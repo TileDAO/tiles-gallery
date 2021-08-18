@@ -67,7 +67,7 @@ function App() {
               <Route exact path="/">
                 <Gallery />
               </Route>
-              <Route exact path="/glyphs">
+              <Route exact path="/63A236">
                 <Glyphs />
               </Route>
               <Route exact path="/minted">
