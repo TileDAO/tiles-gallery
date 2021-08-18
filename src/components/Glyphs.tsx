@@ -8,6 +8,8 @@ export default function Glyphs() {
   const [useColor, setUseColor] = useState<boolean>(true)
   const [previewGlyph, setPreviewGlyph] = useState<string>()
 
+  const isMobile = document.documentElement.clientWidth < 600
+
   const load = (count: number) => {
     const newGallery = [...(gallery ?? [])]
 
@@ -30,10 +32,35 @@ export default function Glyphs() {
 
   const randomAddress = () => Wallet.generate().getAddress().toString('hex')
 
+  const threeColContainerWidth = Math.min(
+    document.documentElement.clientWidth - 40,
+    760,
+  )
+  const threeColWidth = threeColContainerWidth / 3 - 10
+
+  const redGlyphAddress = '0x271ebbd0a1ea752a6976ff938cb0262eceac0300'
+  const blueGlyphAddress = '0x5eedf6747d5d2eee581d7b6731c3809401ec8cd7'
+  const yellowGlyphAddress = '0x476a627c89d9d9e98a4d7763406c55670eccd0cf'
+
   return (
-    <div style={{ paddingTop: 40, paddingBottom: 40 }}>
+    <div
+      style={
+        isMobile
+          ? {
+              paddingTop: 80,
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingBottom: 80,
+            }
+          : { paddingTop: 40, paddingBottom: 40 }
+      }
+    >
       <div
-        style={{ display: 'flex', margin: '40px auto 20vh', maxWidth: 1000 }}
+        style={
+          isMobile
+            ? {}
+            : { display: 'flex', margin: '40px auto 20vh', maxWidth: 1000 }
+        }
       >
         <div
           style={{
@@ -41,6 +68,7 @@ export default function Glyphs() {
             flex: 1,
             justifyContent: 'center',
             flexDirection: 'column',
+            marginBottom: isMobile ? 40 : 0,
           }}
         >
           <h3>Glyphs</h3>
@@ -49,9 +77,9 @@ export default function Glyphs() {
         </div>
         <div>
           <Glyph
-            address="f9d7ae0884c7d06a6b2107c6f5f522c68a9b9112"
+            address="0x5c020d080df888687124afcba23c2cfe55890831"
             color
-            size="80vh"
+            size={isMobile ? '92vw' : '80vh'}
           />
         </div>
       </div>
@@ -61,19 +89,20 @@ export default function Glyphs() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
           marginTop: 40,
         }}
       >
         <div
           style={{
             display: 'inline-grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
             rowGap: 40,
             columnGap: 40,
           }}
         >
           {gallery?.map(g => (
-            <Glyph address={g} color size="20vw" />
+            <Glyph address={g} color size={isMobile ? '40vw' : '20vw'} />
           ))}
         </div>
         <div style={{ margin: '140px 0px', maxWidth: 480 }}>
@@ -88,36 +117,13 @@ export default function Glyphs() {
 
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
           margin: '0 auto',
-          maxWidth: 1000,
+          width: threeColContainerWidth,
         }}
       >
         <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: 20,
-              width: 700,
-            }}
-          >
-            <Glyph
-              address="153aedfbd97a076c00397d1566ffd380f8bcff57"
-              color
-              size={220}
-            />
-            <Glyph
-              address="120755f1a9e58ebe0206a0638a30b0e92976ca3e"
-              color
-              size={220}
-            />
-            <Glyph
-              address="0x5c383c6024972dd9895b905191b1d2984ffce5b1"
-              color
-              size={220}
-            />
+          <div>
+            <h3>Each Glyph has its own colors</h3>
           </div>
           <div
             style={{
@@ -125,35 +131,50 @@ export default function Glyphs() {
               justifyContent: 'space-between',
             }}
           >
-            <Glyph
-              address="153aedfbd97a076c00397d1566ffd380f8bcff57"
-              size={220}
-            />
-            <Glyph
-              address="120755f1a9e58ebe0206a0638a30b0e92976ca3e"
-              size={220}
-            />
-            <Glyph
-              address="0x5c383c6024972dd9895b905191b1d2984ffce5b1"
-              size={220}
-            />
+            <Glyph address={redGlyphAddress} color size={threeColWidth} />
+            <Glyph address={blueGlyphAddress} color size={threeColWidth} />
+            <Glyph address={yellowGlyphAddress} color size={threeColWidth} />
           </div>
         </div>
-        <div style={{ marginLeft: 20 }}>
-          <h4 style={{ marginBottom: 200 }}>Each Glyph has its own colors</h4>
-          <h4>...but is unique even without them.</h4>
+        <div style={{ marginTop: 10 }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Glyph address={redGlyphAddress} size={threeColWidth} />
+            <Glyph address={blueGlyphAddress} size={threeColWidth} />
+            <Glyph address={yellowGlyphAddress} size={threeColWidth} />
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <h3>...but is unique even without them.</h3>
+          </div>
         </div>
       </div>
 
-      <div style={{ display: 'flex', margin: '20vh auto 5vh', maxWidth: 1000 }}>
-        <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          margin: '20vh auto 5vh',
+          maxWidth: isMobile ? undefined : 1000,
+        }}
+      >
+        <div style={{ textAlign: 'center' }}>
           {previewGlyph && utils.isAddress(previewGlyph.toLowerCase()) ? (
-            <Glyph address={previewGlyph} size="70vh" color={useColor} />
+            <Glyph
+              address={previewGlyph}
+              size={
+                isMobile ? document.documentElement.clientWidth - 40 : '70vh'
+              }
+              color={useColor}
+            />
           ) : (
             <div
               style={{
-                width: '75vh',
-                height: '75vh',
+                width: isMobile ? '94vw' : '70vh',
+                height: isMobile ? '94vw' : '70vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -165,7 +186,7 @@ export default function Glyphs() {
         </div>
         <div
           style={{
-            display: 'flex',
+            display: isMobile ? 'block' : 'flex',
             flex: 1,
             justifyContent: 'center',
             flexDirection: 'column',
@@ -184,8 +205,9 @@ export default function Glyphs() {
                 padding: 5,
                 width: 360,
                 boxSizing: 'border-box',
-                marginTop: '10vh',
+                marginTop: isMobile ? 40 : '10vh',
               }}
+              disabled
               placeholder={constants.AddressZero}
               value={previewGlyph}
               onChange={e =>
