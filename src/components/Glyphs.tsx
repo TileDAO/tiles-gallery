@@ -1,12 +1,31 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEthers } from '@usedapp/core'
 import Wallet from 'ethereumjs-wallet'
+import { BigNumber, constants, utils } from 'ethers'
+import { useLayoutEffect, useState } from 'react'
+
+import { tilesAddress } from '../contracts/tiles.address'
+import { useErc20Contract } from '../hooks/Erc20Contract'
 import Glyph from './shared/Glyph'
-import { constants, utils } from 'ethers'
 
 export default function Glyphs() {
   const [gallery, setGallery] = useState<string[]>()
   const [useColor, setUseColor] = useState<boolean>(true)
   const [previewGlyph, setPreviewGlyph] = useState<string>()
+  const [balance, setBalance] = useState<BigNumber>()
+
+  const { account } = useEthers()
+
+  const contract = useErc20Contract(tilesAddress)
+
+  useLayoutEffect(() => {
+    if (!account || !contract) return
+
+    // Get tokenIDs of Tiles owned by `account`
+    contract.functions
+      .balanceOf(account)
+      .then(res => setBalance(res[0]))
+      .catch(e => console.log('Error getting tokensOfOwner', e))
+  }, [account])
 
   const isMobile = document.documentElement.clientWidth < 600
 
@@ -41,6 +60,22 @@ export default function Glyphs() {
   const redGlyphAddress = '0x271ebbd0a1ea752a6976ff938cb0262eceac0300'
   const blueGlyphAddress = '0x5eedf6747d5d2eee581d7b6731c3809401ec8cd7'
   const yellowGlyphAddress = '0x476a627c89d9d9e98a4d7763406c55670eccd0cf'
+
+  if (!balance?.gt(0))
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100vw',
+          height: '100vh',
+          userSelect: 'none',
+        }}
+      >
+        ?
+      </div>
+    )
 
   return (
     <div
@@ -77,7 +112,7 @@ export default function Glyphs() {
         </div>
         <div>
           <Glyph
-            address="0x5c020d080df888687124afcba23c2cfe55890831"
+            address="9203659b66766c84f86ed9ebb075ebc5eae055a9"
             color
             size={isMobile ? '92vw' : '80vh'}
           />
@@ -102,7 +137,12 @@ export default function Glyphs() {
           }}
         >
           {gallery?.map(g => (
-            <Glyph address={g} color size={isMobile ? '40vw' : '20vw'} />
+            <Glyph
+              key={g}
+              address={g}
+              color
+              size={isMobile ? '40vw' : '20vw'}
+            />
           ))}
         </div>
         <div style={{ margin: '140px 0px', maxWidth: 480 }}>

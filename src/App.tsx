@@ -17,7 +17,6 @@ import Wallet from './components/Wallet'
 import { TilesContext } from './contexts/TilesContext'
 import { useTilesContract } from './hooks/TilesContract'
 
-
 function App() {
   const { account } = useEthers()
   const [saleIsActive, setsaleIsActive] = useState<boolean>()
@@ -67,7 +66,7 @@ function App() {
               <Route exact path="/">
                 <Gallery />
               </Route>
-              <Route exact path="/63A236">
+              <Route exact path="/glyphs">
                 <Glyphs />
               </Route>
               <Route exact path="/minted">
