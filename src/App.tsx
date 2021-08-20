@@ -66,8 +66,11 @@ function App() {
               <Route exact path="/">
                 <Gallery />
               </Route>
-              <Route exact path="/glyphs">
+              <Route exact path="/63a2">
                 <Glyphs />
+              </Route>
+              <Route exact path="/glyphs">
+                <Glyphs gated />
               </Route>
               <Route exact path="/minted">
                 <Minted />

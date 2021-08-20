@@ -7,7 +7,7 @@ import { tilesAddress } from '../contracts/tiles.address'
 import { useErc20Contract } from '../hooks/Erc20Contract'
 import Glyph from './shared/Glyph'
 
-export default function Glyphs() {
+export default function Glyphs({ gated }: { gated?: boolean }) {
   const [gallery, setGallery] = useState<string[]>()
   const [useColor, setUseColor] = useState<boolean>(true)
   const [previewGlyph, setPreviewGlyph] = useState<string>()
@@ -18,7 +18,7 @@ export default function Glyphs() {
   const contract = useErc20Contract(tilesAddress)
 
   useLayoutEffect(() => {
-    if (!account || !contract) return
+    if (!account || !contract || !gated) return
 
     // Get tokenIDs of Tiles owned by `account`
     contract.functions
@@ -61,7 +61,7 @@ export default function Glyphs() {
   const blueGlyphAddress = '0x5eedf6747d5d2eee581d7b6731c3809401ec8cd7'
   const yellowGlyphAddress = '0x476a627c89d9d9e98a4d7763406c55670eccd0cf'
 
-  if (!balance?.gt(0))
+  if (!balance?.gt(0) && gated)
     return (
       <div
         style={{
