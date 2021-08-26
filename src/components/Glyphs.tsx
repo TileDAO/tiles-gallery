@@ -247,7 +247,6 @@ export default function Glyphs({ gated }: { gated?: boolean }) {
                 boxSizing: 'border-box',
                 marginTop: isMobile ? 40 : '10vh',
               }}
-              disabled
               placeholder={constants.AddressZero}
               value={previewGlyph}
               onChange={e =>
