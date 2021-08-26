@@ -73,7 +73,7 @@ export default function Glyphs({ gated }: { gated?: boolean }) {
           userSelect: 'none',
         }}
       >
-        ?
+        Tile owners only
       </div>
     )
 

@@ -16,7 +16,7 @@ export default function Minted() {
   function load(count: number, start?: BigNumber) {
     if (!start && !tokenIds.length) return
 
-    const newTokenIds = start ? [start] : tokenIds
+    const newTokenIds = start ? [start] : [...tokenIds]
 
     for (let i = 0; i < count - (start ? 1 : 0); i++) {
       newTokenIds?.push(newTokenIds[newTokenIds.length - 1].sub(1))
