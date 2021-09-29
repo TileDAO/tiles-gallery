@@ -2,12 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useEthers } from '@usedapp/core'
 import { utils } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
-import { useContext } from 'react'
-import { useLayoutEffect, useState } from 'react'
-import { TilesContext } from '../contexts/TilesContext'
+import { useContext, useLayoutEffect, useState } from 'react'
 
+import { TilesContext } from '../contexts/TilesContext'
 import { useTicketBoothContract } from '../hooks/TicketBoothContract'
 import { useTilesContract } from '../hooks/TilesContract'
+import FormattedAddress from './shared/FormattedAddress'
 
 export default function Navbar() {
   const [ownedTokens, setOwnedTokens] = useState<BigNumber[]>()
@@ -92,7 +92,7 @@ export default function Navbar() {
                   TILE
                 </a>
               </span>{' '}
-              | {account}{' '}
+              | <FormattedAddress address={account} />{' '}
               <span className="btn" onClick={deactivate}>
                 X
               </span>
