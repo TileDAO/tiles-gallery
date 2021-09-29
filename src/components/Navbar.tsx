@@ -92,7 +92,10 @@ export default function Navbar() {
                   TILE
                 </a>
               </span>{' '}
-              | <FormattedAddress address={account} />{' '}
+              |{' '}
+              <span>
+                <FormattedAddress address={account} />
+              </span>{' '}
               <span className="btn" onClick={deactivate}>
                 X
               </span>
