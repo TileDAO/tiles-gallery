@@ -4,8 +4,10 @@ import { useLayoutEffect, useState } from 'react'
 
 export default function FormattedAddress({
   address,
+  align,
 }: {
   address: string | undefined
+  align?: 'left' | 'right'
 }) {
   const { library } = useEthers()
   const [ensName, setEnsName] = useState<string>()
@@ -54,7 +56,11 @@ export default function FormattedAddress({
       <div style={{ borderTop: '5px solid transparent' }}>
         <div
           className="address"
-          style={{ fontWeight: 400, lineHeight: 1.5 }}
+          style={{
+            fontWeight: 400,
+            lineHeight: 1.5,
+            ...(align === 'right' ? { right: 0 } : { left: 0 }),
+          }}
           onClick={e => e.stopPropagation()}
         >
           {ensName && (

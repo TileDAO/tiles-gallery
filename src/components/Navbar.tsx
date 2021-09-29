@@ -93,8 +93,8 @@ export default function Navbar() {
                 </a>
               </span>{' '}
               |{' '}
-              <span>
-                <FormattedAddress address={account} />
+              <span style={{ display: 'inline-block' }}>
+                <FormattedAddress address={account} align="right" />
               </span>{' '}
               <span className="btn" onClick={deactivate}>
                 X

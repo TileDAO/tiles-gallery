@@ -45,9 +45,8 @@ section {
 
 .address-container .address {
   position: absolute;
-  left: 0;
   padding: 10px 15px;
-  background: #FAF3E8;
+  background: #faf3e8;
   font-size: 11px;
   display: none;
   text-align: left;
