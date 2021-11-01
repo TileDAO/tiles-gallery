@@ -8,20 +8,33 @@ type RSVPInfo = {
 
 export default function RSVP() {
   const [rsvps, setRsvps] = useState<RSVPInfo[]>()
-  const [total, setTotal] = useState<number>()
+  const [totalRSVPs, setTotalRSPVs] = useState<number>()
+  const [totalGuests, setTotalGuests] = useState<number>()
 
   useEffect(() => {
     axios
       .get('https://rsvp-proxy.herokuapp.com/rsvps')
       .then((res: AxiosResponse<{ total: number; rsvps: RSVPInfo[] }>) => {
         setRsvps(res.data.rsvps)
-        setTotal(res.data.total)
+        setTotalRSPVs(res.data.total)
+
+        setTotalGuests(
+          res.data.rsvps.reduce((acc, curr) => acc + curr.attendeeCount, 0),
+        )
       })
   })
 
   return (
-    <div style={{ width: '90vw', maxWidth: 400, margin: '80px auto' }}>
-      <div style={{ marginBottom: 30 }}>Total: {total}</div>
+    <div
+      style={{
+        width: '90vw',
+        maxWidth: 400,
+        margin: '80px auto',
+        paddingBottom: 40,
+      }}
+    >
+      <div style={{ marginBottom: 10 }}>{totalRSVPs} RSVPs</div>
+      <div style={{ marginBottom: 30 }}>{totalGuests} guests</div>
       <div
         style={{
           marginBottom: 10,
@@ -29,7 +42,7 @@ export default function RSVP() {
           justifyContent: 'space-between',
         }}
       >
-        <span>Registered at</span>
+        <span>Registered</span>
         <span>Guests</span>
       </div>
       {rsvps
