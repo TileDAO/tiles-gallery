@@ -33,8 +33,19 @@ export default function RSVP() {
         paddingBottom: 40,
       }}
     >
-      <div style={{ marginBottom: 10 }}>{totalRSVPs} RSVPs</div>
-      <div style={{ marginBottom: 30 }}>{totalGuests} guests</div>
+      <div style={{ marginBottom: 30 }}>
+        RSVP to Offchain:{' '}
+        <a
+          href="https://rsvp.fwb.help/offchain"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://rsvp.fwb.help/offchain
+        </a>
+      </div>
+      <div style={{ marginBottom: 30 }}>
+        {totalRSVPs} RSVPs // {totalGuests} guests
+      </div>
       <div
         style={{
           marginBottom: 10,
