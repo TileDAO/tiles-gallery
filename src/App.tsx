@@ -11,6 +11,7 @@ import Manifesto from './components/Manifesto'
 import Minted from './components/Minted'
 import Navbar from './components/Navbar'
 import Prices from './components/Prices'
+import RSVP from './components/RSVP'
 import Detail from './components/shared/Detail'
 import Treasury from './components/Treasury'
 import Wallet from './components/Wallet'
@@ -74,6 +75,9 @@ function App() {
               </Route>
               <Route exact path="/minted">
                 <Minted />
+              </Route>
+              <Route exact path="/rsvp">
+                <RSVP />
               </Route>
               <Route exact path="/artist">
                 <Artist saleIsActive={saleIsActive} />
