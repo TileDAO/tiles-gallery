@@ -1,9 +1,14 @@
+import { useEthers } from '@usedapp/core'
 import axios, { AxiosResponse } from 'axios'
 import { useEffect, useState } from 'react'
 
 type RSVPInfo = {
-  guestCount: number
+  id: string
+  guests: number
   createdAt: string
+  account: string
+  email: string
+  name: string
 }
 
 export default function RSVP() {
@@ -11,24 +16,32 @@ export default function RSVP() {
   const [totalRSVPs, setTotalRSPVs] = useState<number>()
   const [totalGuests, setTotalGuests] = useState<number>()
 
+  const { account } = useEthers()
+
+  const isAdmin =
+    account?.toLowerCase() ===
+    '0x63A2368F4B509438ca90186cb1C15156713D5834'.toLowerCase()
+
+  const rsvpUrl = 'https://rsvp-proxy.herokuapp.com/rsvps'
+
   useEffect(() => {
     axios
-      .get('https://rsvp-proxy.herokuapp.com/rsvps')
+      .get(isAdmin ? process.env.REACT_APP_RSVP_URL ?? rsvpUrl : rsvpUrl)
       .then((res: AxiosResponse<{ total: number; rsvps: RSVPInfo[] }>) => {
         setRsvps(res.data.rsvps)
         setTotalRSPVs(res.data.total)
 
         setTotalGuests(
-          res.data.rsvps.reduce((acc, curr) => acc + curr.guestCount, 0),
+          res.data.rsvps.reduce((acc, curr) => acc + curr.guests, 0),
         )
       })
-  })
+  }, [account])
 
   return (
     <div
       style={{
         width: '90vw',
-        maxWidth: 400,
+        maxWidth: isAdmin ? 800 : 400,
         margin: '80px auto',
         paddingBottom: 40,
       }}
@@ -47,30 +60,52 @@ export default function RSVP() {
         {totalRSVPs} RSVPs // {totalGuests} guests //{' '}
         {(totalRSVPs ?? 0) + (totalGuests ?? 0)} total
       </div>
-      <div
-        style={{
-          marginBottom: 10,
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <span>Registered</span>
-        <span>Guests</span>
-      </div>
+      {!isAdmin && (
+        <div
+          style={{
+            marginBottom: 10,
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <span>Registered</span>
+          <span>Guests</span>
+        </div>
+      )}
       {rsvps
         ?.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-        .map(r => (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: 10,
-            }}
-          >
-            <span>{new Date(r.createdAt).toLocaleString()}</span>
-            <span>{r.guestCount ? '+' + r.guestCount : ''}</span>
-          </div>
-        ))}
+        .map(r =>
+          isAdmin ? (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: 10,
+              }}
+              key={r.createdAt}
+            >
+              <span>
+                {r.name} // {r.email}
+              </span>
+              <span>
+                {r.guests ? '+' + r.guests : ''}{' '}
+                {new Date(r.createdAt).toLocaleString()}
+              </span>
+            </div>
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: 10,
+              }}
+              key={r.createdAt}
+            >
+              <span>{new Date(r.createdAt).toLocaleString()}</span>
+              <span>{r.guests ? '+' + r.guests : ''}</span>
+            </div>
+          ),
+        )}
     </div>
   )
 }
