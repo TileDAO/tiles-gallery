@@ -68,7 +68,7 @@ export default function RSVP() {
             }}
           >
             <span>{new Date(r.createdAt).toLocaleString()}</span>
-            <span>{r.guestCount}</span>
+            <span>{r.guestCount ? '+' + r.guestCount : ''}</span>
           </div>
         ))}
     </div>
