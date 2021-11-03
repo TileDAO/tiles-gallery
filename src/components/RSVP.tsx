@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 import { useEffect, useState } from 'react'
 
 type RSVPInfo = {
-  attendeeCount: number
+  guestCount: number
   createdAt: string
 }
 
@@ -19,7 +19,7 @@ export default function RSVP() {
         setTotalRSPVs(res.data.total)
 
         setTotalGuests(
-          res.data.rsvps.reduce((acc, curr) => acc + curr.attendeeCount, 0),
+          res.data.rsvps.reduce((acc, curr) => acc + curr.guestCount, 0),
         )
       })
   })
@@ -67,7 +67,7 @@ export default function RSVP() {
             }}
           >
             <span>{new Date(r.createdAt).toLocaleString()}</span>
-            <span>{r.attendeeCount}</span>
+            <span>{r.guestCount}</span>
           </div>
         ))}
     </div>
