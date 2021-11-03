@@ -44,7 +44,8 @@ export default function RSVP() {
         </a>
       </div>
       <div style={{ marginBottom: 30 }}>
-        {totalRSVPs} RSVPs // {totalGuests} guests
+        {totalRSVPs} RSVPs // {totalGuests} guests //{' '}
+        {(totalRSVPs ?? 0) + (totalGuests ?? 0)} total
       </div>
       <div
         style={{
