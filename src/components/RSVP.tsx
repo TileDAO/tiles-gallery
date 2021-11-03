@@ -28,14 +28,20 @@ export default function RSVP() {
     axios
       .get(isAdmin ? process.env.REACT_APP_RSVP_URL ?? rsvpUrl : rsvpUrl)
       .then((res: AxiosResponse<{ total: number; rsvps: RSVPInfo[] }>) => {
-        setRsvps(res.data.rsvps)
-        setTotalRSPVs(res.data.total)
+        setTimeout(
+          () => {
+            setRsvps(res.data.rsvps)
+            setTotalRSPVs(res.data.total)
 
-        setTotalGuests(
-          res.data.rsvps.reduce((acc, curr) => acc + curr.guests, 0),
+            setTotalGuests(
+              res.data.rsvps.reduce((acc, curr) => acc + curr.guests, 0),
+            )
+          },
+          // Quick hack for ensuring isAdmin call updates last
+          isAdmin ? 2000 : 0,
         )
       })
-  }, [account])
+  }, [isAdmin])
 
   return (
     <div
