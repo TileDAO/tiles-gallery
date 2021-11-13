@@ -82,7 +82,7 @@ export default function Gallery() {
               cols={size === 'big' ? 1 : 3}
               items={gallery?.map(g => (
                 <div key={g}>
-                  <a href={'/#/' + g} style={{ display: 'block' }}>
+                  <a href={'/#/' + g} style={{ display: 'inline-block' }}>
                     <Tile
                       style={
                         size === 'big'
@@ -168,7 +168,7 @@ export default function Gallery() {
           right: 0,
           padding: 10,
           fontWeight: 'bold',
-          fontSize: '1rem'
+          fontSize: '1rem',
         }}
       >
         <div
