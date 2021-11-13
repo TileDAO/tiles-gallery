@@ -50,7 +50,7 @@ export default function Landing() {
             ...(isMobile ? { marginBottom: 80 } : { marginLeft: 20 }),
           }}
         >
-          <span style={{ fontWeight: 600, fontSize: '1.4rem' }}>Tiles</span>
+          <span style={{ fontWeight: 600 }}>Tiles</span>
           <br />
           <br />
           <br />
@@ -70,17 +70,22 @@ export default function Landing() {
           <br />
           <br />
           <br />
-          <div>
-            <a href="/#/manifesto" className="btn" style={{ marginRight: 20 }}>
+          <span>
+            <a
+              href="/#/manifesto"
+              className="btn"
+              style={{ marginRight: '1rem' }}
+            >
               Manifesto
             </a>
-            <a href="/#/dao" className="btn" style={{ marginRight: 20 }}>
+            <a href="/#/dao" className="btn" style={{ marginRight: '1rem' }}>
               DAO
             </a>
-            <a style={{ width: 70 }} href="/#/faq" className="btn">
+            <a href="/#/faq" className="btn">
               FAQ
             </a>
-          </div>
+          </span>
+          <br />
           <br />
           <br />
           <br />
