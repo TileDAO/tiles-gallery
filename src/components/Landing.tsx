@@ -34,8 +34,8 @@ export default function Landing() {
         >
           <Phaser
             tileStyle={{
-              width: '74vh',
-              height: '74vh',
+              width: '70vh',
+              height: '70vh',
               maxWidth: '100vw',
               maxHeight: '100vw',
             }}
@@ -50,7 +50,7 @@ export default function Landing() {
             ...(isMobile ? { marginBottom: 80 } : { marginLeft: 20 }),
           }}
         >
-          <span style={{ fontWeight: 600 }}>Tiles</span>
+          <span style={{ fontWeight: 600, fontSize: '1.25rem' }}>Tiles</span>
           <br />
           <br />
           <br />
