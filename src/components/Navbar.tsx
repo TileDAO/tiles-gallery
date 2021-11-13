@@ -59,14 +59,19 @@ export default function Navbar() {
           <a className="bland" href="/">
             <img style={{ width: 24, height: 24 }} src="assets/logo.svg" />
           </a>
-          <a className="text-link" href="/#/minted" style={{ marginLeft: 10 }}>
+          <span style={{ marginLeft: 10 }}>
             {saleIsActive ? (
               <span>
-                {totalSupply?.toString() ?? 0} minted{' '}
+                <a className="text-link" href="/#/minted">
+                  {totalSupply?.toString() ?? 0} minted
+                </a>{' '}
                 {currentPrice && (
                   <span>
-                    // current price:{' '}
-                    {utils.formatUnits(currentPrice.toString())} ETH
+                    //{' '}
+                    <a className="text-link" href="/#/prices">
+                      current price:{' '}
+                      {utils.formatUnits(currentPrice.toString())} ETH
+                    </a>
                   </span>
                 )}
               </span>
@@ -75,7 +80,7 @@ export default function Navbar() {
             ) : (
               ''
             )}
-          </a>
+          </span>
         </div>
         {window.innerWidth > 600 &&
           (account ? (

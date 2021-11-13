@@ -7,6 +7,7 @@ import Dao from './components/Dao'
 import FAQ from './components/FAQ'
 import Gallery from './components/Gallery'
 import Glyphs from './components/Glyphs'
+import Landing from './components/Landing'
 import Manifesto from './components/Manifesto'
 import Minted from './components/Minted'
 import Navbar from './components/Navbar'
@@ -65,13 +66,10 @@ function App() {
           <HashRouter>
             <Switch>
               <Route exact path="/">
+                <Landing />
+              </Route>
+              <Route exact path="/mint">
                 <Gallery />
-              </Route>
-              <Route exact path="/63a2">
-                <Glyphs />
-              </Route>
-              <Route exact path="/glyphs">
-                <Glyphs gated />
               </Route>
               <Route exact path="/minted">
                 <Minted />

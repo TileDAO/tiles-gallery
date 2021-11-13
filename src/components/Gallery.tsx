@@ -4,6 +4,7 @@ import { useLayoutEffect, useState } from 'react'
 
 import Grid from './shared/Grid'
 import Tile from './shared/Tile'
+import Phaser from './Phaser'
 
 export default function Gallery() {
   const [size, setSize] = useState<'small' | 'big'>('big')
@@ -35,56 +36,7 @@ export default function Gallery() {
     <div>
       <div
         style={{
-          maxWidth: 960,
-          margin: '0 auto',
-          paddingTop: '12vh',
-          textAlign: 'center',
-        }}
-      >
-        <span style={{ fontWeight: 600 }}>Tiles</span>
-        <br />
-        <br />
-        <br />
-        Infinite artworks
-        <br />
-        <br />
-        <br />
-        Generated from any ETH address
-        <br />
-        <br />
-        <br />
-        Each one is unique & subjectively rare
-        <br />
-        <br />
-        <br />
-        <a href="/#/prices">Price</a> increases as more are sold
-        <br />
-        <br />
-        <br />
-        Value is for you to decide
-        <br />
-        <br />
-        <br />
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            maxWidth: 110,
-            margin: '0 auto',
-          }}
-        >
-          <a href="/#/manifesto">Manifesto</a>
-          <a href="/#/dao">DAO</a>
-        </div>
-        <br />
-        <br />
-        <a style={{ width: 70 }} href="/#/faq">
-          FAQ
-        </a>
-      </div>
-      <div
-        style={{
-          marginTop: 60,
+          marginTop: 80,
           marginBottom: 60,
           marginLeft: 'auto',
           marginRight: 'auto',
@@ -92,6 +44,12 @@ export default function Gallery() {
           maxWidth: '90vw',
         }}
       >
+        <h2 style={{ marginBottom: 20 }}>Mint a Tile</h2>
+        <p>
+          Enter an 0x address to find its matching Tile, or browse the randomly
+          generated list below.
+        </p>
+
         <input
           style={{
             textAlign: 'center',
@@ -209,6 +167,8 @@ export default function Gallery() {
           bottom: 0,
           right: 0,
           padding: 10,
+          fontWeight: 'bold',
+          fontSize: '1rem'
         }}
       >
         <div
