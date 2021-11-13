@@ -19,20 +19,38 @@ export default function Landing() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          flexWrap: 'wrap-reverse',
+          flexWrap: 'wrap',
           flex: 1,
         }}
       >
         <div
           style={{
-            maxWidth: 960,
-            margin: '0 auto',
-            textAlign: 'center',
             flex: 1,
-            fontSize: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...(isMobile ? { marginBottom: 50, marginTop: 20 } : {}),
           }}
         >
-          <span style={{ fontWeight: 600 }}>Tiles</span>
+          <Phaser
+            tileStyle={{
+              width: '74vh',
+              height: '74vh',
+              maxWidth: '100vw',
+              maxHeight: '100vw',
+            }}
+          />
+        </div>
+
+        <div
+          style={{
+            flex: 1,
+            fontSize: '1rem',
+            textAlign: 'center',
+            ...(isMobile ? { marginBottom: 80 } : { marginLeft: 20 }),
+          }}
+        >
+          <span style={{ fontWeight: 600, fontSize: '1.4rem' }}>Tiles</span>
           <br />
           <br />
           <br />
@@ -52,60 +70,25 @@ export default function Landing() {
           <br />
           <br />
           <br />
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              maxWidth: 130,
-              margin: '0 auto',
-            }}
-          >
-            <a href="/#/manifesto" className="btn">
+          <div>
+            <a href="/#/manifesto" className="btn" style={{ marginRight: 20 }}>
               Manifesto
             </a>
-            <a href="/#/dao" className="btn">
+            <a href="/#/dao" className="btn" style={{ marginRight: 20 }}>
               DAO
+            </a>
+            <a style={{ width: 70 }} href="/#/faq" className="btn">
+              FAQ
             </a>
           </div>
           <br />
           <br />
-          <a style={{ width: 70 }} href="/#/faq" className="btn">
-            FAQ
+          <br />
+          <br />
+          <a className="btn" href="/#/mint" style={{ fontWeight: 'bold' }}>
+            Mint
           </a>
         </div>
-
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            ...(isMobile ? { marginBottom: 50, marginTop: 20 } : {}),
-          }}
-        >
-          <Phaser
-            tileStyle={{ width: '55vh', height: '55vh', maxWidth: '88vw' }}
-          />
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '15vh',
-          minHeight: 100,
-          ...(isMobile ? { marginTop: 60 } : {}),
-        }}
-      >
-        <a
-          className="btn"
-          href="/#/mint"
-          style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: 30 }}
-        >
-          Mint a Tile
-        </a>
       </div>
     </div>
   )
