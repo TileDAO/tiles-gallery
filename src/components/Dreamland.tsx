@@ -11,6 +11,7 @@ const apiUrl = process.env.REACT_APP_DREAMLAND_API_URL
 
 export default function Dreamland() {
   const [loading, setLoading] = useState<boolean>()
+  const [showOriginal, setShowOriginal] = useState<boolean>(false)
   const [history, setHistory] = useState<string[]>([])
   const [tile, setTile] = useState<string>()
   const [dream, setDream] = useState<string>()
@@ -80,15 +81,52 @@ export default function Dreamland() {
             alignItems: 'center',
           }}
         >
-          {output ? (
-            <img style={{ width: 400, height: 400 }} src={output} id="output" />
-          ) : (
-            <Tile
-              style={{ width: 400, height: 400 }}
-              address={tile}
-              id={baseTileId}
-            />
-          )}
+          <div style={{ textAlign: 'center' }}>
+            {output && !showOriginal ? (
+              <img
+                style={{ width: 400, height: 400 }}
+                src={output}
+                id="output"
+              />
+            ) : (
+              <Tile
+                style={{ width: 400, height: 400 }}
+                address={tile}
+                id={baseTileId}
+              />
+            )}
+            {output && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    padding: 5,
+                    ...(showOriginal
+                      ? { opacity: 0.5 }
+                      : { fontWeight: 'bold' }),
+                  }}
+                  onClick={() => setShowOriginal(false)}
+                >
+                  Dream
+                </div>
+                <div
+                  style={{
+                    padding: 5,
+                    ...(showOriginal
+                      ? { fontWeight: 'bold' }
+                      : { opacity: 0.5 }),
+                  }}
+                  onClick={() => setShowOriginal(true)}
+                >
+                  Tile
+                </div>
+              </div>
+            )}
+          </div>
           <div
             style={{
               display: 'flex',
@@ -138,6 +176,12 @@ export default function Dreamland() {
               id="dream"
               onChange={e => {
                 setDream(e.target.value)
+              }}
+              onKeyDown={e => {
+                console.log('e', e)
+                if (e.code === 'Enter') {
+                  dreamIt()
+                }
               }}
             />
             <div
