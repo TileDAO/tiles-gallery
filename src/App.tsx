@@ -4,6 +4,7 @@ import { useLayoutEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import Artist from './components/Artist'
 import Dao from './components/Dao'
+import Dreamland from './components/Dreamland'
 import FAQ from './components/FAQ'
 import Gallery from './components/Gallery'
 import Glyphs from './components/Glyphs'
@@ -94,6 +95,9 @@ function App() {
               </Route>
               <Route exact path="/faq">
                 <FAQ />
+              </Route>
+              <Route exact path="/dreamland">
+                <Dreamland />
               </Route>
               <Route exact path="/wallet/:address">
                 <Wallet />
