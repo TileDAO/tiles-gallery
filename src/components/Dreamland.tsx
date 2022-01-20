@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Wallet from 'ethereumjs-wallet'
+import { constants } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
 
 import { tilePngUrl } from '../utils/api'
@@ -16,9 +17,9 @@ export default function Dreamland() {
   const [output, setOutput] = useState<string>()
 
   useEffect(() => {
-    const randomAddress = Wallet.generate().getAddress().toString('hex')
+    const randomAddress = '0x' + Wallet.generate().getAddress().toString('hex')
     setTile(randomAddress)
-    setHistory(['0x' + randomAddress])
+    setHistory([randomAddress])
   }, [])
 
   const dreamIt = useCallback(async () => {
@@ -96,9 +97,29 @@ export default function Dreamland() {
               alignItems: 'center',
             }}
           >
-            {history.map(h => (
-              <div>{h}</div>
-            ))}
+            {output || loading ? (
+              history.map(h => (
+                <div style={{ marginBottom: 5 }} key={h}>
+                  {h}
+                </div>
+              ))
+            ) : (
+              <input
+                style={{
+                  textAlign: 'center',
+                  display: 'block',
+                  border: '1px solid #ddd',
+                  borderRadius: 4,
+                  padding: 5,
+                  width: '100%',
+                  boxSizing: 'border-box',
+                }}
+                disabled={loading}
+                value={tile}
+                placeholder={constants.AddressZero}
+                onChange={e => setTile(e.target.value.trim())}
+              />
+            )}
             <input
               style={{
                 marginTop: 20,
@@ -110,6 +131,7 @@ export default function Dreamland() {
                 boxSizing: 'border-box',
                 width: 400,
               }}
+              disabled={loading}
               placeholder="What is your dream?"
               type="text"
               name="dream"
@@ -132,20 +154,8 @@ export default function Dreamland() {
               }}
               onClick={() => dreamIt()}
             >
-              {loading ? 'Loading...' : output ? 'Dream again' : 'Dream'}
+              {loading ? 'Dreaming...' : output ? 'Dream again' : 'Dream'}
             </div>
-            {output && (
-              <div
-                className="btn"
-                onClick={() => {
-                  setOutput(undefined)
-                  setHistory([])
-                }}
-                style={{ marginTop: 20 }}
-              >
-                Wake up
-              </div>
-            )}
           </div>
         </div>
       </div>
