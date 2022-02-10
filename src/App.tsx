@@ -96,7 +96,7 @@ function App() {
               <Route exact path="/faq">
                 <FAQ />
               </Route>
-              <Route exact path="/dreamland">
+              <Route exact path="/dreamland/:tile">
                 <Dreamland />
               </Route>
               <Route exact path="/wallet/:address">

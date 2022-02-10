@@ -1,30 +1,79 @@
+import { useEthers } from '@usedapp/core'
 import axios from 'axios'
-import Wallet from 'ethereumjs-wallet'
-import { constants } from 'ethers'
+import { BigNumber } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
+import { useTilesContract } from '../hooks/TilesContract'
 import { tilePngUrl } from '../utils/api'
 import Tile from './shared/Tile'
 
 const baseTileId = 'base-tile'
 const apiUrl = process.env.REACT_APP_DREAMLAND_API_URL
 
-export default function Dreamland() {
-  const [loading, setLoading] = useState<boolean>()
-  const [showOriginal, setShowOriginal] = useState<boolean>(false)
-  const [history, setHistory] = useState<string[]>([])
-  const [tile, setTile] = useState<string>()
-  const [dream, setDream] = useState<string>()
-  const [output, setOutput] = useState<string>()
+type DreamMetadata = {
+  tile: string
+  image: string
+  description: string
+  journal: string[]
+}
 
+export default function Dreamland() {
+  const [confirmRestart, setConfirmRestart] = useState<boolean>(false)
+  const [isMintedForTile, setIsMintedForTile] = useState<boolean>()
+  const [ownsTile, setOwnsTile] = useState<boolean>()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [showOriginal, setShowOriginal] = useState<boolean>(false)
+  const [text, setText] = useState<string>()
+  const [image, setImage] = useState<string>()
+  const [metadata, setMetadata] = useState<DreamMetadata>()
+
+  const { tile } = useParams<{ tile: string }>()
+  const { account } = useEthers()
+
+  // const dreamlandContract = useDreamlandContract()
+  const tilesContract = useTilesContract()
+
+  // Check if connected wallet owns this Tile
   useEffect(() => {
-    const randomAddress = '0x' + Wallet.generate().getAddress().toString('hex')
-    setTile(randomAddress)
-    setHistory([randomAddress])
-  }, [])
+    tilesContract.functions.idOfAddress(tile).then((id: [BigNumber]) => {
+      if (id[0].isZero()) {
+        setOwnsTile(false)
+        return
+      }
+
+      tilesContract.ownerOf(id[0]).then((owner: string) => {
+        setOwnsTile(owner === account)
+      })
+    })
+  }, [tilesContract, tile, account])
+
+  // Get existing database data
+  useEffect(() => {
+    // Check if Dreamland token exists for Tile address
+    // dreamlandContract.functions
+    //   .idOfAddress(tile)
+    //   .then((res: number[]) => setIsMintedForTile(res[0] > 0))
+    //   .catch((e: any) => console.log('Error getting owner', e))
+    setIsMintedForTile(false)
+
+    const loadDreamImage = async () => {
+      const { data: newImage } = await axios.get<string>(
+        apiUrl + '/img/' + tile,
+      )
+      const { data: metadata } = await axios.get<DreamMetadata>(
+        apiUrl + '/metadata/' + tile,
+      )
+
+      if (newImage) setImage(newImage)
+      if (metadata.journal) setMetadata(metadata)
+    }
+
+    loadDreamImage()
+  }, [tile])
 
   const dreamIt = useCallback(async () => {
-    if (!dream || !tile || !apiUrl) return
+    if (!text || !tile || !apiUrl || !ownsTile) return
 
     setLoading(true)
 
@@ -39,14 +88,16 @@ export default function Dreamland() {
     }
 
     // Use previous output if it exists
-    const imgData = (output ?? ((await getDataUrl(tile)) as string)).split(
+    const imgData = (image ?? ((await getDataUrl(tile)) as string)).split(
       'data:image/png;base64,',
     )[1]
 
-    const result = await axios.post(
-      apiUrl,
+    // Dream new dream
+    await axios.post(
+      apiUrl + '/dream',
       {
-        text: dream,
+        tile,
+        text,
         imgData,
       },
       {
@@ -57,11 +108,36 @@ export default function Dreamland() {
       },
     )
 
-    setHistory([...history, dream])
-    setOutput(result.data)
-
+    // Update metadata & image
+    const { data: metadata } = await axios.get<DreamMetadata>(
+      apiUrl + '/metadata/' + tile,
+    )
+    setMetadata(metadata)
+    setImage((await axios.get<string>(metadata.image)).data)
     setLoading(false)
-  }, [dream, tile, history])
+  }, [text, tile, ownsTile])
+
+  const restart = useCallback(async () => {
+    if (!ownsTile) return
+
+    axios
+      .post(
+        apiUrl + '/restart',
+        {
+          tile,
+        },
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .then(() => {
+        setImage(undefined)
+        setConfirmRestart(false)
+      })
+  }, [ownsTile, tile])
 
   return (
     <div>
@@ -82,10 +158,10 @@ export default function Dreamland() {
           }}
         >
           <div style={{ textAlign: 'center' }}>
-            {output && !showOriginal ? (
+            {image && !showOriginal ? (
               <img
                 style={{ width: 400, height: 400 }}
-                src={output}
+                src={image}
                 id="output"
               />
             ) : (
@@ -95,7 +171,7 @@ export default function Dreamland() {
                 id={baseTileId}
               />
             )}
-            {output && (
+            {image && (
               <div
                 style={{
                   display: 'flex',
@@ -127,80 +203,94 @@ export default function Dreamland() {
               </div>
             )}
           </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {output || loading ? (
-              history.map(h => (
-                <div style={{ marginBottom: 5 }} key={h}>
-                  {h}
-                </div>
-              ))
-            ) : (
+
+          {isMintedForTile === false && ownsTile && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {metadata &&
+                metadata.journal.map(j => (
+                  <div style={{ marginBottom: 5 }} key={j}>
+                    {j}
+                  </div>
+                ))}
+
               <input
                 style={{
+                  marginTop: 20,
                   textAlign: 'center',
                   display: 'block',
                   border: '1px solid #ddd',
                   borderRadius: 4,
                   padding: 5,
-                  width: '100%',
                   boxSizing: 'border-box',
+                  width: 400,
                 }}
+                value={text}
                 disabled={loading}
-                value={tile}
-                placeholder={constants.AddressZero}
-                onChange={e => setTile(e.target.value.trim())}
+                placeholder="What is your dream?"
+                type="text"
+                id="dream-input"
+                onChange={e => {
+                  setText(e.target.value)
+                }}
+                onKeyDown={e => {
+                  console.log('e', e)
+                  if (e.code === 'Enter') {
+                    dreamIt()
+                  }
+                }}
               />
-            )}
-            <input
-              style={{
-                marginTop: 20,
-                textAlign: 'center',
-                display: 'block',
-                border: '1px solid #ddd',
-                borderRadius: 4,
-                padding: 5,
-                boxSizing: 'border-box',
-                width: 400,
-              }}
-              disabled={loading}
-              placeholder="What is your dream?"
-              type="text"
-              name="dream"
-              id="dream"
-              onChange={e => {
-                setDream(e.target.value)
-              }}
-              onKeyDown={e => {
-                console.log('e', e)
-                if (e.code === 'Enter') {
-                  dreamIt()
-                }
-              }}
-            />
-            <div
-              className="btn"
-              style={{
-                marginTop: 20,
-                fontWeight: 'bold',
-                ...(loading || !dream
-                  ? {
-                      opacity: 0.5,
-                      pointerEvents: 'none',
-                    }
-                  : {}),
-              }}
-              onClick={() => dreamIt()}
-            >
-              {loading ? 'Dreaming...' : output ? 'Dream again' : 'Dream'}
+              <div
+                className="btn"
+                style={{
+                  marginTop: 20,
+                  fontWeight: 'bold',
+                  ...(loading || !text
+                    ? {
+                        opacity: 0.5,
+                        pointerEvents: 'none',
+                      }
+                    : {}),
+                }}
+                onClick={() => dreamIt()}
+              >
+                {loading ? 'Dreaming...' : image ? 'Dream again' : 'Dream'}
+              </div>
+              {image &&
+                !loading &&
+                (confirmRestart ? (
+                  <div
+                    className="btn"
+                    style={{
+                      marginTop: 20,
+                      fontWeight: 'bold',
+                    }}
+                    onClick={() => restart()}
+                  >
+                    Yes, erase my dream
+                  </div>
+                ) : (
+                  <div
+                    className="btn"
+                    style={{
+                      marginTop: 20,
+                      fontWeight: 'bold',
+                    }}
+                    onClick={() => setConfirmRestart(true)}
+                  >
+                    Restart
+                  </div>
+                ))}
             </div>
-          </div>
+          )}
+
+          {!ownsTile && <div>You can only Dream of Tiles you own.</div>}
         </div>
       </div>
     </div>
