@@ -62,7 +62,7 @@ export default function Dreamland() {
         apiUrl + '/img/' + tile,
       )
       const { data: metadata } = await axios.get<DreamMetadata>(
-        apiUrl + '/metadata/' + tile,
+        apiUrl + '/' + tile,
       )
 
       if (newImage) setImage(newImage)
@@ -110,7 +110,7 @@ export default function Dreamland() {
 
     // Update metadata & image
     const { data: metadata } = await axios.get<DreamMetadata>(
-      apiUrl + '/metadata/' + tile,
+      apiUrl + '/' + tile,
     )
     setMetadata(metadata)
     setImage((await axios.get<string>(metadata.image)).data)
