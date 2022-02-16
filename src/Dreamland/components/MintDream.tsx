@@ -1,6 +1,7 @@
 import { useEthers } from '@usedapp/core'
 import axios from 'axios'
 import { BigNumber } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -10,7 +11,6 @@ import { useTilesContract } from '../../hooks/TilesContract'
 import { useDreamsContract } from '../hooks/DreamsContract'
 import { DreamMetadata } from '../models/dreamMetadata'
 import DreamTile from './DreamTile'
-import { formatEther, parseEther } from 'ethers/lib/utils'
 
 const MAX_WORDS = 100
 const MAX_CHARS = 300
@@ -32,12 +32,20 @@ export default function MintDream() {
   const [dreamImage, setDreamImage] = useState<string | null>()
   const [dreamMetadata, setDreamMetadata] = useState<DreamMetadata | null>()
   const [tileIsOwned, setTileIsOwned] = useState<boolean>()
+  const [isDreamt, setIsDreamt] = useState<boolean>()
 
   const { tile } = useParams<{ tile: string }>()
   const tilesContract = useTilesContract()
   const dreamsContract = useDreamsContract()
   const { price } = useContext(DreamlandContext)
   const { account } = useEthers()
+
+  useEffect(() => {
+    axios
+      .get<string>(apiUrl + '/' + tile?.toLowerCase())
+      .then(res => setIsDreamt(true))
+      .catch(() => setIsDreamt(false))
+  }, [tile])
 
   // Check if connected wallet owns this Tile
   useEffect(() => {
@@ -138,7 +146,7 @@ export default function MintDream() {
       console.log('Error on dream', e)
     }
 
-    // window.location.reload()
+    window.location.reload()
   }, [text, tile])
 
   const mint = useCallback(() => {
@@ -224,7 +232,7 @@ export default function MintDream() {
   }, [confirmRestart, hasDreamData])
 
   const mintElem = useMemo(() => {
-    if (!hasDreamData || !dreamMetadata) return null
+    if (!hasDreamData || !dreamMetadata || isDreamt) return null
 
     return (
       <div>

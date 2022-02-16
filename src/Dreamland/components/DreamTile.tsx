@@ -1,19 +1,25 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 
 import Tile from '../../components/shared/Tile'
 import Dream from './Dream'
 
 const apiUrl = process.env.REACT_APP_DREAMLAND_API_URL
 
-export default function DreamTile({ tile }: { tile: string | undefined }) {
+export default function DreamTile({
+  tile,
+  style,
+}: {
+  tile: string | undefined
+  style?: CSSProperties
+}) {
   const [isDreamt, setIsDreamt] = useState<boolean>()
   const [showOriginal, setShowOriginal] = useState<boolean>(false)
 
   useEffect(() => {
     axios
-      .get<string>(apiUrl + '/img/' + tile)
-      .then(() => setIsDreamt(true))
+      .get<string>(apiUrl + '/' + tile?.toLowerCase())
+      .then(res => setIsDreamt(true))
       .catch(() => setIsDreamt(false))
   }, [tile])
 
@@ -22,9 +28,9 @@ export default function DreamTile({ tile }: { tile: string | undefined }) {
   return (
     <div style={{ textAlign: 'center' }}>
       {showOriginal || !isDreamt ? (
-        <Tile style={{ width: 400, height: 400 }} address={tile} />
+        <Tile style={style ?? { width: 400, height: 400 }} address={tile} />
       ) : (
-        <Dream style={{ width: 400, height: 400 }} tile={tile} />
+        <Dream style={style ?? { width: 400, height: 400 }} tile={tile} />
       )}
 
       {isDreamt && (

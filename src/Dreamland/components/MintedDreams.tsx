@@ -56,24 +56,22 @@ export default function MintedDreams() {
         cols={3}
         items={tokenIds.map(tokenId => (
           <div key={tokenId.toString()}>
-            <a
-              href={'/#/dreamland/' + tokenId}
-              style={{
-                display: 'block',
-                textDecoration: 'none',
-              }}
-            >
-              <DreamForToken
-                style={{ width: 280, height: 280 }}
-                tokenId={tokenId}
-                renderDetails={(address, id) => (
-                  <div style={{ marginBottom: 10, textAlign: 'center' }}>
-                    <div style={{ fontSize: 11, opacity: 0.25 }}>{address}</div>
-                    <div>#{id.toString()}</div>
-                  </div>
-                )}
-              />
-            </a>
+            <DreamForToken
+              style={{ width: 280, height: 280 }}
+              tokenId={tokenId}
+              dreamLink={
+                window.location.href +
+                (window.location.href.endsWith('/') ? '' : '/') +
+                'id/' +
+                tokenId.toString()
+              }
+              renderDetails={(address, id) => (
+                <div style={{ marginBottom: 10, textAlign: 'center' }}>
+                  <div style={{ fontSize: 11, opacity: 0.25 }}>{address}</div>
+                  <div>#{id.toString()}</div>
+                </div>
+              )}
+            />
           </div>
         ))}
       />

@@ -1,7 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { CSSProperties, useEffect, useLayoutEffect, useState } from 'react'
+
 import { useDreamsContract } from '../hooks/DreamsContract'
+import { DreamMetadata } from '../models/dreamMetadata'
+import DreamTile from './DreamTile'
 
 export default function DreamForToken({
   tokenId,
@@ -17,7 +20,7 @@ export default function DreamForToken({
   renderDetails?: (address: string, id: BigNumber) => string | JSX.Element
 }) {
   const [URI, setURI] = useState<string>()
-  const [data, setData] = useState<{ name: string; image: string }>()
+  const [data, setData] = useState<DreamMetadata>()
 
   const contract = useDreamsContract()
 
@@ -25,26 +28,14 @@ export default function DreamForToken({
     if (!tokenId || tokenId.eq(0)) return
     contract.functions
       .tokenURI(tokenId.toHexString())
-      .then(res => {
-        console.log('asdf', res)
-        setURI(res[0])
-      })
+      .then(res => setURI(res[0]))
       .catch(e => console.log('Error getting tokenURI', e))
   }, [tokenId])
 
   useLayoutEffect(() => {
     if (!URI) return
-    console.log('asdf', URI)
-    axios
-      .get(URI)
-      .then(res => {
-        console.log('asdf', res)
-        setData(res.data)
-      })
-      .catch(e => console.log('asdf e', e))
+    axios.get(URI).then(res => setData(res.data))
   }, [URI])
-
-  console.log('drmtok', data)
 
   if (!data) return null
 
@@ -58,9 +49,9 @@ export default function DreamForToken({
           ...style,
         }}
         src={data.image}
-        onClick={() => onClickDream?.(data.name)}
+        onClick={() => onClickDream?.(data.tile)}
       />
-      {renderDetails && tokenId ? renderDetails(data.name, tokenId) : null}
+      {renderDetails && tokenId ? renderDetails(data.tile, tokenId) : null}
     </div>
   )
 

@@ -86,7 +86,10 @@ export default function Dreamland() {
           <Route exact path={`${url}/mint/:tile`}>
             <MintDream />
           </Route>
-          <Route exact path={`${url}/:id`}>
+          <Route exact path={`${url}/:tile`}>
+            <DreamDetail />
+          </Route>
+          <Route exact path={`${url}/id/:id`}>
             <DreamDetail />
           </Route>
           <Route exact path={`${url}`}>
