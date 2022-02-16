@@ -21,10 +21,13 @@ export default function MintedDreams() {
 
     const newTokenIds = start ? [start] : [...tokenIds]
 
-    for (let i = 0; i < count - (start ? 1 : 0); i++) {
-      const idx = newTokenIds.length - 1
-      if (idx === 0) break
-      newTokenIds?.push(newTokenIds[newTokenIds.length - 1].sub(1))
+    const startId = newTokenIds[newTokenIds.length - 1]
+
+    let added = 0
+    for (let i = startId.toNumber(); i > 0; i--) {
+      if (added === count) break
+      newTokenIds?.push(BigNumber.from(i).sub(1))
+      added++
     }
 
     setTokenIds(newTokenIds)

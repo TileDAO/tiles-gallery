@@ -44,18 +44,13 @@ export default function Dreamland() {
       .catch(e => console.log('Error getting saleIsActive', e))
     dreamsContract.functions
       .PRICE()
-      .then(res => {
-        console.log('price')
-        setPrice(res[0])
-      })
+      .then(res => setPrice(res[0]))
       .catch(e => console.log('Error getting price', e))
     dreamsContract.functions
       .MAX_SUPPLY()
       .then(res => setMaxSupply(res[0]))
       .catch(e => console.log('Error getting max supply', e))
   }, [])
-
-  console.log('url', url, path)
 
   return (
     <DreamlandContext.Provider
