@@ -37,7 +37,7 @@ export default function Phaser({ tileStyle }: { tileStyle?: CSSProperties }) {
 
     setAddress(newAddress)
 
-    function phase() {
+    const interval = setInterval(() => {
       let addressArr = newAddress.split('')
 
       for (let i = 0; i < 3; i++) {
@@ -47,11 +47,9 @@ export default function Phaser({ tileStyle }: { tileStyle?: CSSProperties }) {
 
       newAddress = addressArr.join('')
       setAddress(newAddress)
-    }
-
-    setInterval(() => {
-      phase()
     }, 1000)
+
+    return () => clearInterval(interval)
   }, [])
 
   return (

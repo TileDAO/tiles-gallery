@@ -12,3 +12,6 @@ export const glyphSvgUrl = (address: string, color?: boolean) =>
   '/svg/' +
   address.toLowerCase() +
   (color ? '?color=true' : '')
+
+export const dreamPngUrl = (address: string) =>
+  process.env.REACT_APP_DREAMLAND_API_URL + '/img/' + address.toLowerCase()

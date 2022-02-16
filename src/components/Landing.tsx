@@ -38,6 +38,8 @@ export default function Landing() {
               height: '70vh',
               maxWidth: '100vw',
               maxHeight: '100vw',
+              minWidth: 360,
+              minHeight: 360,
             }}
           />
         </div>

@@ -4,7 +4,6 @@ import { useLayoutEffect, useState } from 'react'
 
 import Grid from './shared/Grid'
 import Tile from './shared/Tile'
-import Phaser from './Phaser'
 
 export default function Gallery() {
   const [size, setSize] = useState<'small' | 'big'>('big')

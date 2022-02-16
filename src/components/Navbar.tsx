@@ -93,7 +93,7 @@ export default function Navbar() {
                 <a className="text-link" href="/#/treasury">
                   {TILEBalance
                     ? Math.round(parseFloat(formatEther(TILEBalance ?? 0)))
-                    : '--'}{' '}
+                    : '0'}{' '}
                   TILE
                 </a>
               </span>{' '}

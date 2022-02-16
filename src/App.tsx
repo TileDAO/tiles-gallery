@@ -4,10 +4,9 @@ import { useLayoutEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import Artist from './components/Artist'
 import Dao from './components/Dao'
-import Dreamland from './components/Dreamland'
+import Dreamland from './Dreamland/components'
 import FAQ from './components/FAQ'
 import Gallery from './components/Gallery'
-import Glyphs from './components/Glyphs'
 import Landing from './components/Landing'
 import Manifesto from './components/Manifesto'
 import Minted from './components/Minted'
@@ -19,6 +18,9 @@ import Treasury from './components/Treasury'
 import Wallet from './components/Wallet'
 import { TilesContext } from './contexts/TilesContext'
 import { useTilesContract } from './hooks/TilesContract'
+import DreamsOwnerDashboard from './Dreamland/components/DreamsOwnerDashboard'
+import SelectTile from './Dreamland/components/SelectTile'
+import MintDream from './Dreamland/components/MintDream'
 
 function App() {
   const { account } = useEthers()
@@ -96,7 +98,7 @@ function App() {
               <Route exact path="/faq">
                 <FAQ />
               </Route>
-              <Route exact path="/dreamland/:tile">
+              <Route path="/dreamland">
                 <Dreamland />
               </Route>
               <Route exact path="/wallet/:address">

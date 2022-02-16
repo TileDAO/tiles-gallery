@@ -1,24 +1,29 @@
 import { BigNumber } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { TilesContext } from '../contexts/TilesContext'
-import Grid from './shared/Grid'
-import TileForToken from './shared/TileForToken'
+import { DreamlandContext } from '../../contexts/DreamlandContext'
+import Grid from '../../components/shared/Grid'
 
-export default function Minted() {
+import DreamForToken from './DreamForToken'
+
+const pageSize = 30
+
+export default function MintedDreams() {
   const [tokenIds, setTokenIds] = useState<BigNumber[]>([])
 
-  const { totalSupply } = useContext(TilesContext)
+  const { totalSupply, maxSupply } = useContext(DreamlandContext)
 
   useLayoutEffect(() => {
-    load(30, totalSupply)
+    load(pageSize, totalSupply)
   }, [totalSupply])
 
   function load(count: number, start?: BigNumber) {
-    if (!start?.gt(0) && !tokenIds.length) return
+    if (!start?.gt(0)) return
 
     const newTokenIds = start ? [start] : [...tokenIds]
 
     for (let i = 0; i < count - (start ? 1 : 0); i++) {
+      const idx = newTokenIds.length - 1
+      if (idx === 0) break
       newTokenIds?.push(newTokenIds[newTokenIds.length - 1].sub(1))
     }
 
@@ -26,40 +31,39 @@ export default function Minted() {
   }
 
   return (
-    <div
-      style={{
-        paddingTop: '20vh',
-        width: 960,
-        maxWidth: '90vw',
-        margin: '0 auto',
-        paddingBottom: 100,
-      }}
-    >
+    <div>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
-          marginBottom: 80,
+          marginBottom: 40,
         }}
       >
-        <h4>Minted Tiles</h4>
-        <a style={{ display: 'inline-block' }} className="bland btn" href="/">
-          Mint
+        <h4>
+          {totalSupply?.toString()}/{maxSupply?.toString()} Dreams minted
+        </h4>
+        <a
+          style={{ display: 'inline-block' }}
+          className="bland btn"
+          href="/#/dreamland/mint"
+        >
+          Mint a Dream
         </a>
       </div>
+
       <Grid
         cols={3}
         items={tokenIds.map(tokenId => (
           <div key={tokenId.toString()}>
             <a
-              href={'/#/id/' + tokenId}
+              href={'/#/dreamland/' + tokenId}
               style={{
                 display: 'block',
                 textDecoration: 'none',
               }}
             >
-              <TileForToken
+              <DreamForToken
                 style={{ width: 280, height: 280 }}
                 tokenId={tokenId}
                 renderDetails={(address, id) => (
@@ -73,18 +77,20 @@ export default function Minted() {
           </div>
         ))}
       />
-      <div style={{ textAlign: 'center' }}>
-        <div
-          className="btn"
-          style={{
-            display: 'inline-block',
-            marginTop: 100,
-            padding: 20,
-          }}
-          onClick={() => load(30)}
-        >
-          more
-        </div>
+
+      <div
+        style={{
+          textAlign: 'center',
+          padding: 20,
+        }}
+      >
+        {tokenIds && tokenIds.length && tokenIds.length % pageSize === 0 ? (
+          <span className="btn" onClick={() => load(pageSize)}>
+            more
+          </span>
+        ) : (
+          tokenIds.length === 0 && <span>No dreams minted yet</span>
+        )}
       </div>
     </div>
   )

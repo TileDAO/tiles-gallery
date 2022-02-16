@@ -35,6 +35,12 @@ input {
   text-decoration: none;
 }
 
+.btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  border-color: transparent;
+}
+
 .btn:hover {
   border-color: #222;
 }

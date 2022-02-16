@@ -15,11 +15,13 @@ export const networkConfig: Config = {
   ) as ChainId,
   readOnlyUrls: {
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/' + infuraId,
+    [ChainId.Rinkeby]: 'https://rinkeby.infura.io/v3/' + infuraId,
   },
   multicallAddresses: {
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/' + infuraId,
+    [ChainId.Rinkeby]: 'https://rinkeby.infura.io/v3/' + infuraId,
   },
-  supportedChains: [ChainId.Mainnet],
+  supportedChains: [ChainId.Mainnet, ChainId.Rinkeby],
 }
 
 ReactDOM.render(
