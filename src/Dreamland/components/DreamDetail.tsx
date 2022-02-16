@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom'
 
 import useDreamMetadata from '../hooks/DreamMetadata'
 import { useDreamsContract } from '../hooks/DreamsContract'
-import Dream from './Dream'
-import DreamForToken from './DreamForToken'
 import DreamTile from './DreamTile'
 
 export default function DreamDetail() {

@@ -41,9 +41,9 @@ export default function MintDream() {
   const { account } = useEthers()
 
   useEffect(() => {
-    axios
-      .get<string>(apiUrl + '/' + tile?.toLowerCase())
-      .then(res => setIsDreamt(true))
+    dreamsContract.functions
+      .idOfAddress(tile)
+      .then(res => setIsDreamt(res[0] > 0))
       .catch(() => setIsDreamt(false))
   }, [tile])
 
