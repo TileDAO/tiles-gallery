@@ -7,7 +7,9 @@ export default function SelectTile() {
   const { account } = useEthers()
   const ownedTiles = useOwnedTiles(account)
 
-  if (!ownedTiles) return null
+  if (!ownedTiles) {
+    return <div style={{ textAlign: 'center' }}>Connect a wallet to mint</div>
+  }
 
   return (
     <div>

@@ -1,6 +1,7 @@
 import { BigNumber } from 'ethers'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import FormattedAddress from '../../components/shared/FormattedAddress'
 
 import useDreamMetadata from '../hooks/DreamMetadata'
 import { useDreamsContract } from '../hooks/DreamsContract'
@@ -11,6 +12,7 @@ export default function DreamDetail() {
     useParams<{ tile: string; id: string }>()
   const [tileAddress, setTileAddress] = useState<string>()
   const [tokenId, setTokenId] = useState<BigNumber>()
+  const [owner, setOwner] = useState<string>()
 
   const contract = useDreamsContract()
 
@@ -37,6 +39,14 @@ export default function DreamDetail() {
     )
   }, [tokenId, tileAddress])
 
+  useLayoutEffect(() => {
+    if (!tokenId || tokenId.eq(0)) return
+    contract.functions.ownerOf(tokenId.toHexString()).then(
+      res => setOwner(res[0]),
+      err => console.log('Error getting ownerOf', err),
+    )
+  }, [tokenId])
+
   const dreamMetadata = useDreamMetadata(tileAddress)
 
   if (!tileAddress && !tokenId) return null
@@ -46,9 +56,19 @@ export default function DreamDetail() {
       {tileAddress && (
         <div>
           <DreamTile tile={tileAddress} style={{ width: 400, height: 400 }} />
-          <div style={{ marginBottom: 20, marginTop: 10, textAlign: 'center' }}>
-            {tileAddress?.startsWith('0x') ? '' : '0x'}
-            {tileAddress}
+          <div
+            style={{
+              marginBottom: 20,
+              marginTop: 10,
+              textAlign: 'center',
+              color: '#bbb',
+            }}
+          >
+            <div style={{ color: '#bbb' }}>
+              Owner: <FormattedAddress address={owner} />
+              Tile: {tileAddress?.startsWith('0x') ? '' : '0x'}
+              {tileAddress}
+            </div>
           </div>
         </div>
       )}

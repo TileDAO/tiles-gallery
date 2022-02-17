@@ -5,7 +5,6 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
 import { DreamlandContext } from '../../contexts/DreamlandContext'
 import { useDreamsContract } from '../hooks/DreamsContract'
-import Dream from './Dream'
 import DreamDetail from './DreamDetail'
 import DreamsOwnerDashboard from './DreamsOwnerDashboard'
 import MintDream from './MintDream'
@@ -21,7 +20,7 @@ export default function Dreamland() {
 
   const { account } = useEthers()
 
-  const { path, url } = useRouteMatch()
+  const { url } = useRouteMatch()
 
   const dreamsContract = useDreamsContract()
 

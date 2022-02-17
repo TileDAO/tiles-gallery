@@ -32,7 +32,7 @@ export default function MintDream() {
   const [dreamImage, setDreamImage] = useState<string | null>()
   const [dreamMetadata, setDreamMetadata] = useState<DreamMetadata | null>()
   const [tileIsOwned, setTileIsOwned] = useState<boolean>()
-  const [isDreamt, setIsDreamt] = useState<boolean>()
+  const [isMinted, setIsMinted] = useState<boolean>()
 
   const { tile } = useParams<{ tile: string }>()
   const tilesContract = useTilesContract()
@@ -43,8 +43,8 @@ export default function MintDream() {
   useEffect(() => {
     dreamsContract.functions
       .idOfAddress(tile)
-      .then(res => setIsDreamt(res[0] > 0))
-      .catch(() => setIsDreamt(false))
+      .then(res => setIsMinted(res[0] > 0))
+      .catch(() => setIsMinted(false))
   }, [tile])
 
   // Check if connected wallet owns this Tile
@@ -232,7 +232,9 @@ export default function MintDream() {
   }, [confirmRestart, hasDreamData])
 
   const mintElem = useMemo(() => {
-    if (!hasDreamData || !dreamMetadata || isDreamt) return null
+    if (!hasDreamData || !dreamMetadata) return null
+
+    if (isMinted) return <div>Already minted</div>
 
     return (
       <div>
@@ -304,7 +306,7 @@ export default function MintDream() {
         </div>
       </div>
     )
-  }, [hasDreamData, isLoading, confirmLock])
+  }, [hasDreamData, isLoading, confirmLock, dreamMetadata, price, isMinted])
 
   if (!tileIsOwned) {
     return (
