@@ -5,6 +5,7 @@ import { useLayoutEffect, useState } from 'react'
 
 import { tilesAddress } from '../contracts/tiles.address'
 import { useErc20Contract } from '../hooks/Erc20Contract'
+import { isMobile } from '../utils/isMobile'
 import Glyph from './shared/Glyph'
 
 export default function Glyphs({ gated }: { gated?: boolean }) {
@@ -26,8 +27,6 @@ export default function Glyphs({ gated }: { gated?: boolean }) {
       .then(res => setBalance(res[0]))
       .catch(e => console.log('Error getting tokensOfOwner', e))
   }, [account])
-
-  const isMobile = document.documentElement.clientWidth < 600
 
   const load = (count: number) => {
     const newGallery = [...(gallery ?? [])]

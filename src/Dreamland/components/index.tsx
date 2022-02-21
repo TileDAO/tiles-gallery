@@ -8,6 +8,8 @@ import { DreamlandContext } from '../../contexts/DreamlandContext'
 import { useDreamsContract } from '../hooks/DreamsContract'
 import DreamDetail from './DreamDetail'
 import DreamsOwnerDashboard from './DreamsOwnerDashboard'
+import FAQ from './FAQ'
+import Landing from './Landing'
 import MintDream from './MintDream'
 import MintedDreams from './MintedDreams'
 import SelectTile from './SelectTile'
@@ -21,7 +23,7 @@ export default function Dreamland() {
 
   const { account } = useEthers()
 
-  const { url } = useRouteMatch()
+  const { url, isExact } = useRouteMatch()
 
   const dreamsContract = useDreamsContract()
 
@@ -71,14 +73,11 @@ export default function Dreamland() {
           margin: '0 auto',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-            marginBottom: 40,
-          }}
-        >
+        <div style={{ marginBottom: 100 }} hidden={!isExact}>
+          <Landing />
+        </div>
+
+        <div style={{ marginBottom: 40 }}>
           <div>
             <a
               className="text-link"
@@ -89,14 +88,6 @@ export default function Dreamland() {
             </a>{' '}
             {price && <>// price: {formatEther(price)} ETH</>}
           </div>
-
-          <a
-            style={{ display: 'inline-block' }}
-            className="bland btn"
-            href="/#/dreamland/mint"
-          >
-            Mint a Dream
-          </a>
         </div>
 
         <Switch>
@@ -108,6 +99,9 @@ export default function Dreamland() {
           </Route>
           <Route exact path={`${url}/mint/:tile`}>
             <MintDream />
+          </Route>
+          <Route exact path={`${url}/faq`}>
+            <FAQ />
           </Route>
           <Route exact path={`${url}/:tile`}>
             <DreamDetail />

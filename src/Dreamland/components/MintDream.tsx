@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom'
 import Tile from '../../components/shared/Tile'
 import { DreamlandContext } from '../../contexts/DreamlandContext'
 import { useTilesContract } from '../../hooks/TilesContract'
+import { isMobile } from '../../utils/isMobile'
 import { useDreamsContract } from '../hooks/DreamsContract'
 import { DreamMetadata } from '../models/dreamMetadata'
 import DreamTile from './DreamTile'
@@ -41,8 +42,6 @@ export default function MintDream() {
   const dreamsContract = useDreamsContract()
   const { price } = useContext(DreamlandContext)
   const { account } = useEthers()
-
-  const isMobile = window.innerWidth <= 600
 
   const size = isMobile ? 320 : 400
 
@@ -289,7 +288,7 @@ export default function MintDream() {
                 style={{ fontWeight: 'bold' }}
                 onClick={() => lock()}
               >
-                Yes, lock this Dream forever
+                Yes, lock this Dream journal forever
               </div>
             </div>
           ) : (
@@ -299,7 +298,7 @@ export default function MintDream() {
                 style={{ display: 'inline-block', fontWeight: 'bold' }}
                 onClick={() => setConfirmLock(true)}
               >
-                Lock
+                Lock journal
               </div>
               <div
                 style={{
@@ -459,7 +458,7 @@ export default function MintDream() {
                 entered. Each phrase will be added to your dream journal, which
                 is stored in the Dream NFT metadata. "Wake up" to clear your
                 dream journal and start over with your Tile image. Once your
-                dream has been locked, no more changes can be made.
+                dream journal has been locked, no more changes can be made.
               </p>
 
               {mintElem && <div style={{ marginTop: 30 }}>{mintElem}</div>}

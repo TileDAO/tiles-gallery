@@ -1,8 +1,7 @@
+import { isMobile } from '../utils/isMobile'
 import Phaser from './Phaser'
 
 export default function Landing() {
-  const isMobile = window.innerWidth < 600
-
   return (
     <div
       style={{
