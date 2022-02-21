@@ -2,7 +2,14 @@ import { useEthers } from '@usedapp/core'
 import axios from 'axios'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  CSSProperties,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { useParams } from 'react-router-dom'
 
 import Tile from '../../components/shared/Tile'
@@ -14,16 +21,11 @@ import DreamTile from './DreamTile'
 
 const MAX_WORDS = 100
 const MAX_CHARS = 300
-
-const ERRORS = {
-  WORD_LIMIT: `Phrase cannot be longer than ${MAX_WORDS} words`,
-  CHAR_LIMIT: `Phrase cannot be longer than ${MAX_CHARS} characters`,
-}
+const MAX_PHRASES = 10
 
 const apiUrl = process.env.REACT_APP_DREAMLAND_API_URL
 
 export default function MintDream() {
-  const [error, setError] = useState<keyof typeof ERRORS>()
   const [confirmLock, setConfirmLock] = useState<boolean>(false)
   const [confirmRestart, setConfirmRestart] = useState<boolean>(false)
   const [loadingAction, setLoadingAction] = useState<boolean>(false)
@@ -39,6 +41,10 @@ export default function MintDream() {
   const dreamsContract = useDreamsContract()
   const { price } = useContext(DreamlandContext)
   const { account } = useEthers()
+
+  const isMobile = window.innerWidth <= 600
+
+  const size = isMobile ? 320 : 400
 
   useEffect(() => {
     dreamsContract.functions
@@ -122,8 +128,16 @@ export default function MintDream() {
     window.location.reload()
   }, [tile])
 
+  const error = useMemo(() => {
+    if (text.split(' ').length > MAX_WORDS) {
+      return `Phrase cannot be longer than ${MAX_WORDS} words`
+    } else if (text.length > MAX_CHARS) {
+      return `Phrase cannot be longer than ${MAX_CHARS} characters`
+    }
+  }, [text])
+
   const dream = useCallback(async () => {
-    if (!text || !tile || !apiUrl) return
+    if (!text || !tile || !apiUrl || error) return
 
     setLoadingDream(true)
 
@@ -163,14 +177,6 @@ export default function MintDream() {
       .catch(e => console.log('Error minting Dream'))
   }, [tile, price])
 
-  const validateText = (str: string) => {
-    if (str.split(' ').length > MAX_WORDS) {
-      setError('WORD_LIMIT')
-    } else if (str.length > MAX_CHARS) {
-      setError('CHAR_LIMIT')
-    }
-  }
-
   const isLoading = loadingAction || loadingDream
   const hasDreamData = dreamImage && dreamMetadata
 
@@ -184,7 +190,7 @@ export default function MintDream() {
           color: '#FE4465',
         }}
       >
-        {ERRORS[error]}
+        {error}
       </div>
     )
   }, [error])
@@ -226,10 +232,35 @@ export default function MintDream() {
       </div>
     ) : (
       <div className="bland btn" onClick={() => setConfirmRestart(true)}>
-        Restart
+        Wake up
       </div>
     )
   }, [confirmRestart, hasDreamData])
+
+  const dreamElem = useMemo(() => {
+    const style: CSSProperties = {
+      fontWeight: 'bold',
+      fontSize: '1rem',
+    }
+
+    if (dreamMetadata && dreamMetadata.journal.length >= 10) {
+      return (
+        <div className="btn disabled" style={style}>
+          Only {MAX_PHRASES} phrases allowed
+        </div>
+      )
+    }
+
+    return (
+      <div
+        className={error ? 'btn disabled' : 'btn'}
+        style={style}
+        onClick={() => dream()}
+      >
+        {dreamImage ? 'Dream again' : 'Dream'}
+      </div>
+    )
+  }, [error, dreamImage, dream, dreamMetadata?.journal])
 
   const mintElem = useMemo(() => {
     if (!hasDreamData || !dreamMetadata) return null
@@ -306,7 +337,16 @@ export default function MintDream() {
         </div>
       </div>
     )
-  }, [hasDreamData, isLoading, confirmLock, dreamMetadata, price, isMinted])
+  }, [
+    hasDreamData,
+    isLoading,
+    confirmLock,
+    dreamMetadata,
+    price,
+    isMinted,
+    lock,
+    mint,
+  ])
 
   if (!tileIsOwned) {
     return (
@@ -333,13 +373,20 @@ export default function MintDream() {
       }}
     >
       <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-        }}
+        style={
+          isMobile
+            ? {
+                display: 'flex',
+                flexDirection: 'column',
+              }
+            : {
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+              }
+        }
       >
-        <DreamTile tile={tile} />
+        <DreamTile tile={tile} style={{ width: size, height: size }} />
 
         <div
           style={{
@@ -347,7 +394,7 @@ export default function MintDream() {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'flex-start',
-            maxWidth: 400,
+            maxWidth: isMobile ? '100%' : size,
           }}
         >
           {dreamMetadata?.journal.length && (
@@ -372,18 +419,13 @@ export default function MintDream() {
                   borderRadius: 4,
                   padding: 5,
                   boxSizing: 'border-box',
-                  width: 400,
+                  width: isMobile ? '100%' : size,
                 }}
                 value={text}
                 disabled={loadingAction || loadingDream}
                 placeholder="What is your dream?"
                 rows={1}
-                onChange={e => {
-                  const _text = e.target.value
-
-                  validateText(_text)
-                  setText(e.target.value)
-                }}
+                onChange={e => setText(e.target.value)}
                 onKeyDown={e => {
                   if (e.code === 'Enter') dream()
                 }}
@@ -403,25 +445,22 @@ export default function MintDream() {
                     justifyContent: 'space-between',
                     alignItems: 'baseline',
                     width: '100%',
+                    marginTop: 15,
                   }}
                 >
-                  <div
-                    className="btn"
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: '1rem',
-                      marginTop: 15,
-                    }}
-                    onClick={() => dream()}
-                  >
-                    {dreamImage ? 'Dream again' : 'Dream'}
-                  </div>
+                  {dreamElem}
 
-                  {restartElem && (
-                    <div style={{ marginTop: 15 }}>{restartElem}</div>
-                  )}
+                  {restartElem}
                 </div>
               )}
+
+              <p style={{ opacity: 0.5 }}>
+                Click "Dream" to evolve the image based on the phrase you've
+                entered. Each phrase will be added to your dream journal, which
+                is stored in the Dream NFT metadata. "Wake up" to clear your
+                dream journal and start over with your Tile image. Once your
+                dream has been locked, no more changes can be made.
+              </p>
 
               {mintElem && <div style={{ marginTop: 30 }}>{mintElem}</div>}
             </>
