@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { DreamlandContext } from '../../contexts/DreamlandContext'
-import Grid from '../../components/shared/Grid'
 
+import Grid from '../../components/shared/Grid'
+import { DreamlandContext } from '../../contexts/DreamlandContext'
 import DreamForToken from './DreamForToken'
 
 const pageSize = 30
@@ -10,7 +10,7 @@ const pageSize = 30
 export default function MintedDreams() {
   const [tokenIds, setTokenIds] = useState<BigNumber[]>([])
 
-  const { totalSupply, maxSupply } = useContext(DreamlandContext)
+  const { totalSupply } = useContext(DreamlandContext)
 
   useLayoutEffect(() => {
     load(pageSize, totalSupply)
@@ -35,26 +35,6 @@ export default function MintedDreams() {
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          marginBottom: 40,
-        }}
-      >
-        <h4>
-          {totalSupply?.toString()}/{maxSupply?.toString()} Dreams minted
-        </h4>
-        <a
-          style={{ display: 'inline-block' }}
-          className="bland btn"
-          href="/#/dreamland/mint"
-        >
-          Mint a Dream
-        </a>
-      </div>
-
       <Grid
         cols={3}
         items={tokenIds.map(tokenId => (

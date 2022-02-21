@@ -1,5 +1,6 @@
 import { useEthers } from '@usedapp/core'
 import { BigNumber } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
@@ -70,6 +71,34 @@ export default function Dreamland() {
           margin: '0 auto',
         }}
       >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            marginBottom: 40,
+          }}
+        >
+          <div>
+            <a
+              className="text-link"
+              href="/#/dreamland"
+              style={{ fontWeight: 'bold' }}
+            >
+              {totalSupply?.toString()}/{maxSupply?.toString()} Dreams minted
+            </a>{' '}
+            {price && <>// price: {formatEther(price)} ETH</>}
+          </div>
+
+          <a
+            style={{ display: 'inline-block' }}
+            className="bland btn"
+            href="/#/dreamland/mint"
+          >
+            Mint a Dream
+          </a>
+        </div>
+
         <Switch>
           <Route exact path={`${url}/owner`}>
             <DreamsOwnerDashboard />
