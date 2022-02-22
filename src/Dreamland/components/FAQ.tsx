@@ -1,4 +1,5 @@
 import QA from '../../components/shared/QA'
+import { dreamsAddress } from '../../contracts/dreams.address';
 
 export default function FAQ() {
   const qas: { q: string; a: string | JSX.Element }[] = [
@@ -10,11 +11,11 @@ export default function FAQ() {
       q: 'Where is the Dreams contract?',
       a: (
         <a
-          href="https://etherscan.io/address/<asdf>"
+          href={`https://etherscan.io/address/${dreamsAddress}`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          https://etherscan.io/address/{`<asdf>`}
+          {`https://etherscan.io/address/${dreamsAddress}`}
         </a>
       ),
     },
