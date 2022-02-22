@@ -44,10 +44,10 @@ export default function Landing() {
         }}
       >
         <h2>Dreamland</h2>
-        <p>How does your Tile appear in your dreams?</p>
+        <p>How do Tiles appear in your dreams?</p>
         <p>
-          Create your own artwork from your Tiles by writing your thoughts to a
-          dream journal. Using a neural network developed by{' '}
+          Create imaginative new pieces of art from Tiles by writing your
+          thoughts to a dream journal. Using a neural network developed by{' '}
           <a
             className="btn"
             href="https://wolfbearstudio.com/"
@@ -56,10 +56,10 @@ export default function Landing() {
           >
             Wolfbear Studio
           </a>
-          , your Tile will evolve to unveil what you're dreaming of.
+          , your Tile will then evolve to unveil what you're dreaming.
         </p>
         <p>
-          Every Tile allows its owner to mint a single Dream on the Ethereum
+          Each Tile allows its owner to mint a single Dream on the Ethereum
           blockchain, until the max supply of 2,222 Dreams is reached.{' '}
           <a className="btn" href="/#/dreamland/faq">
             FAQ
