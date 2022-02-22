@@ -52,7 +52,7 @@ export default function DreamDetail() {
 
   if (!owner)
     return (
-      <div>
+      <div style={{ textAlign: 'center' }}>
         <Tile address={tileAddress} />
         <div style={{ marginTop: 20 }}>Not yet minted</div>
       </div>

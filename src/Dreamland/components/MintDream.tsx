@@ -475,7 +475,7 @@ export default function MintDream() {
 
           {mintElem && <div style={{ marginTop: 30 }}>{mintElem}</div>}
 
-          {isMinted && <div>Already minted</div>}
+          {isMinted && <div style={{ marginTop: 30 }}>Already minted</div>}
         </div>
       </div>
     </div>
