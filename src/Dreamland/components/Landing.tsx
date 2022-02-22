@@ -43,7 +43,7 @@ export default function Landing() {
           ...(isMobile ? { marginBottom: 80 } : { marginLeft: 20 }),
         }}
       >
-        <h2>Dreamland</h2>
+        <h1>Dreamland</h1>
         <p>How do Tiles appear in your dreams?</p>
         <p>
           Create imaginative new pieces of art from Tiles by writing your

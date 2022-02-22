@@ -1,12 +1,8 @@
 import QA from '../../components/shared/QA'
-import { dreamsAddress } from '../../contracts/dreams.address';
+import { dreamsAddress } from '../../contracts/dreams.address'
 
 export default function FAQ() {
   const qas: { q: string; a: string | JSX.Element }[] = [
-    {
-      q: 'What does it cost to mint a Dream?',
-      a: 'Price is fixed at 0.02 ETH.',
-    },
     {
       q: 'Where is the Dreams contract?',
       a: (
@@ -20,6 +16,18 @@ export default function FAQ() {
       ),
     },
     {
+      q: 'What does it cost to mint a Dream?',
+      a: 'Price is fixed at 0.02 ETH.',
+    },
+    {
+      q: 'If a buy a Tile that has already been used to mint a Dream, can I still mint a Dream from it?',
+      a: 'No, only one Dream can be minted from a Tile.',
+    },
+    {
+      q: 'How many phrases can I add to a dream journal?',
+      a: '10',
+    },
+    {
       q: 'How are Dream images and metadata stored?',
       a: 'Dream images and metadata must be stored in a centralized database, accessible via a server hosted at dreamland.tiles.art. Once all Dreams are minted, data will be migrated to a decentralized storage option like IPFS.',
     },
@@ -30,10 +38,6 @@ export default function FAQ() {
     {
       q: 'What if I mint directly from the Dreams contract?',
       a: 'Minting directly to the contract will mean you will never be able to associate an image or metadata with your token.',
-    },
-    {
-      q: 'How many phrases can I add to a dream journal?',
-      a: '10',
     },
     {
       q: 'How are Dream images made?',
