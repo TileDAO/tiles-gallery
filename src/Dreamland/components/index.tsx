@@ -1,5 +1,5 @@
 import { useEthers } from '@usedapp/core'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
@@ -90,29 +90,27 @@ export default function Dreamland() {
           </div>
         </div>
 
+        <Switch>
+          <Route exact path={`${url}/owner`}>
+            <DreamsOwnerDashboard />
+          </Route>
+        </Switch>
+
         {saleIsActive ? (
           <Switch>
-            <Route exact path={`${url}/owner`}>
-              <DreamsOwnerDashboard />
-            </Route>
-            <Route exact path={`${url}/mint`}>
-              <SelectTile />
-            </Route>
-            <Route exact path={`${url}/mint/:tile`}>
-              <MintDream />
-            </Route>
-            <Route exact path={`${url}/faq`}>
-              <FAQ />
-            </Route>
-            <Route exact path={`${url}/:tile`}>
-              <DreamDetail />
-            </Route>
-            <Route exact path={`${url}/id/:id`}>
-              <DreamDetail />
-            </Route>
-            <Route exact path={`${url}`}>
-              <MintedDreams />
-            </Route>
+            <Route exact path={`${url}/mint`} component={SelectTile} />
+            <Route exact path={`${url}/mint/:tile`} component={MintDream} />
+            <Route exact path={`${url}/faq`} component={FAQ} />
+            <Route exact path={`${url}/id/:id`} component={DreamDetail} />
+            <Route
+              exact
+              path={`${url}/:tile`}
+              render={props => {
+                if (!utils.isAddress(props.match.path)) return null
+                return DreamDetail
+              }}
+            />
+            <Route exact path={`${url}`} component={MintedDreams} />
           </Switch>
         ) : (
           <div>Sale has not started</div>

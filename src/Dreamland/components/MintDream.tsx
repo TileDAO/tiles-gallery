@@ -17,7 +17,8 @@ import { DreamsContext } from '../../contexts/DreamsContext'
 import { useTilesContract } from '../../hooks/TilesContract'
 import { isMobile } from '../../utils/isMobile'
 import { useDreamsContract } from '../hooks/DreamsContract'
-import { DreamMetadata } from '../models/dreamMetadata'
+import { DreamMetadata, UnlockedDreamMetadata } from '../models/dreamMetadata'
+import { metadataIsLocked } from '../utils'
 import DreamTile from './DreamTile'
 
 const MAX_WORDS = 100
@@ -33,7 +34,9 @@ export default function MintDream() {
   const [loadingDream, setLoadingDream] = useState<boolean>(false)
   const [text, setText] = useState<string>('')
   const [dreamImage, setDreamImage] = useState<string | null>()
-  const [dreamMetadata, setDreamMetadata] = useState<DreamMetadata | null>()
+  const [dreamMetadata, setDreamMetadata] = useState<
+    DreamMetadata | UnlockedDreamMetadata | null
+  >()
   const [tileIsOwned, setTileIsOwned] = useState<boolean>()
   const [isMinted, setIsMinted] = useState<boolean>()
 
@@ -44,6 +47,10 @@ export default function MintDream() {
   const { account } = useEthers()
 
   const size = isMobile ? 320 : 400
+
+  const dreamingIsAllowed =
+    dreamMetadata !== undefined &&
+    (dreamMetadata === null || !metadataIsLocked(dreamMetadata))
 
   useEffect(() => {
     dreamsContract.functions
@@ -292,7 +299,9 @@ export default function MintDream() {
           ) : (
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
               <div
-                className={dreamMetadata.unlocked ? 'btn' : 'btn disabled'}
+                className={
+                  metadataIsLocked(dreamMetadata) ? 'btn disabled' : 'btn'
+                }
                 style={{ display: 'inline-block', fontWeight: 'bold' }}
                 onClick={() => setConfirmLock(true)}
               >
@@ -301,13 +310,13 @@ export default function MintDream() {
               <div
                 style={{
                   fontSize: '0.7rem',
-                  opacity: dreamMetadata.unlocked ? 1 : 0.5,
+                  opacity: metadataIsLocked(dreamMetadata) ? 0.5 : 1,
                 }}
               >
                 (
-                {dreamMetadata.unlocked
-                  ? 'No more changes will be allowed'
-                  : 'completed'}
+                {metadataIsLocked(dreamMetadata)
+                  ? 'completed'
+                  : 'No more changes will be allowed'}
                 )
               </div>
             </div>
@@ -325,7 +334,7 @@ export default function MintDream() {
           <span>2.</span>
 
           <div
-            className={dreamMetadata?.unlocked ? 'btn disabled' : 'btn'}
+            className={metadataIsLocked(dreamMetadata) ? 'btn' : 'btn disabled'}
             style={{ fontWeight: 'bold' }}
             onClick={() => mint()}
           >
@@ -405,51 +414,48 @@ export default function MintDream() {
             </div>
           )}
 
-          {dreamMetadata !== undefined &&
-            (dreamMetadata?.unlocked || !dreamMetadata) && (
-              <textarea
-                style={{
-                  marginTop: 20,
-                  textAlign: 'center',
-                  display: 'block',
-                  border: '1px solid #ddd',
-                  borderRadius: 4,
-                  padding: 5,
-                  boxSizing: 'border-box',
-                  width: isMobile ? '100%' : size,
-                }}
-                value={text}
-                disabled={loadingAction || loadingDream}
-                placeholder="What is your dream?"
-                rows={1}
-                onChange={e => setText(e.target.value)}
-                onKeyDown={e => {
-                  if (e.code === 'Enter') dream()
-                }}
-              />
-            )}
+          {dreamingIsAllowed && (
+            <textarea
+              style={{
+                marginTop: 20,
+                textAlign: 'center',
+                display: 'block',
+                border: '1px solid #ddd',
+                borderRadius: 4,
+                padding: 5,
+                boxSizing: 'border-box',
+                width: isMobile ? '100%' : size,
+              }}
+              value={text}
+              disabled={loadingAction || loadingDream}
+              placeholder="What is your dream?"
+              rows={1}
+              onChange={e => setText(e.target.value)}
+              onKeyDown={e => {
+                if (e.code === 'Enter') dream()
+              }}
+            />
+          )}
 
           {errorElem && <div style={{ marginTop: 15 }}>{errorElem}</div>}
 
           {loadingElem && <div style={{ marginTop: 15 }}>{loadingElem}</div>}
 
-          {!isLoading && (
+          {dreamingIsAllowed && !isLoading && (
             <>
-              {(!dreamMetadata || dreamMetadata?.unlocked) && (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                    width: '100%',
-                    marginTop: 15,
-                  }}
-                >
-                  {dreamElem}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                  width: '100%',
+                  marginTop: 15,
+                }}
+              >
+                {dreamElem}
 
-                  {restartElem}
-                </div>
-              )}
+                {restartElem}
+              </div>
 
               <p style={{ opacity: 0.5 }}>
                 Click "Dream" to evolve the image based on the phrase you've
