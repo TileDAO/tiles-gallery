@@ -394,7 +394,11 @@ export default function MintDream() {
               }
         }
       >
-        <DreamTile tile={tile} style={{ width: size, height: size }} />
+        <DreamTile
+          tile={tile}
+          style={{ width: size, height: size }}
+          dreamImage={dreamImage ?? undefined}
+        />
 
         <div
           style={{
