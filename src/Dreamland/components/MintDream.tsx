@@ -39,6 +39,7 @@ export default function MintDream() {
   >()
   const [tileIsOwned, setTileIsOwned] = useState<boolean>()
   const [isMinted, setIsMinted] = useState<boolean>()
+  const [showDreamTile, setShowDreamTile] = useState<boolean>()
 
   const { tile } = useParams<{ tile: string }>()
   const tilesContract = useTilesContract()
@@ -59,6 +60,7 @@ export default function MintDream() {
     setConfirmRestart(false)
     setConfirmLock(false)
     setText('')
+    setShowDreamTile(false)
 
     setLoadingAction(true)
 
@@ -75,6 +77,7 @@ export default function MintDream() {
 
     setDreamImage(image?.data ?? null)
     setDreamMetadata(metadata?.data ?? null)
+    setShowDreamTile(true)
 
     setLoadingAction(false)
   }, [tile])
@@ -395,11 +398,8 @@ export default function MintDream() {
         }
       >
         <DreamTile
-          tile={tile}
+          tile={showDreamTile ? tile : undefined}
           style={{ width: size, height: size }}
-          dreamImage={
-            dreamImage ? Buffer.from(dreamImage).toString('base64') : undefined
-          }
         />
 
         <div
