@@ -53,6 +53,8 @@ export default function MintDream() {
     (dreamMetadata === null || !metadataIsLocked(dreamMetadata))
 
   useEffect(() => {
+    load()
+
     dreamsContract.functions
       .idOfAddress(tile)
       .then(res => setIsMinted(res[0] > 0))
