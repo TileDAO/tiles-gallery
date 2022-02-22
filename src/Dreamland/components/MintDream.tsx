@@ -39,6 +39,8 @@ export default function MintDream() {
   >()
   const [tileIsOwned, setTileIsOwned] = useState<boolean>()
   const [isMinted, setIsMinted] = useState<boolean>()
+  // Used for manually requesting re-render
+  const [int, setInt] = useState<number>(0)
 
   const { tile } = useParams<{ tile: string }>()
   const tilesContract = useTilesContract()
@@ -94,7 +96,7 @@ export default function MintDream() {
     }
 
     loadDreamImage()
-  }, [tile])
+  }, [tile, int])
 
   const lock = useCallback(async () => {
     try {
@@ -114,7 +116,7 @@ export default function MintDream() {
       console.log('Error on lock', e)
     }
 
-    window.location.reload()
+    setInt(i => i + 1)
   }, [tile])
 
   const restart = useCallback(async () => {
@@ -131,7 +133,7 @@ export default function MintDream() {
     setConfirmRestart(false)
     setLoadingAction(false)
     setText('')
-    window.location.reload()
+    setInt(i => i + 1)
   }, [tile])
 
   const error = useMemo(() => {
@@ -166,7 +168,7 @@ export default function MintDream() {
       console.log('Error on dream', e)
     }
 
-    window.location.reload()
+    setInt(i => i + 1)
   }, [text, tile])
 
   const mint = useCallback(() => {
