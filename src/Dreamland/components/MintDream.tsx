@@ -176,6 +176,8 @@ export default function MintDream() {
       console.log('Error on dream', e)
     }
 
+    setLoadingDream(false)
+    setText('')
     setInt(i => i + 1)
   }, [text, tile])
 
