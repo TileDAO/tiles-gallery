@@ -2,6 +2,7 @@ import { BigNumber } from 'ethers'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import FormattedAddress from '../../components/shared/FormattedAddress'
+import Tile from '../../components/shared/Tile'
 
 import useDreamMetadata from '../hooks/DreamMetadata'
 import { useDreamsContract } from '../hooks/DreamsContract'
@@ -48,6 +49,14 @@ export default function DreamDetail() {
   }, [tokenId])
 
   const dreamMetadata = useDreamMetadata(tileAddress)
+
+  if (!owner)
+    return (
+      <div>
+        <Tile address={tileAddress} />
+        <div style={{ marginTop: 20 }}>Not yet minted</div>
+      </div>
+    )
 
   if (!tileAddress && !tokenId) return null
 
