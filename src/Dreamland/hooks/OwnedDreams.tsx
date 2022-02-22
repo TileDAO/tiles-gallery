@@ -17,7 +17,7 @@ export function useOwnedDreams(wallet: string) {
     } else if (ownedTokens) {
       setOwnedTokens([])
     }
-  }, [wallet])
+  }, [wallet, ownedTokens])
 
   return ownedTokens
 }

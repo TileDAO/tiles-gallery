@@ -19,7 +19,7 @@ export default function DreamDetail() {
   useEffect(() => {
     if (tileFromParams) setTileAddress(tileFromParams)
     if (idFromParams) setTokenId(BigNumber.from(idFromParams))
-  }, [])
+  }, [tileFromParams, idFromParams])
 
   useEffect(() => {
     if (tokenId || !tileAddress) return

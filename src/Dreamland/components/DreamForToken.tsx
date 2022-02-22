@@ -4,7 +4,6 @@ import { CSSProperties, useEffect, useLayoutEffect, useState } from 'react'
 
 import { useDreamsContract } from '../hooks/DreamsContract'
 import { DreamMetadata } from '../models/dreamMetadata'
-import DreamTile from './DreamTile'
 
 export default function DreamForToken({
   tokenId,

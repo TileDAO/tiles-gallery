@@ -2,9 +2,9 @@ import { useEthers } from '@usedapp/core'
 import { BigNumber } from 'ethers'
 import { useLayoutEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
+
 import Artist from './components/Artist'
 import Dao from './components/Dao'
-import Dreamland from './Dreamland/components'
 import FAQ from './components/FAQ'
 import Gallery from './components/Gallery'
 import Landing from './components/Landing'
@@ -17,10 +17,8 @@ import Detail from './components/shared/Detail'
 import Treasury from './components/Treasury'
 import Wallet from './components/Wallet'
 import { TilesContext } from './contexts/TilesContext'
+import Dreamland from './Dreamland/components'
 import { useTilesContract } from './hooks/TilesContract'
-import DreamsOwnerDashboard from './Dreamland/components/DreamsOwnerDashboard'
-import SelectTile from './Dreamland/components/SelectTile'
-import MintDream from './Dreamland/components/MintDream'
 
 function App() {
   const { account } = useEthers()

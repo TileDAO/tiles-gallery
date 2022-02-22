@@ -14,7 +14,7 @@ export default function MintedDreams() {
 
   useLayoutEffect(() => {
     load(pageSize, totalSupply)
-  }, [totalSupply])
+  }, [totalSupply, load])
 
   function load(count: number, start?: BigNumber) {
     if (!start?.gt(0)) return

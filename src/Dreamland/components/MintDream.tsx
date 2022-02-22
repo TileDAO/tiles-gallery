@@ -52,31 +52,6 @@ export default function MintDream() {
     dreamMetadata !== undefined &&
     (dreamMetadata === null || !metadataIsLocked(dreamMetadata))
 
-  useEffect(() => {
-    load()
-
-    dreamsContract.functions
-      .idOfAddress(tile)
-      .then(res => setIsMinted(res[0] > 0))
-      .catch(() => setIsMinted(false))
-  }, [tile])
-
-  // Check if connected wallet owns this Tile
-  useEffect(() => {
-    if (!tile || !account) return
-
-    tilesContract.functions.idOfAddress(tile).then((id: [BigNumber]) => {
-      if (id[0].isZero()) {
-        setTileIsOwned(false)
-        return
-      }
-
-      tilesContract.ownerOf(id[0]).then((owner: string) => {
-        setTileIsOwned(owner === account)
-      })
-    })
-  }, [tilesContract, tile, account])
-
   // Get existing database data
   const load = useCallback(async () => {
     // Reset states
@@ -98,6 +73,31 @@ export default function MintDream() {
 
     setLoadingAction(false)
   }, [tile])
+
+  useEffect(() => {
+    load()
+
+    dreamsContract.functions
+      .idOfAddress(tile)
+      .then(res => setIsMinted(res[0] > 0))
+      .catch(() => setIsMinted(false))
+  }, [tile, load])
+
+  // Check if connected wallet owns this Tile
+  useEffect(() => {
+    if (!tile || !account) return
+
+    tilesContract.functions.idOfAddress(tile).then((id: [BigNumber]) => {
+      if (id[0].isZero()) {
+        setTileIsOwned(false)
+        return
+      }
+
+      tilesContract.ownerOf(id[0]).then((owner: string) => {
+        setTileIsOwned(owner === account)
+      })
+    })
+  }, [tilesContract, tile, account])
 
   const lock = useCallback(async () => {
     if (!confirmLock) return
@@ -122,7 +122,7 @@ export default function MintDream() {
     }
 
     load()
-  }, [tile, confirmLock])
+  }, [tile, confirmLock, load])
 
   const restart = useCallback(async () => {
     if (!confirmRestart) return
@@ -138,7 +138,7 @@ export default function MintDream() {
     setDreamMetadata(null)
     setDreamImage(null)
     load()
-  }, [tile, confirmRestart])
+  }, [tile, confirmRestart, load])
 
   const error = useMemo(() => {
     if (text.split(' ').length > MAX_WORDS) {
@@ -173,7 +173,7 @@ export default function MintDream() {
     }
 
     load()
-  }, [text, tile])
+  }, [text, tile, load, error])
 
   const mint = useCallback(() => {
     if (!price) return
@@ -247,7 +247,7 @@ export default function MintDream() {
         Wake up
       </div>
     )
-  }, [confirmRestart, hasDreamData])
+  }, [confirmRestart, hasDreamData, restart])
 
   const dreamElem = useMemo(() => {
     const style: CSSProperties = {
@@ -272,7 +272,7 @@ export default function MintDream() {
         {dreamImage ? 'Dream again' : 'Dream'}
       </div>
     )
-  }, [error, dreamImage, dream, dreamMetadata?.journal])
+  }, [error, dreamImage, dream, dreamMetadata])
 
   const mintElem = useMemo(() => {
     if (!hasDreamData || !dreamMetadata || isMinted) return null
@@ -351,7 +351,6 @@ export default function MintDream() {
     )
   }, [
     hasDreamData,
-    isLoading,
     confirmLock,
     dreamMetadata,
     price,
