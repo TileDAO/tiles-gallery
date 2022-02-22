@@ -12,10 +12,6 @@ export default function MintedDreams() {
 
   const { totalSupply } = useContext(DreamsContext)
 
-  useLayoutEffect(() => {
-    load(pageSize, totalSupply)
-  }, [totalSupply, load])
-
   function load(count: number, start?: BigNumber) {
     if (!start?.gt(0)) return
 
@@ -32,6 +28,10 @@ export default function MintedDreams() {
 
     setTokenIds(newTokenIds)
   }
+
+  useLayoutEffect(() => {
+    load(pageSize, totalSupply)
+  }, [totalSupply])
 
   return (
     <div>
