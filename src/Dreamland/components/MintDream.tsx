@@ -99,6 +99,10 @@ export default function MintDream() {
   }, [tile, int])
 
   const lock = useCallback(async () => {
+    if (!confirmLock) return
+
+    setLoadingAction(true)
+
     try {
       await axios.post(
         apiUrl + '/lock',
@@ -116,10 +120,14 @@ export default function MintDream() {
       console.log('Error on lock', e)
     }
 
+    setConfirmLock(false)
+    setLoadingAction(false)
     setInt(i => i + 1)
-  }, [tile])
+  }, [tile, confirmLock])
 
   const restart = useCallback(async () => {
+    if (!confirmRestart) return
+
     setLoadingAction(true)
 
     try {
@@ -134,7 +142,7 @@ export default function MintDream() {
     setLoadingAction(false)
     setText('')
     setInt(i => i + 1)
-  }, [tile])
+  }, [tile, confirmRestart])
 
   const error = useMemo(() => {
     if (text.split(' ').length > MAX_WORDS) {
