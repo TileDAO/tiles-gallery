@@ -1,7 +1,12 @@
+import { useContext } from 'react'
+
+import { DreamsContext } from '../../contexts/DreamsContext'
 import { isMobile } from '../../utils/isMobile'
 
 export default function Landing() {
   const size = isMobile ? 320 : 400
+
+  const { saleIsActive } = useContext(DreamsContext)
 
   return (
     <div
@@ -39,10 +44,10 @@ export default function Landing() {
         }}
       >
         <h2>Dreamland</h2>
+        <p>How does your Tile appear in your dreams?</p>
         <p>
-          Create a Dream from your Tile by adding phrases to a dream journal.
-          Your Tile will evolve based on what you're dreaming of, using a neural
-          network developed by{' '}
+          Create your own artwork from your Tiles by writing your thoughts to a
+          dream journal. Using a neural network developed by{' '}
           <a
             className="btn"
             href="https://wolfbearstudio.com/"
@@ -51,23 +56,32 @@ export default function Landing() {
           >
             Wolfbear Studio
           </a>
-          .
+          , your Tile will evolve to unveil what you're dreaming of.
         </p>
         <p>
-          Every Tile allows its owner to mint a single Dream, until the max
-          supply of 2,222 Dreams is reached.{' '}
+          Every Tile allows its owner to mint a single Dream on the Ethereum
+          blockchain, until the max supply of 2,222 Dreams is reached.{' '}
           <a className="btn" href="/#/dreamland/faq">
             FAQ
           </a>
         </p>
         <br />
-        <a
-          style={{ fontWeight: 'bold' }}
-          className="btn"
-          href="/#/dreamland/mint"
-        >
-          Mint a Dream
-        </a>
+
+        <div>
+          {saleIsActive ? (
+            <a
+              style={{ fontWeight: 'bold' }}
+              className={saleIsActive ? 'btn' : 'btn disabled'}
+              href="/#/dreamland/mint"
+            >
+              Mint a Dream
+            </a>
+          ) : (
+            <div style={{ fontWeight: 'bold', fontStyle: 'italic' }}>
+              Sale starts 02-22-22
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

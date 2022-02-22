@@ -13,7 +13,7 @@ import {
 import { useParams } from 'react-router-dom'
 
 import Tile from '../../components/shared/Tile'
-import { DreamlandContext } from '../../contexts/DreamlandContext'
+import { DreamsContext } from '../../contexts/DreamsContext'
 import { useTilesContract } from '../../hooks/TilesContract'
 import { isMobile } from '../../utils/isMobile'
 import { useDreamsContract } from '../hooks/DreamsContract'
@@ -40,7 +40,7 @@ export default function MintDream() {
   const { tile } = useParams<{ tile: string }>()
   const tilesContract = useTilesContract()
   const dreamsContract = useDreamsContract()
-  const { price } = useContext(DreamlandContext)
+  const { price } = useContext(DreamsContext)
   const { account } = useEthers()
 
   const size = isMobile ? 320 : 400

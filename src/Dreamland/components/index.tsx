@@ -4,7 +4,7 @@ import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
-import { DreamlandContext } from '../../contexts/DreamlandContext'
+import { DreamsContext } from '../../contexts/DreamsContext'
 import { useDreamsContract } from '../hooks/DreamsContract'
 import DreamDetail from './DreamDetail'
 import DreamsOwnerDashboard from './DreamsOwnerDashboard'
@@ -55,7 +55,7 @@ export default function Dreamland() {
   }, [])
 
   return (
-    <DreamlandContext.Provider
+    <DreamsContext.Provider
       value={{
         totalSupply,
         maxSupply,
@@ -90,30 +90,34 @@ export default function Dreamland() {
           </div>
         </div>
 
-        <Switch>
-          <Route exact path={`${url}/owner`}>
-            <DreamsOwnerDashboard />
-          </Route>
-          <Route exact path={`${url}/mint`}>
-            <SelectTile />
-          </Route>
-          <Route exact path={`${url}/mint/:tile`}>
-            <MintDream />
-          </Route>
-          <Route exact path={`${url}/faq`}>
-            <FAQ />
-          </Route>
-          <Route exact path={`${url}/:tile`}>
-            <DreamDetail />
-          </Route>
-          <Route exact path={`${url}/id/:id`}>
-            <DreamDetail />
-          </Route>
-          <Route exact path={`${url}`}>
-            <MintedDreams />
-          </Route>
-        </Switch>
+        {saleIsActive ? (
+          <Switch>
+            <Route exact path={`${url}/owner`}>
+              <DreamsOwnerDashboard />
+            </Route>
+            <Route exact path={`${url}/mint`}>
+              <SelectTile />
+            </Route>
+            <Route exact path={`${url}/mint/:tile`}>
+              <MintDream />
+            </Route>
+            <Route exact path={`${url}/faq`}>
+              <FAQ />
+            </Route>
+            <Route exact path={`${url}/:tile`}>
+              <DreamDetail />
+            </Route>
+            <Route exact path={`${url}/id/:id`}>
+              <DreamDetail />
+            </Route>
+            <Route exact path={`${url}`}>
+              <MintedDreams />
+            </Route>
+          </Switch>
+        ) : (
+          <div>Sale has not started</div>
+        )}
       </div>
-    </DreamlandContext.Provider>
+    </DreamsContext.Provider>
   )
 }

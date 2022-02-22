@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
 
 import Grid from '../../components/shared/Grid'
-import { DreamlandContext } from '../../contexts/DreamlandContext'
+import { DreamsContext } from '../../contexts/DreamsContext'
 import DreamForToken from './DreamForToken'
 
 const pageSize = 30
@@ -10,7 +10,7 @@ const pageSize = 30
 export default function MintedDreams() {
   const [tokenIds, setTokenIds] = useState<BigNumber[]>([])
 
-  const { totalSupply } = useContext(DreamlandContext)
+  const { totalSupply } = useContext(DreamsContext)
 
   useLayoutEffect(() => {
     load(pageSize, totalSupply)
