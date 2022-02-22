@@ -466,10 +466,10 @@ export default function MintDream() {
                 dream journal and start over with your Tile image. Once your
                 dream journal has been locked, no more changes can be made.
               </p>
-
-              {mintElem && <div style={{ marginTop: 30 }}>{mintElem}</div>}
             </>
           )}
+
+          {mintElem && <div style={{ marginTop: 30 }}>{mintElem}</div>}
 
           {isMinted && <div>Already minted</div>}
         </div>
