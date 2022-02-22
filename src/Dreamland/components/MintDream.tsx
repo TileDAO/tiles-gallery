@@ -55,11 +55,14 @@ export default function MintDream() {
   // Get existing database data
   const load = useCallback(async () => {
     // Reset states
+    setLoadingDream(false)
     setConfirmRestart(false)
     setConfirmLock(false)
     setText('')
 
     setLoadingAction(true)
+
+    console.log('loading')
 
     const image = await axios
       .get<string>(apiUrl + '/img/' + tile)
@@ -67,6 +70,8 @@ export default function MintDream() {
     const metadata = await axios
       .get<DreamMetadata>(apiUrl + '/' + tile)
       .catch(e => console.log('No Dream metadata for Tile', tile))
+
+    console.log('got image', image?.data.substring(0, 100))
 
     setDreamImage(image?.data ?? null)
     setDreamMetadata(metadata?.data ?? null)
@@ -349,15 +354,7 @@ export default function MintDream() {
         </div>
       </div>
     )
-  }, [
-    hasDreamData,
-    confirmLock,
-    dreamMetadata,
-    price,
-    isMinted,
-    lock,
-    mint,
-  ])
+  }, [hasDreamData, confirmLock, dreamMetadata, price, isMinted, lock, mint])
 
   if (!tileIsOwned) {
     return (
