@@ -39,8 +39,6 @@ export default function MintDream() {
   >()
   const [tileIsOwned, setTileIsOwned] = useState<boolean>()
   const [isMinted, setIsMinted] = useState<boolean>()
-  // Used for manually requesting re-render
-  const [int, setInt] = useState<number>(0)
 
   const { tile } = useParams<{ tile: string }>()
   const tilesContract = useTilesContract()
@@ -78,25 +76,26 @@ export default function MintDream() {
   }, [tilesContract, tile, account])
 
   // Get existing database data
-  useEffect(() => {
-    const loadDreamImage = async () => {
-      setLoadingAction(true)
+  const load = useCallback(async () => {
+    // Reset states
+    setConfirmRestart(false)
+    setConfirmLock(false)
+    setText('')
 
-      const image = await axios
-        .get<string>(apiUrl + '/img/' + tile)
-        .catch(e => console.log('No Dream image for Tile', tile))
-      const metadata = await axios
-        .get<DreamMetadata>(apiUrl + '/' + tile)
-        .catch(e => console.log('No Dream metadata for Tile', tile))
+    setLoadingAction(true)
 
-      setDreamImage(image?.data ?? null)
-      setDreamMetadata(metadata?.data ?? null)
+    const image = await axios
+      .get<string>(apiUrl + '/img/' + tile)
+      .catch(e => console.log('No Dream image for Tile', tile))
+    const metadata = await axios
+      .get<DreamMetadata>(apiUrl + '/' + tile)
+      .catch(e => console.log('No Dream metadata for Tile', tile))
 
-      setLoadingAction(false)
-    }
+    setDreamImage(image?.data ?? null)
+    setDreamMetadata(metadata?.data ?? null)
 
-    loadDreamImage()
-  }, [tile, int])
+    setLoadingAction(false)
+  }, [tile])
 
   const lock = useCallback(async () => {
     if (!confirmLock) return
@@ -120,9 +119,7 @@ export default function MintDream() {
       console.log('Error on lock', e)
     }
 
-    setConfirmLock(false)
-    setLoadingAction(false)
-    setInt(i => i + 1)
+    load()
   }, [tile, confirmLock])
 
   const restart = useCallback(async () => {
@@ -138,10 +135,7 @@ export default function MintDream() {
 
     setDreamMetadata(null)
     setDreamImage(null)
-    setConfirmRestart(false)
-    setLoadingAction(false)
-    setText('')
-    setInt(i => i + 1)
+    load()
   }, [tile, confirmRestart])
 
   const error = useMemo(() => {
@@ -176,9 +170,7 @@ export default function MintDream() {
       console.log('Error on dream', e)
     }
 
-    setLoadingDream(false)
-    setText('')
-    setInt(i => i + 1)
+    load()
   }, [text, tile])
 
   const mint = useCallback(() => {
