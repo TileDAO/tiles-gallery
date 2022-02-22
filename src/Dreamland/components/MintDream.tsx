@@ -397,7 +397,9 @@ export default function MintDream() {
         <DreamTile
           tile={tile}
           style={{ width: size, height: size }}
-          dreamImage={dreamImage ?? undefined}
+          dreamImage={
+            dreamImage ? Buffer.from(dreamImage).toString('base64') : undefined
+          }
         />
 
         <div
