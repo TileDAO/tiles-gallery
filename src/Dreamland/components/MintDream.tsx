@@ -262,9 +262,7 @@ export default function MintDream() {
   }, [error, dreamImage, dream, dreamMetadata?.journal])
 
   const mintElem = useMemo(() => {
-    if (!hasDreamData || !dreamMetadata) return null
-
-    if (isMinted) return <div>Already minted</div>
+    if (!hasDreamData || !dreamMetadata || isMinted) return null
 
     return (
       <div>
@@ -464,6 +462,8 @@ export default function MintDream() {
               {mintElem && <div style={{ marginTop: 30 }}>{mintElem}</div>}
             </>
           )}
+
+          {isMinted && <div>Already minted</div>}
         </div>
       </div>
     </div>
