@@ -8,9 +8,11 @@ const apiUrl = process.env.REACT_APP_DREAMLAND_API_URL
 
 export default function DreamTile({
   tile,
+  dreamImage,
   style,
 }: {
   tile: string | undefined
+  dreamImage?: string
   style?: CSSProperties
 }) {
   const [isDreamt, setIsDreamt] = useState<boolean>()
@@ -28,9 +30,33 @@ export default function DreamTile({
   return (
     <div style={{ textAlign: 'center' }}>
       {showOriginal || !isDreamt ? (
-        <Tile style={style ?? { width: 400, height: 400 }} address={tile} />
+        <Tile
+          style={{
+            width: 400,
+            height: 400,
+            ...style,
+          }}
+          address={tile}
+        />
+      ) : dreamImage ? (
+        <img
+          style={{
+            background: '#faf3e8',
+            width: 400,
+            height: 400,
+            ...style,
+          }}
+          src={dreamImage}
+        />
       ) : (
-        <Dream style={style ?? { width: 400, height: 400 }} tile={tile} />
+        <Dream
+          style={{
+            width: 400,
+            height: 400,
+            ...style,
+          }}
+          tile={tile}
+        />
       )}
 
       {isDreamt && (
