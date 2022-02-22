@@ -2,7 +2,7 @@ import { useEthers } from '@usedapp/core'
 import { BigNumber, utils } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
-import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 
 import { DreamsContext } from '../../contexts/DreamsContext'
 import { useDreamsContract } from '../hooks/DreamsContract'
@@ -91,9 +91,7 @@ export default function Dreamland() {
         </div>
 
         <Switch>
-          <Route exact path={`${url}/owner`}>
-            <DreamsOwnerDashboard />
-          </Route>
+          <Route exact path={`${url}/owner`} component={DreamsOwnerDashboard} />
         </Switch>
 
         {saleIsActive ? (
@@ -106,8 +104,8 @@ export default function Dreamland() {
               exact
               path={`${url}/:tile`}
               render={props => {
-                if (!utils.isAddress(props.match.path)) return null
-                return DreamDetail
+                if (!utils.isAddress(props.match.params.tile)) return null
+                return <DreamDetail />
               }}
             />
             <Route exact path={`${url}`} component={MintedDreams} />
