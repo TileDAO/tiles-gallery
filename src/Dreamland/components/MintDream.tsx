@@ -33,7 +33,6 @@ export default function MintDream() {
   const [loadingAction, setLoadingAction] = useState<boolean>(false)
   const [loadingDream, setLoadingDream] = useState<boolean>(false)
   const [text, setText] = useState<string>('')
-  const [dreamImage, setDreamImage] = useState<string | null>()
   const [dreamMetadata, setDreamMetadata] = useState<
     DreamMetadata | UnlockedDreamMetadata | null
   >()
@@ -64,18 +63,10 @@ export default function MintDream() {
 
     setLoadingAction(true)
 
-    console.log('loading')
-
-    const image = await axios
-      .get<string>(apiUrl + '/img/' + tile)
-      .catch(e => console.log('No Dream image for Tile', tile))
     const metadata = await axios
       .get<DreamMetadata>(apiUrl + '/' + tile)
       .catch(e => console.log('No Dream metadata for Tile', tile))
 
-    console.log('got image', image?.data.substring(0, 100))
-
-    setDreamImage(image?.data ?? null)
     setDreamMetadata(metadata?.data ?? null)
     setShowDreamTile(true)
 
@@ -144,7 +135,6 @@ export default function MintDream() {
     }
 
     setDreamMetadata(null)
-    setDreamImage(null)
     load()
   }, [tile, confirmRestart, load])
 
@@ -198,7 +188,6 @@ export default function MintDream() {
   }, [tile, price])
 
   const isLoading = loadingAction || loadingDream
-  const hasDreamData = dreamImage && dreamMetadata
 
   const errorElem = useMemo(() => {
     if (!error) return null
@@ -240,7 +229,7 @@ export default function MintDream() {
   }, [loadingDream, loadingAction])
 
   const restartElem = useMemo(() => {
-    if (!hasDreamData) return null
+    if (!dreamMetadata) return null
 
     return confirmRestart ? (
       <div
@@ -255,7 +244,7 @@ export default function MintDream() {
         Wake up
       </div>
     )
-  }, [confirmRestart, hasDreamData, restart])
+  }, [confirmRestart, dreamMetadata, restart])
 
   const dreamElem = useMemo(() => {
     const style: CSSProperties = {
@@ -277,13 +266,13 @@ export default function MintDream() {
         style={style}
         onClick={() => dream()}
       >
-        {dreamImage ? 'Dream again' : 'Dream'}
+        {dreamMetadata?.journal.length ? 'Dream again' : 'Dream'}
       </div>
     )
-  }, [error, dreamImage, dream, dreamMetadata])
+  }, [error, dreamMetadata, dream, dreamMetadata])
 
   const mintElem = useMemo(() => {
-    if (!hasDreamData || !dreamMetadata || isMinted) return null
+    if (!dreamMetadata || isMinted) return null
 
     return (
       <div>
@@ -357,7 +346,7 @@ export default function MintDream() {
         </div>
       </div>
     )
-  }, [hasDreamData, confirmLock, dreamMetadata, price, isMinted, lock, mint])
+  }, [confirmLock, dreamMetadata, price, isMinted, lock, mint])
 
   if (!tileIsOwned) {
     return (
