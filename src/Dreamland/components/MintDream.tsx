@@ -147,6 +147,7 @@ export default function MintDream() {
   }, [text])
 
   const dream = useCallback(async () => {
+    console.log('asdf', text, tile, apiUrl, error)
     if (!text || !tile || !apiUrl || error) return
 
     setLoadingDream(true)
