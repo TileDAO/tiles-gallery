@@ -92,13 +92,13 @@ export default function Dreamland() {
 
         <Switch>
           <Route exact path={`${url}/owner`} component={DreamsOwnerDashboard} />
+          <Route exact path={`${url}/faq`} component={FAQ} />
         </Switch>
 
         {saleIsActive ? (
           <Switch>
             <Route exact path={`${url}/mint`} component={SelectTile} />
             <Route exact path={`${url}/mint/:tile`} component={MintDream} />
-            <Route exact path={`${url}/faq`} component={FAQ} />
             <Route exact path={`${url}/id/:id`} component={DreamDetail} />
             <Route
               exact
