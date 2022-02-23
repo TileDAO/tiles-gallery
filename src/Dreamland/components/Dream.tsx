@@ -1,16 +1,16 @@
 import { CSSProperties } from 'react'
-import { tileSvgUrl } from '../../utils/api'
+import { dreamPngUrl } from '../../utils/api'
 
-export default function Tile({
-  address,
+export default function Dream({
+  tile,
   style,
   id,
 }: {
-  address: string | undefined
+  tile: string | undefined
   style?: CSSProperties
   id?: string
 }) {
-  if (!address) return null
+  if (!tile) return null
   return (
     <img
       id={id}
@@ -20,7 +20,7 @@ export default function Tile({
         height: 300,
         ...style,
       }}
-      src={tileSvgUrl(address)}
+      src={dreamPngUrl(tile)}
     />
   )
 }

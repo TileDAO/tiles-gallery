@@ -2,11 +2,11 @@ import { useEthers } from '@usedapp/core'
 import { BigNumber } from 'ethers'
 import { useLayoutEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
+
 import Artist from './components/Artist'
 import Dao from './components/Dao'
 import FAQ from './components/FAQ'
 import Gallery from './components/Gallery'
-import Glyphs from './components/Glyphs'
 import Landing from './components/Landing'
 import Manifesto from './components/Manifesto'
 import Minted from './components/Minted'
@@ -17,6 +17,7 @@ import Detail from './components/shared/Detail'
 import Treasury from './components/Treasury'
 import Wallet from './components/Wallet'
 import { TilesContext } from './contexts/TilesContext'
+import Dreamland from './Dreamland/components'
 import { useTilesContract } from './hooks/TilesContract'
 
 function App() {
@@ -94,6 +95,9 @@ function App() {
               </Route>
               <Route exact path="/faq">
                 <FAQ />
+              </Route>
+              <Route path="/dreamland">
+                <Dreamland />
               </Route>
               <Route exact path="/wallet/:address">
                 <Wallet />

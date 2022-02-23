@@ -1,8 +1,7 @@
+import { isMobile } from '../utils/isMobile'
 import Phaser from './Phaser'
 
 export default function Landing() {
-  const isMobile = window.innerWidth < 600
-
   return (
     <div
       style={{
@@ -38,6 +37,8 @@ export default function Landing() {
               height: '70vh',
               maxWidth: '100vw',
               maxHeight: '100vw',
+              minWidth: 360,
+              minHeight: 360,
             }}
           />
         </div>
@@ -88,10 +89,14 @@ export default function Landing() {
           <br />
           <br />
           <br />
-          <br />
-          <br />
           <a className="btn" href="/#/mint" style={{ fontWeight: 'bold' }}>
-            Mint
+            Mint a Tile
+          </a>
+          <br />
+          <br />
+          <br />
+          <a className="btn" href="/#/dreamland" style={{ fontWeight: 'bold' }}>
+            Dreamland
           </a>
         </div>
       </div>

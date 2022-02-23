@@ -14,7 +14,7 @@ export default function Minted() {
   }, [totalSupply])
 
   function load(count: number, start?: BigNumber) {
-    if (!start && !tokenIds.length) return
+    if (!start?.gt(0) && !tokenIds.length) return
 
     const newTokenIds = start ? [start] : [...tokenIds]
 

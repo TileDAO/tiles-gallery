@@ -1,29 +1,14 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useTilesContract } from '../hooks/TilesContract'
+import { useOwnedTiles } from '../hooks/OwnedTiles'
 import FormattedAddress from './shared/FormattedAddress'
 import Grid from './shared/Grid'
 import TileForToken from './shared/TileForToken'
 
 export default function Wallet() {
-  const [ownedTokens, setOwnedTokens] = useState<BigNumber[]>()
-
   const { address } = useParams<{ address: string }>()
 
-  const contract = useTilesContract()
-
-  useLayoutEffect(() => {
-    if (address) {
-      contract.functions
-        .tokensOfOwner(address)
-        .then(res => setOwnedTokens(res[0]))
-        .catch(e => console.log('Error getting tokensOfOwner', e))
-    } else if (ownedTokens) {
-      setOwnedTokens([])
-    }
-  }, [address])
+  const ownedTiles = useOwnedTiles(address)
 
   return (
     <div
@@ -38,34 +23,30 @@ export default function Wallet() {
       <h4 style={{ marginBottom: 80 }}>
         Tiles owned by <FormattedAddress address={address} />
       </h4>
-      {ownedTokens &&
-        (ownedTokens.length ? (
+      {ownedTiles &&
+        (ownedTiles.length ? (
           <Grid
-            items={ownedTokens.map(t => {
+            items={ownedTiles.map(id => {
               return (
-                <a
-                  href={'/#/id/' + t.toString()}
-                  key={t.toString()}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <TileForToken
-                    tokenId={t}
-                    style={{ width: 280, height: 280 }}
-                    renderDetails={(_address, id) => (
-                      <div
-                        style={{
-                          fontSize: 11,
-                          textAlign: 'center',
-                        }}
-                      >
-                        <div>{_address}</div>
-                        <div style={{ fontWeight: 600, opacity: 0.25 }}>
-                          #{id.toString()}
-                        </div>
+                <TileForToken
+                  key={id.toString()}
+                  tileLink={'/#/id/' + id.toString()}
+                  tokenId={id}
+                  style={{ width: 280, height: 280 }}
+                  renderDetails={(_address, id) => (
+                    <div
+                      style={{
+                        fontSize: 11,
+                        textAlign: 'center',
+                      }}
+                    >
+                      <div>{_address}</div>
+                      <div style={{ fontWeight: 600, opacity: 0.25 }}>
+                        #{id.toString()}
                       </div>
-                    )}
-                  />
-                </a>
+                    </div>
+                  )}
+                />
               )
             })}
           />

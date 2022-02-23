@@ -1,11 +1,6 @@
-export default function FAQ() {
-  const qa = (q: string, a: string | JSX.Element) => (
-    <div key={q} style={{ marginBottom: 40 }}>
-      <h4>{q}</h4>
-      <p>{a}</p>
-    </div>
-  )
+import QA from './shared/QA'
 
+export default function FAQ() {
   const qas: { q: string; a: string | JSX.Element }[] = [
     {
       q: 'How many Tiles are there?',
@@ -175,7 +170,11 @@ export default function FAQ() {
           margin: '10vh auto',
         }}
       >
-        {qas.map(_qa => qa(_qa.q, _qa.a))}
+        {qas.map(qa => (
+          <div style={{ marginBottom: 40 }}>
+            <QA q={qa.q} a={qa.a} />
+          </div>
+        ))}
       </div>
     </div>
   )

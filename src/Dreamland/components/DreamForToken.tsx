@@ -2,25 +2,26 @@ import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { CSSProperties, useEffect, useLayoutEffect, useState } from 'react'
 
-import { useTilesContract } from '../../hooks/TilesContract'
+import { useDreamsContract } from '../hooks/DreamsContract'
+import { DreamMetadata } from '../models/dreamMetadata'
 
-export default function TileForToken({
+export default function DreamForToken({
   tokenId,
-  onClickTile,
-  tileLink,
+  onClickDream,
+  dreamLink,
   style,
   renderDetails,
 }: {
   tokenId: BigNumber | undefined
-  onClickTile?: (address: string) => void
-  tileLink?: string | ((address: string) => string)
+  onClickDream?: (address: string) => void
+  dreamLink?: string
   style?: CSSProperties
   renderDetails?: (address: string, id: BigNumber) => string | JSX.Element
 }) {
   const [URI, setURI] = useState<string>()
-  const [data, setData] = useState<{ name: string; image: string }>()
+  const [data, setData] = useState<DreamMetadata>()
 
-  const contract = useTilesContract()
+  const contract = useDreamsContract()
 
   useEffect(() => {
     if (!tokenId || tokenId.eq(0)) return
@@ -43,21 +44,18 @@ export default function TileForToken({
         style={{
           width: 100,
           height: 100,
-          cursor: onClickTile ? 'cursor' : 'unset',
+          cursor: onClickDream ? 'cursor' : 'unset',
           ...style,
         }}
         src={data.image}
-        onClick={() => onClickTile?.(data.name)}
+        onClick={() => onClickDream?.(data.tile)}
       />
-      {tokenId ? renderDetails?.(data.name, tokenId) : null}
+      {renderDetails && tokenId ? renderDetails(data.tile, tokenId) : null}
     </div>
   )
 
-  return tileLink ? (
-    <a
-      href={typeof tileLink === 'string' ? tileLink : tileLink?.(data.name)}
-      style={{ textDecoration: 'none' }}
-    >
+  return dreamLink ? (
+    <a href={dreamLink} style={{ textDecoration: 'none' }}>
       {elem}
     </a>
   ) : (
