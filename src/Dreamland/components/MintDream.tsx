@@ -171,7 +171,10 @@ export default function MintDream() {
       console.log('Error on dream', e)
     }
 
-    load()
+    // Arbitrary wait to load allows more time for remote db to update
+    setTimeout(() => {
+      load()
+    }, 2000)
   }, [text, tile, load, error])
 
   const mint = useCallback(() => {
