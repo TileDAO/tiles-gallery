@@ -92,12 +92,6 @@ export default function Landing() {
           <a className="btn" href="/#/mint" style={{ fontWeight: 'bold' }}>
             Mint a Tile
           </a>
-          <br />
-          <br />
-          <br />
-          <a className="btn" href="/#/dreamland" style={{ fontWeight: 'bold' }}>
-            Dreamland
-          </a>
         </div>
       </div>
     </div>
